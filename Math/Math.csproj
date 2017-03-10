@@ -41,10 +41,6 @@
     <Compile Include="Nodes\Binary\IBinaryOperationNode.cs" />
     <Compile Include="Nodes\INode.cs" />
     <Compile Include="Nodes\Unary\IUnaryOperationNode.cs" />
-    <Compile Include="Nodes\MultiplicationNode.cs" />
-    <Compile Include="Nodes\NumberNode.cs" />
-    <Compile Include="Nodes\SubstractionNode.cs" />
-    <Compile Include="Nodes\SummationNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
