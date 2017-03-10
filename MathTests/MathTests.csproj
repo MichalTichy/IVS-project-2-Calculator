@@ -52,6 +52,7 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="NumberNodeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SummationNodeTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
