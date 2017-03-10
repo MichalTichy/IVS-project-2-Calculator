@@ -1,6 +1,4 @@
-using Math.Nodes.Binary;
-
-namespace Math.Nodes
+namespace Math.Nodes.Binary
 {
     public class SumNode : IBinaryOperationNode
     {
