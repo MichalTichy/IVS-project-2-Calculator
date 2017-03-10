@@ -1,4 +1,4 @@
-namespace Math
+namespace Math.Nodes.Unary
 {
     public interface IUnaryOperationNode : INode
     {

@@ -1,4 +1,4 @@
-namespace Math
+namespace Math.Nodes.Binary
 {
     public interface IBinaryOperationNode : INode
     {
