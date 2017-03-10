@@ -21,7 +21,7 @@ namespace MathTests
             Random random=new Random();
             for (int i = 0; i < 1000; i++)
             {
-                var value = random.Next(int.MinValue+1, int.MaxValue-1)+random.NextDouble();
+                var value = random.NextBigDouble();
                 var number=new NumberNode(value);
                 Assert.AreEqual(value,number.Evaluate());
             }
