@@ -2,7 +2,7 @@ namespace Math.Nodes
 {
     public class NumberNode : INode
     {
-        public string TextRepresentation => value.ToString();
+        public virtual string TextRepresentation => value.ToString();
 
         protected readonly double value;
 
@@ -11,7 +11,7 @@ namespace Math.Nodes
             this.value = value;
         }
 
-        public double Evaluate()
+        public virtual double Evaluate()
         {
             return value;
         }

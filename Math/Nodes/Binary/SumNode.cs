@@ -5,9 +5,9 @@ namespace Math.Nodes.Binary
         public INode RightNode { get; set; }
         public INode LeftNode { get; set; }
 
-        public string TextRepresentation => "+";
+        public virtual string TextRepresentation => "+";
         
-        public double Evaluate()
+        public virtual double Evaluate()
         {
             return LeftNode.Evaluate() + RightNode.Evaluate();
         }
