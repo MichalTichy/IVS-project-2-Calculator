@@ -1,11 +1,9 @@
-namespace Math.Nodes.Binary
+namespace Math.Nodes.Functions.Binary
 {
-    public class SumNode : IBinaryOperationNode
+    public class SumNode : IFunctionNode
     {
         public INode RightNode { get; set; }
         public INode LeftNode { get; set; }
-
-        public virtual string TextRepresentation => "+";
         
         public virtual double Evaluate()
         {

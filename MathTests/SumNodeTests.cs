@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Math;
 using Math.Nodes;
-using Math.Nodes.Binary;
+using Math.Nodes.Functions.Binary;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace MathTests
