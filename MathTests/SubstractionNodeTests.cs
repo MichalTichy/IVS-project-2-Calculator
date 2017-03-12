@@ -15,11 +15,13 @@ namespace MathTests
         [TestMethod]
         public void BasicSubstractionTest()
         {
-            SubstractionNode substraction = new SubstractionNode();
-            substraction.LeftNode = new NumberNode(3.5);
-            substraction.RightNode = new NumberNode(1.3);
+            SubstractionNode substraction = new SubstractionNode
+            {
+                LeftNode = new NumberNode(3.5m),
+                RightNode = new NumberNode(1.3m)
+            };
 
-            Assert.AreEqual(2.2, substraction.Evaluate());
+            Assert.AreEqual(2.2m, substraction.Evaluate());
         }
     }
 }

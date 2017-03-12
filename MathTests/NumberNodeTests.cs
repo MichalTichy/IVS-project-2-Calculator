@@ -11,7 +11,7 @@ namespace MathTests
         [TestMethod]
         public void ReturnsItsValue()
         {
-            double value = 5.123;
+            decimal value = 5.123m;
             var number=new NumberNode(value);
             Assert.AreEqual(value,number.Evaluate());
         }
@@ -22,7 +22,7 @@ namespace MathTests
             Random random=new Random();
             for (int i = 0; i < 1000; i++)
             {
-                var value = random.NextBigDouble();
+                var value = random.NextDecimal();
                 var number=new NumberNode(value);
                 Assert.AreEqual(value,number.Evaluate());
             }

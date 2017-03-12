@@ -2,6 +2,6 @@
 {
     public interface INode
     {
-        double Evaluate();
+        decimal Evaluate();
     }
 }

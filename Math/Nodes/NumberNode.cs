@@ -2,14 +2,14 @@ namespace Math.Nodes
 {
     public class NumberNode : INode
     {
-        protected readonly double value;
+        protected readonly decimal value;
 
-        public NumberNode(double value)
+        public NumberNode(decimal value)
         {
             this.value = value;
         }
 
-        public virtual double Evaluate()
+        public virtual decimal Evaluate()
         {
             return value;
         }

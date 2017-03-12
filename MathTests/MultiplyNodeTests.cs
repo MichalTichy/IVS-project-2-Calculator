@@ -16,10 +16,10 @@ namespace MathTests
         public void BasicMultiplicationTest()
         {
             MultiplyNode multiplication = new MultiplyNode();
-            multiplication.LeftNode = new NumberNode(1.2);
-            multiplication.RightNode = new NumberNode(2.3);
+            multiplication.LeftNode = new NumberNode(1.2m);
+            multiplication.RightNode = new NumberNode(2.3m);
 
-            Assert.AreEqual(2.76, multiplication.Evaluate());
+            Assert.AreEqual(2.76m, multiplication.Evaluate());
         }
     }
 }
