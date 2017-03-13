@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Math.Nodes.Functions
+﻿namespace Math.Nodes.Functions
 {
     public interface IFunctionNode : INode
     {
