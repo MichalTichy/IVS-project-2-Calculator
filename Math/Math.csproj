@@ -5,7 +5,7 @@
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{9E4EE6D2-E524-400E-989E-89D92FCEDD6C}</ProjectGuid>
+    <ProjectGuid>{9D26D224-9315-40CE-8784-B108243756D2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Math</RootNamespace>
     <AssemblyName>Math</AssemblyName>
@@ -38,16 +38,18 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Nodes\Functions\Binary\SubstractionNode.cs" />
-    <Compile Include="Nodes\Functions\Binary\MultiplyNode.cs" />
+    <Compile Include="ExpressionParser.cs" />
+    <Compile Include="MathOperatorDescription.cs" />
     <Compile Include="Nodes\Functions\Binary\IBinaryOperationNode.cs" />
+    <Compile Include="Nodes\Functions\Binary\MultiplyNode.cs" />
+    <Compile Include="Nodes\Functions\Binary\SubstractionNode.cs" />
+    <Compile Include="Nodes\Functions\Binary\SumNode.cs" />
     <Compile Include="Nodes\Functions\IFunctionNode.cs" />
+    <Compile Include="Nodes\Functions\OperationType.cs" />
+    <Compile Include="Nodes\Functions\Unary\IUnaryOperationNode.cs" />
     <Compile Include="Nodes\INode.cs" />
     <Compile Include="Nodes\NumberNode.cs" />
-    <Compile Include="Nodes\Functions\Binary\SumNode.cs" />
-    <Compile Include="Nodes\Functions\Unary\IUnaryOperationNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
 </Project>

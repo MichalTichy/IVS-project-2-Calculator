@@ -47,8 +47,12 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Reflection.TypeExtensions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Reflection.TypeExtensions.4.3.0\lib\net46\System.Reflection.TypeExtensions.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExpressionParserTests.cs" />
     <Compile Include="SubstractionNodeTests.cs" />
     <Compile Include="MultiplyNodeTests.cs" />
     <Compile Include="Extensions.cs" />
@@ -61,7 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Math\Math.csproj">
-      <Project>{9e4ee6d2-e524-400e-989e-89d92fcedd6c}</Project>
+      <Project>{9d26d224-9315-40ce-8784-b108243756d2}</Project>
       <Name>Math</Name>
     </ProjectReference>
   </ItemGroup>
