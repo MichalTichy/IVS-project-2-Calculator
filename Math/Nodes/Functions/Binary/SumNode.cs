@@ -1,6 +1,6 @@
 namespace Math.Nodes.Functions.Binary
 {
-    public class SumNode : IFunctionNode
+    public class SumNode : IBinaryOperationNode
     {
         public INode RightNode { get; set; }
         public INode LeftNode { get; set; }

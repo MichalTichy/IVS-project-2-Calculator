@@ -1,7 +1,8 @@
-namespace Math.Nodes
+namespace Math.Nodes.Values
 {
-    public class NumberNode : INode
+    public class NumberNode : IValueNode
     {
+
         protected readonly decimal value;
 
         public NumberNode(decimal value)

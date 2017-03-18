@@ -1,5 +1,6 @@
 ﻿using System;
 using Math.Nodes;
+using Math.Nodes.Values;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace MathTests

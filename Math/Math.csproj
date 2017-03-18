@@ -38,7 +38,7 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExpressionParser.cs" />
+    <Compile Include="ExpressionTreeBuilder.cs" />
     <Compile Include="MathOperatorDescription.cs" />
     <Compile Include="Nodes\Functions\Binary\IBinaryOperationNode.cs" />
     <Compile Include="Nodes\Functions\Binary\MultiplyNode.cs" />
@@ -48,8 +48,9 @@
     <Compile Include="Nodes\Functions\OperationType.cs" />
     <Compile Include="Nodes\Functions\Unary\IUnaryOperationNode.cs" />
     <Compile Include="Nodes\INode.cs" />
-    <Compile Include="Nodes\NumberNode.cs" />
     <Compile Include="Nodes\TemporaryNode.cs" />
+    <Compile Include="Nodes\Values\NumberNode.cs" />
+    <Compile Include="Nodes\Values\IValueNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

@@ -1,6 +1,7 @@
 ﻿using Math;
 using Math.Nodes;
 using Math.Nodes.Functions.Binary;
+using Math.Nodes.Values;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace MathTests
