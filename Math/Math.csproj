@@ -49,6 +49,7 @@
     <Compile Include="Nodes\Functions\Unary\IUnaryOperationNode.cs" />
     <Compile Include="Nodes\INode.cs" />
     <Compile Include="Nodes\NumberNode.cs" />
+    <Compile Include="Nodes\TemporaryNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
