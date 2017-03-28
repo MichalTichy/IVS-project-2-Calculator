@@ -1,4 +1,6 @@
-﻿namespace Math.Nodes.Functions.Binary
+﻿using System;
+
+namespace Math.Nodes.Functions.Binary
 {
     public class MultiplyNode : IBinaryOperationNode
     {
@@ -7,7 +9,7 @@
 
         public decimal Evaluate()
         {
-            return LeftNode.Evaluate() * RightNode.Evaluate();
+            return Decimal.Multiply(LeftNode.Evaluate(), RightNode.Evaluate());
         }
     }
 }
