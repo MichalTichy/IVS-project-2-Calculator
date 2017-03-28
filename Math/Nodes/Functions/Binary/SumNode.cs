@@ -1,3 +1,5 @@
+using System;
+
 namespace Math.Nodes.Functions.Binary
 {
     public class SumNode : IBinaryOperationNode
@@ -7,7 +9,7 @@ namespace Math.Nodes.Functions.Binary
         
         public virtual decimal Evaluate()
         {
-            return LeftNode.Evaluate() + RightNode.Evaluate();
+            return Decimal.Add(LeftNode.Evaluate(), RightNode.Evaluate());
         }
     }
 }
