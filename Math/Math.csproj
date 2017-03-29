@@ -40,6 +40,7 @@
   <ItemGroup>
     <Compile Include="ExpressionTreeBuilder.cs" />
     <Compile Include="MathOperatorDescription.cs" />
+    <Compile Include="Nodes\Functions\Binary\DivNode.cs" />
     <Compile Include="Nodes\Functions\Binary\IBinaryOperationNode.cs" />
     <Compile Include="Nodes\Functions\Binary\MultiplyNode.cs" />
     <Compile Include="Nodes\Functions\Binary\SubstractionNode.cs" />
