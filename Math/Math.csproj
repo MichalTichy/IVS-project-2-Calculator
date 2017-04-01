@@ -48,6 +48,7 @@
     <Compile Include="Nodes\Functions\Binary\SumNode.cs" />
     <Compile Include="Nodes\Functions\IFunctionNode.cs" />
     <Compile Include="Nodes\Functions\OperationType.cs" />
+    <Compile Include="Nodes\Functions\Unary\FactorialNode.cs" />
     <Compile Include="Nodes\Functions\Unary\IUnaryOperationNode.cs" />
     <Compile Include="Nodes\INode.cs" />
     <Compile Include="Nodes\TemporaryNode.cs" />
