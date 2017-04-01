@@ -7,6 +7,7 @@ using Math.Nodes.Functions.Binary;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using Math.Nodes;
+using Math.Nodes.Functions.Unary;
 using Math.Nodes.Values;
 
 namespace Math
@@ -40,6 +41,7 @@ namespace Math
             RegisterOperator(new MathOperatorDescription(typeof(SumNode), "+",OperationType.LowPriorityOperation));
             RegisterOperator(new MathOperatorDescription(typeof(SubstractionNode),"-",OperationType.LowPriorityOperation));
             RegisterOperator(new MathOperatorDescription(typeof(MultiplyNode),"*",OperationType.HighPriorityOperation));
+            RegisterOperator(new MathOperatorDescription(typeof(FactorialNode),"!",OperationType.FunctionCalls));
         }
 
         public virtual INode ParseExpression(string expression)
@@ -81,6 +83,13 @@ namespace Math
 
                     currentNode = currentNode.GetRightNode();
                 }
+            }
+
+            if (currentNode.Value==null && currentNode.FutureType==null)
+            {
+                var toDelete = currentNode;
+                currentNode = currentNode.GetParentNode();
+                toDelete.UnreferenceFromParent();
             }
 
             return currentNode.GetRoot().Build();

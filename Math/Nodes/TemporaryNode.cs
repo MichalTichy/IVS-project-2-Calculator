@@ -149,6 +149,20 @@ namespace Math.Nodes
             return node;
         }
 
+        public void UnreferenceFromParent()
+        {
+            if (ParentNode.LeftNode == this)
+            {
+                ParentNode.LeftNode = null;
+            }
+
+
+            if (ParentNode.RightNode == this)
+            {
+                ParentNode.RightNode = null;
+            }
+        }
+
         private void CheckBuildConditions()
         {
             if (Value != null && FutureType != null)

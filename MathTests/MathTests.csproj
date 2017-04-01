@@ -52,6 +52,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DivNodeTests - Copy.cs" />
     <Compile Include="PowNodeTest.cs" />
     <Compile Include="DivNodeTests.cs" />
     <Compile Include="ExpressionParserTests.cs" />

@@ -28,14 +28,7 @@ namespace MathTests
                 Assert.IsNotNull(expressionParser.RegisteredOperators.SingleOrDefault(t=>t.NodeType==functionType));
             }
         }
-
-        [TestMethod]
-        public void CheckIfTreeIsBuildCorrectly()
-        {
-            var expressionParser=new ExpressionTreeBuilder();
-            var expressionTree = expressionParser.ParseExpression("5+2*(2-1)");
-        }
-
+        
         [TestMethod]
         public void MathOperationsOrderTest1()
         {
