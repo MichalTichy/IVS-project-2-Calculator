@@ -20,13 +20,20 @@ namespace MathTests
             var type = typeof(IFunctionNode);
             var types = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(s => s.GetTypes())
-                .Where(p => type.IsAssignableFrom(p) && p.IsClass && !p.IsAbstract).ToArray();
+                .Where(p => type.IsAssignableFrom(p) && p.IsClass && !p.IsAbstract && p.IsPublic).ToArray();
 
             Assert.AreEqual(types.Count(),expressionParser.RegisteredOperators.Count);
             foreach (var functionType in types)
             {
                 Assert.IsNotNull(expressionParser.RegisteredOperators.SingleOrDefault(t=>t.NodeType==functionType));
             }
+        }
+
+        [TestMethod]
+        public void CheckIfTreeIsBuildCorrectly()
+        {
+            var expressionParser=new ExpressionTreeBuilder();
+            var expressionTree = expressionParser.ParseExpression("5+2*(2-1)");
         }
 
         [TestMethod]

@@ -7,6 +7,8 @@ namespace Math.Nodes.Functions.Binary
         public INode RightNode { get; set; }
         public INode LeftNode { get; set; }
 
+        public INode Parent { get; set; }
+
         public decimal Evaluate()
         {
             return Decimal.Multiply(LeftNode.Evaluate(), RightNode.Evaluate());

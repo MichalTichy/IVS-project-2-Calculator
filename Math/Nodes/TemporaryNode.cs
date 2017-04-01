@@ -23,7 +23,7 @@ namespace Math.Nodes
 
         public decimal? Value { get; set; }
 
-        public TemporaryNode GetParentNode()
+        public virtual TemporaryNode GetParentNode()
         {
             if (ParentNode == null)
                 InsertToParent(new TemporaryNode());
@@ -31,7 +31,7 @@ namespace Math.Nodes
             return ParentNode;
         }
 
-        public TemporaryNode GetRightNode()
+        public virtual TemporaryNode GetRightNode()
         {
             if (RightNode == null)
                 InsertToRight(new TemporaryNode());
@@ -39,7 +39,7 @@ namespace Math.Nodes
             return RightNode;
         }
 
-        public TemporaryNode GetLeftNode()
+        public virtual TemporaryNode GetLeftNode()
         {
             if (LeftNode == null)
                 InsertToLeft(new TemporaryNode());
@@ -47,7 +47,7 @@ namespace Math.Nodes
             return LeftNode;
         }
 
-        public TemporaryNode InsertToRight(TemporaryNode node)
+        public virtual TemporaryNode InsertToRight(TemporaryNode node)
         {
             var tmp = RightNode;
 
@@ -61,7 +61,7 @@ namespace Math.Nodes
             return node;
         }
 
-        public TemporaryNode InsertToLeft(TemporaryNode node)
+        public virtual TemporaryNode InsertToLeft(TemporaryNode node)
         {
             var tmp = LeftNode;
 
@@ -75,7 +75,7 @@ namespace Math.Nodes
             return node;
         }
 
-        public TemporaryNode InsertToParent(TemporaryNode node)
+        public virtual TemporaryNode InsertToParent(TemporaryNode node)
         {
             var tmp = ParentNode;
 
@@ -98,7 +98,7 @@ namespace Math.Nodes
             return node;
         }
 
-        public TemporaryNode GetRoot()
+        public virtual TemporaryNode GetRoot()
         {
             var root = this;
             while (root.ParentNode!=null)
@@ -108,42 +108,44 @@ namespace Math.Nodes
             return root;
         }
 
-        public INode Build()
+        public virtual INode Build(INode parentNode = null)
         {
             CheckBuildConditions();
 
             if (Value != null)
-                return new NumberNode(Value.Value);
+                return new NumberNode(Value.Value)
+                    { Parent = parentNode};
 
             var node = (INode)Activator.CreateInstance(FutureType.NodeType);
-            var unaryNode = node as IUnaryOperationNode;
-            if (unaryNode != null)
-                return FillNode(unaryNode);
 
-            var binaryNode = node as IBinaryOperationNode;
-            if (binaryNode != null)
-                return FillNode(binaryNode);
+            if (node is IUnaryOperationNode unaryNode)
+                return FillNode(unaryNode,parentNode);
+            
+            if (node is IBinaryOperationNode binaryNode)
+                return FillNode(binaryNode,parentNode);
 
             throw new NotSupportedException("Node type is not supported");
         }
 
-        private INode FillNode(IUnaryOperationNode node)
+        private INode FillNode(IUnaryOperationNode node, INode parentNode)
         {
+            node.Parent = parentNode;
             if (RightNode != null)
             {
-                node.ChildNode = RightNode.Build();
+                node.ChildNode = RightNode.Build(node);
             }
             else if (LeftNode != null)
             {
-                node.ChildNode = LeftNode.Build();
+                node.ChildNode = LeftNode.Build(node);
             }
             return node;
         }
 
-        private INode FillNode(IBinaryOperationNode node)
+        private INode FillNode(IBinaryOperationNode node, INode parentNode)
         {
-            node.RightNode = RightNode.Build();
-            node.LeftNode = LeftNode.Build();
+            node.Parent = parentNode;
+            node.RightNode = RightNode.Build(node);
+            node.LeftNode = LeftNode.Build(node);
             return node;
         }
 

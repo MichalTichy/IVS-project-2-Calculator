@@ -10,6 +10,8 @@ namespace Math.Nodes.Values
             this.value = value;
         }
 
+        public INode Parent { get; set; }
+
         public virtual decimal Evaluate()
         {
             return value;

@@ -16,7 +16,7 @@ namespace Math
         protected SortedDictionary<string,MathOperatorDescription> registeredOperators = new SortedDictionary<string,MathOperatorDescription>();
         public IReadOnlyCollection<MathOperatorDescription> RegisteredOperators => registeredOperators.Values.ToList().AsReadOnly();
 
-        public void RegisterOperator(MathOperatorDescription mathOperatorDescription)
+        public virtual void RegisterOperator(MathOperatorDescription mathOperatorDescription)
         {
             if (registeredOperators.ContainsKey(mathOperatorDescription.TextRepresentation))
                 throw new ArgumentException("Operator with same text representation is allready registered.");
@@ -35,14 +35,14 @@ namespace Math
                 RegisterOperator(mathOperatorDescription);
         }
 
-        protected void RegisterDefaultOperators()
+        protected virtual void RegisterDefaultOperators()
         {
             RegisterOperator(new MathOperatorDescription(typeof(SumNode), "+",OperationType.LowPriorityOperation));
             RegisterOperator(new MathOperatorDescription(typeof(SubstractionNode),"-",OperationType.LowPriorityOperation));
             RegisterOperator(new MathOperatorDescription(typeof(MultiplyNode),"*",OperationType.HighPriorityOperation));
         }
 
-        public INode ParseExpression(string expression)
+        public virtual INode ParseExpression(string expression)
         {
             TemporaryNode currentNode = new TemporaryNode();
 
@@ -147,8 +147,7 @@ namespace Math
         protected bool CheckIfIsTextIsValidNumber(string text)
         {
             //TODO rewrite to REGEX
-            var result=new decimal();
-            return decimal.TryParse(text, out result);
+            return decimal.TryParse(text, out var result);
         }
     }
 }
