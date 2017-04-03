@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,13 +23,21 @@ namespace MathTests
                 .SelectMany(s => s.GetTypes())
                 .Where(p => type.IsAssignableFrom(p) && p.IsClass && !p.IsAbstract && p.IsPublic).ToArray();
 
-            Assert.AreEqual(types.Count(),expressionParser.RegisteredOperators.Count);
+            var fail = false;
             foreach (var functionType in types)
             {
-                Assert.IsNotNull(expressionParser.RegisteredOperators.SingleOrDefault(t=>t.NodeType==functionType));
+                if (expressionParser.RegisteredOperators.SingleOrDefault(t => t.NodeType == functionType) == null)
+                {
+                    Debug.WriteLine($"{functionType} not found");
+                    fail = true;
+                }
+
             }
+            
+            Assert.IsFalse(fail);
+            Assert.AreEqual(types.Count(), expressionParser.RegisteredOperators.Count);
         }
-        
+
         [TestMethod]
         public void MathOperationsOrderTest1()
         {

@@ -7,7 +7,7 @@ using Math.Nodes.Values;
 
 namespace Math.Nodes.Functions.Binary
 {
-    public class DivNode : IBinaryOperationNode
+    public class DivisionNode : IBinaryOperationNode
     {
         public INode RightNode { get; set; }
         public INode LeftNode { get; set; }

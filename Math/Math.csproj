@@ -41,7 +41,7 @@
     <Compile Include="ExpressionTreeBuilder.cs" />
     <Compile Include="MathOperatorDescription.cs" />
     <Compile Include="Nodes\Functions\Binary\PowNode.cs" />
-    <Compile Include="Nodes\Functions\Binary\DivNode.cs" />
+    <Compile Include="Nodes\Functions\Binary\DivisionNode.cs" />
     <Compile Include="Nodes\Functions\Binary\IBinaryOperationNode.cs" />
     <Compile Include="Nodes\Functions\Binary\MultiplyNode.cs" />
     <Compile Include="Nodes\Functions\Binary\SubstractionNode.cs" />
@@ -50,6 +50,7 @@
     <Compile Include="Nodes\Functions\OperationType.cs" />
     <Compile Include="Nodes\Functions\Unary\FactorialNode.cs" />
     <Compile Include="Nodes\Functions\Unary\IUnaryOperationNode.cs" />
+    <Compile Include="Nodes\Functions\Unary\PercentageNode.cs" />
     <Compile Include="Nodes\INode.cs" />
     <Compile Include="Nodes\TemporaryNode.cs" />
     <Compile Include="Nodes\Values\NumberNode.cs" />

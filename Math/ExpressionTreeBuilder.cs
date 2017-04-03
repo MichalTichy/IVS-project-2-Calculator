@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http.Headers;
 using Math.Nodes.Functions;
 using Math.Nodes.Functions.Binary;
 using System.Reflection;
@@ -41,7 +42,10 @@ namespace Math
             RegisterOperator(new MathOperatorDescription(typeof(SumNode), "+",OperationType.LowPriorityOperation));
             RegisterOperator(new MathOperatorDescription(typeof(SubstractionNode),"-",OperationType.LowPriorityOperation));
             RegisterOperator(new MathOperatorDescription(typeof(MultiplyNode),"*",OperationType.HighPriorityOperation));
+            RegisterOperator(new MathOperatorDescription(typeof(DivisionNode),"/",OperationType.HighPriorityOperation));
             RegisterOperator(new MathOperatorDescription(typeof(FactorialNode),"!",OperationType.FunctionCalls));
+            RegisterOperator(new MathOperatorDescription(typeof(PercentageNode),"%",OperationType.FunctionCalls));
+            RegisterOperator(new MathOperatorDescription(typeof(PowNode),"^",OperationType.FunctionCalls));
         }
 
         public virtual INode ParseExpression(string expression)
@@ -72,7 +76,7 @@ namespace Math
                     {
                         currentNode.FutureType = operatorDescription;
                     }
-                    else if (currentNode.FutureType.OperationType > operatorDescription.OperationType)
+                    else if (currentNode.FutureType.OperationType >= operatorDescription.OperationType)
                     {
                         currentNode = currentNode.InsertToParent(new TemporaryNode() {FutureType = operatorDescription});
                     }
@@ -81,7 +85,10 @@ namespace Math
                         currentNode = currentNode.InsertToRight(new TemporaryNode() {FutureType = operatorDescription});
                     }
 
-                    currentNode = currentNode.GetRightNode();
+                    if ((typeof(IBinaryOperationNode).IsAssignableFrom(currentNode.FutureType.NodeType)))
+                    {
+                        currentNode = currentNode.GetRightNode();
+                    }
                 }
             }
 

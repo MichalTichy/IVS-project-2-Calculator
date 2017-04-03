@@ -11,7 +11,7 @@ namespace Math.Nodes.Functions.Binary
 
         public decimal Evaluate()
         {
-            return Decimal.Multiply(LeftNode.Evaluate(), RightNode.Evaluate());
+            return LeftNode.Evaluate() * RightNode.Evaluate();
         }
     }
 }

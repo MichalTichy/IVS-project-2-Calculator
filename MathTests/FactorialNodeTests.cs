@@ -27,7 +27,7 @@ namespace MathTests
         public void FactorialOfDecimalNumber()
         {
             var factorial = new FactorialNode {ChildNode = new NumberNode(2.5m)};
-            Assert.ThrowsException<ArithmeticException>(() => factorial.Evaluate());
+            Assert.IsTrue((factorial.Evaluate()-3.32335m)<0.00001m);
         }
     }
 
