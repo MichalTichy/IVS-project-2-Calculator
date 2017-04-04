@@ -1,4 +1,5 @@
-﻿using Math = System.Math;
+﻿using System;
+using Math = System.Math;
 
 namespace Math.Nodes.Functions.Binary
 {
@@ -11,7 +12,19 @@ namespace Math.Nodes.Functions.Binary
 
         public decimal Evaluate()
         {
+            decimal LeftNodeValue = LeftNode.Evaluate();
+            decimal RightNodeValue = RightNode.Evaluate();
+            CheckIfItsPossibleToCalculatePower(RightNodeValue);
+
             return (decimal)System.Math.Pow((double)LeftNode.Evaluate(), (double)RightNode.Evaluate());
+        }
+
+        void CheckIfItsPossibleToCalculatePower(decimal value)
+        {
+            if (value%1 != 0 || value < 1)
+            {
+                throw new ArgumentException("Argument is not natural number or is smaller than 1.");
+            }
         }
     }
 }

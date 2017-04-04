@@ -18,46 +18,6 @@ namespace MathTests
             Assert.AreEqual(8, power.Evaluate());
         }
         
-        [TestMethod]
-        public void NegativeNumbersPowerTest()
-        {
-            PowNode power = new PowNode();
-            power.LeftNode = new NumberNode(-3);
-            power.RightNode = new NumberNode(-5);
-
-            Assert.AreEqual(-0.00411522633744856m, power.Evaluate());
-        }
-
-        [TestMethod]
-        public void PositiveDecimalNumbersPowerTest()
-        {
-            PowNode power = new PowNode();
-            power.LeftNode = new NumberNode(32.23m);
-            power.RightNode = new NumberNode(0.9m);
-
-            Assert.AreEqual(22.7737356376674m, power.Evaluate());
-        }
-
-        [TestMethod]
-        public void NegativeDecimalNumbersPowerTest()
-        {
-            PowNode power = new PowNode();
-            power.LeftNode = new NumberNode(3.2m);
-            power.RightNode = new NumberNode(-1.9m);
-
-            Assert.AreEqual(0.109702125246383m, power.Evaluate());
-        }
-
-        [TestMethod]
-        [ExpectedException(typeof(OverflowException))]
-        public void NegativeDecimaleOverflowNumbersPowerTest()
-        {
-            PowNode power = new PowNode();
-            power.LeftNode = new NumberNode(-64.32m);
-            power.RightNode = new NumberNode(-0.8m);
-
-            power.Evaluate();
-        }
 
         [TestMethod]
         [ExpectedException(typeof(OverflowException))]
@@ -80,26 +40,26 @@ namespace MathTests
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
         public void SecondZeroNumberPowerTest()
         {
             PowNode power = new PowNode();
             power.LeftNode = new NumberNode(2);
             power.RightNode = new NumberNode(0);
 
-            Assert.AreEqual(1, power.Evaluate());
+            power.Evaluate();
         }
 
         [TestMethod]
-        public void BothZeroNumberPowerTest()
+        [ExpectedException(typeof(ArgumentException))]
+        public void SecondNumberNotNaturalPowerTest()
         {
             PowNode power = new PowNode();
-            power.LeftNode = new NumberNode(0);
-            power.RightNode = new NumberNode(0);
+            power.LeftNode = new NumberNode(2);
+            power.RightNode = new NumberNode(3.4m);
 
-            Assert.AreEqual(1, power.Evaluate());
+            power.Evaluate();
         }
-
-
+    
     }
-
 }
