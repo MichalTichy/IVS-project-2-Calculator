@@ -98,7 +98,7 @@ namespace Math
             return currentNode.GetRoot().Build();
         }
 
-        private ICollection<(string token, MathOperatorDescription operatorDescription)> AssignOperatorDescriptionToTokens(ICollection<string> tokens)
+        protected virtual ICollection<(string token, MathOperatorDescription operatorDescription)> AssignOperatorDescriptionToTokens(ICollection<string> tokens)
         {
             var expressionTokens=new List<ValueTuple<string, MathOperatorDescription>>();
 
@@ -116,7 +116,7 @@ namespace Math
         }
 
 
-        protected ICollection<string> SplitExpressionToTokens(string expression)
+        protected virtual ICollection<string> SplitExpressionToTokens(string expression)
         {
             var tokens = new List<string> {expression.Replace(" ", "").ToLower()};
 
@@ -151,7 +151,7 @@ namespace Math
             return tokens;
         }
 
-        protected ICollection<string> SeparateOperatorFromText(string text, string operatorTextRepresentation)
+        protected virtual ICollection<string> SeparateOperatorFromText(string text, string operatorTextRepresentation)
         {
             var indexOfOperatorOccurrence = text.IndexOf(operatorTextRepresentation, StringComparison.Ordinal);
 
@@ -173,7 +173,7 @@ namespace Math
             return textParts;
         }
 
-        protected bool CheckIfIsTextIsValidNumber(string text)
+        protected virtual bool CheckIfIsTextIsValidNumber(string text)
         {
             //TODO rewrite to REGEX
             return decimal.TryParse(text, out var result);
