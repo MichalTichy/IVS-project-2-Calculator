@@ -9,6 +9,10 @@ namespace Math
         public readonly string TextRepresentation;
         public readonly Type NodeType;
         public readonly OperationType OperationType;
+       
+        public bool PrecedingTokenCannotBeBinaryFunction;
+
+        public bool PrecedingTokenCannotBeUnaryFunction;
 
         public MathOperatorDescription(Type nodeType, string textRepresentation, OperationType operationType)
         {

@@ -59,7 +59,7 @@ namespace Math
             {
                 if (expressionPart.token == "(")
                 {
-                    currentNode = currentNode.GetLeftNode();
+                    currentNode = currentNode.GetLeftNode(); //BUG possible bug 5 + 3 + 4 Sqrt(10)
                 }
                 else if (expressionPart.token == ")")
                 {
