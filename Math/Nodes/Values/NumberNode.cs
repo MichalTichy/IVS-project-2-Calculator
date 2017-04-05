@@ -1,3 +1,5 @@
+using System;
+
 namespace Math.Nodes.Values
 {
     public class NumberNode : IValueNode
@@ -8,6 +10,11 @@ namespace Math.Nodes.Values
         public NumberNode(decimal value)
         {
             this.value = value;
+        }
+
+        public NumberNode(string value)
+        {
+            this.value = Decimal.Parse(value);
         }
 
         public INode Parent { get; set; }

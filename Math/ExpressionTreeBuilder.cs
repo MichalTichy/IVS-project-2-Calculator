@@ -1,4 +1,5 @@
 ﻿using System;
+
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Net.Http.Headers;
 using Math.Nodes.Functions;
 using Math.Nodes.Functions.Binary;
 using System.Reflection;
+using System.Security.Principal;
 using System.Text.RegularExpressions;
 using Math.Nodes;
 using Math.Nodes.Functions.Unary;
@@ -51,26 +53,26 @@ namespace Math
         public virtual INode ParseExpression(string expression)
         {
             TemporaryNode currentNode = new TemporaryNode();
-
-            var tokens = SplitExpressionToTokens(expression);
-            foreach (var token in tokens)
+            
+            var expressionParts = AssignOperatorDescriptionToTokens(SplitExpressionToTokens(expression));
+            foreach (var expressionPart in expressionParts)
             {
-                if (token == "(")
+                if (expressionPart.token == "(")
                 {
                     currentNode = currentNode.GetLeftNode();
                 }
-                else if (token == ")")
+                else if (expressionPart.token == ")")
                 {
                     currentNode = currentNode.GetParentNode();
                 }
-                else if (CheckIfIsTextIsValidNumber(token))
+                else if (CheckIfIsTextIsValidNumber(expressionPart.token))
                 {
-                    currentNode.Value = decimal.Parse(token);
+                    currentNode.Value = decimal.Parse(expressionPart.token);
                     currentNode = currentNode.GetParentNode();
                 }
                 else
                 {
-                    var operatorDescription = registeredOperators[token];
+                    var operatorDescription = expressionPart.operatorDescription;
 
                     if (currentNode.FutureType == null)
                     {
@@ -91,18 +93,29 @@ namespace Math
                     }
                 }
             }
-
-            if (currentNode.Value==null && currentNode.FutureType==null)
-            {
-                var toDelete = currentNode;
-                currentNode = currentNode.GetParentNode();
-                toDelete.UnreferenceFromParent();
-            }
+            
 
             return currentNode.GetRoot().Build();
         }
-        
-        
+
+        private ICollection<(string token, MathOperatorDescription operatorDescription)> AssignOperatorDescriptionToTokens(ICollection<string> tokens)
+        {
+            var expressionTokens=new List<ValueTuple<string, MathOperatorDescription>>();
+
+            foreach (var token in tokens)
+            {
+                MathOperatorDescription operatorDescription=null;
+                if (registeredOperators.ContainsKey(token))
+                {
+                    operatorDescription = registeredOperators[token];
+                }
+                expressionTokens.Add((token,operatorDescription));
+            }
+
+            return expressionTokens;
+        }
+
+
         protected ICollection<string> SplitExpressionToTokens(string expression)
         {
             var tokens = new List<string> {expression.Replace(" ", "").ToLower()};
