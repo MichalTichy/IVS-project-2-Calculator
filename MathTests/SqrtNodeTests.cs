@@ -13,11 +13,27 @@ namespace MathTests
     public class SqrtNodeTests
     {
         [TestMethod]
-        public void PosistiveNumbersSqrtTest()
+        public void PosistiveNumberSqrtTest()
         {
             var sqrt = new SqrtNode(){ ChildNode = new NumberNode(4) };
             Assert.AreEqual(2, sqrt.Evaluate());
         }
-  
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void NegativeNumberSqrtTest()
+        {
+            var sqrt = new SqrtNode() { ChildNode = new NumberNode(-1) };
+            sqrt.Evaluate();
+        }
+
+        [TestMethod]
+        public void ZeroNumberSqrtTest()
+        {
+            var sqrt = new SqrtNode() { ChildNode = new NumberNode(0) };
+            Assert.AreEqual(0, sqrt.Evaluate());
+        }
+
+
     }
 }
