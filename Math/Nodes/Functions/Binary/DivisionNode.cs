@@ -16,9 +16,20 @@ namespace Math.Nodes.Functions.Binary
 
         public decimal Evaluate()
         {
+            decimal RightNodeValue = RightNode.Evaluate();
+            decimal LeftNodeValue = LeftNode.Evaluate();
+
+            CheckIfItsPossibleToCalculateDivision(RightNodeValue);
+
             return Decimal.Divide(LeftNode.Evaluate(), RightNode.Evaluate());
         }
 
-
+        void CheckIfItsPossibleToCalculateDivision (decimal value)
+        {
+            if (value == 0)
+            {
+                throw new DivideByZeroException("Cannot divide by zero!");
+            }
+        }
     }
 }
