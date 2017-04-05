@@ -44,6 +44,7 @@
     <Compile Include="Nodes\Functions\Binary\DivisionNode.cs" />
     <Compile Include="Nodes\Functions\Binary\IBinaryOperationNode.cs" />
     <Compile Include="Nodes\Functions\Binary\MultiplyNode.cs" />
+    <Compile Include="Nodes\Functions\Binary\RootNode.cs" />
     <Compile Include="Nodes\Functions\Binary\SubstractionNode.cs" />
     <Compile Include="Nodes\Functions\Binary\SumNode.cs" />
     <Compile Include="Nodes\Functions\IFunctionNode.cs" />

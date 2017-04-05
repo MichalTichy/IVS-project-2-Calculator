@@ -48,6 +48,7 @@ namespace Math
             RegisterOperator(new MathOperatorDescription(typeof(FactorialNode),"!",OperationType.FunctionCalls));
             RegisterOperator(new MathOperatorDescription(typeof(PercentageNode),"%",OperationType.FunctionCalls));
             RegisterOperator(new MathOperatorDescription(typeof(PowNode),"^",OperationType.FunctionCalls));
+            RegisterOperator(new MathOperatorDescription(typeof(RootNode),"sqrt",OperationType.FunctionCalls));
         }
 
         public virtual INode ParseExpression(string expression)
