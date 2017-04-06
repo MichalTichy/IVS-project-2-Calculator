@@ -10,6 +10,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Math", "Math\Math.csproj", "{9D26D224-9315-40CE-8784-B108243756D2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calculator", "Calculator\Calculator.csproj", "{62424309-5B7A-44B0-8D3F-719117212DC9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9D26D224-9315-40CE-8784-B108243756D2} = {9D26D224-9315-40CE-8784-B108243756D2}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
