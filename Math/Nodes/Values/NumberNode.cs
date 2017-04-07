@@ -23,5 +23,10 @@ namespace Math.Nodes.Values
         {
             return value;
         }
+
+        public static bool IsNumber(string text)
+        {
+            return decimal.TryParse(text, out var result);
+        }
     }
 }

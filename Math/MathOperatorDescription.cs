@@ -1,6 +1,8 @@
 using System;
 using System.Reflection;
 using Math.Nodes.Functions;
+using Math.Nodes.Functions.Binary;
+using Math.Nodes.Functions.Unary;
 
 namespace Math
 {
@@ -9,10 +11,6 @@ namespace Math
         public readonly string TextRepresentation;
         public readonly Type NodeType;
         public readonly OperationType OperationType;
-       
-        public bool PrecedingTokenCannotBeBinaryFunction;
-
-        public bool PrecedingTokenCannotBeUnaryFunction;
 
         public MathOperatorDescription(Type nodeType, string textRepresentation, OperationType operationType)
         {
@@ -25,6 +23,23 @@ namespace Math
             TextRepresentation = textRepresentation;
 
             OperationType = operationType;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is MathOperatorDescription desc))
+                return false;
+
+            if (desc.TextRepresentation != TextRepresentation)
+                return false;
+
+            if (NodeType.isBinary() && desc.NodeType.isBinary())
+                return true;
+
+            if (NodeType.isUnary() && desc.NodeType.isUnary())
+                return true;
+
+            return false;
         }
     }
 }

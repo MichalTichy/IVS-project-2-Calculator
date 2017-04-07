@@ -73,5 +73,40 @@ namespace MathTests
             var expressionParser = new ExpressionTreeBuilder();
             Assert.AreEqual(720, expressionParser.ParseExpression("(8*6/8)!").Evaluate());
         }
+
+        [TestMethod]
+        public void NegativeNumber()
+        {
+            var expressionParser = new ExpressionTreeBuilder();
+            Assert.AreEqual(-3, expressionParser.ParseExpression("-3").Evaluate());
+        }
+
+        [TestMethod]
+        public void NegativeNumberAndSubstractionTest()
+        {
+            var expressionParser = new ExpressionTreeBuilder();
+            Assert.AreEqual(8, expressionParser.ParseExpression("3--5").Evaluate());
+        }
+
+        [TestMethod]
+        public void NegativeNumberAndParenthesisTests()
+        {
+            var expressionParser = new ExpressionTreeBuilder();
+            Assert.AreEqual(8, expressionParser.ParseExpression("(3-(-5))").Evaluate());
+        }
+
+        [TestMethod]
+        public void MultipleParenthisTest()
+        {
+            var expressionParser = new ExpressionTreeBuilder();
+            Assert.AreEqual(20, expressionParser.ParseExpression("(((((3)*(15-8)+(-1)))))").Evaluate());
+        }
+
+        [TestMethod]
+        public void DivisionByZeroTest()
+        {
+            var expressionParser = new ExpressionTreeBuilder();
+            Assert.ThrowsException<DivideByZeroException>(()=>expressionParser.ParseExpression("(2 - 1 + 14/0 + 7").Evaluate());
+        }
     }
 }

@@ -3,7 +3,7 @@ using System.Numerics;
 
 namespace Math.Nodes.Functions.Unary
 {
-    public class FactorialNode : IUnaryOperationNode
+    public class FactorialNode : IFollowingUnaryOperationNode
     {
         public INode Parent { get; set; }
         public INode ChildNode { get; set; }

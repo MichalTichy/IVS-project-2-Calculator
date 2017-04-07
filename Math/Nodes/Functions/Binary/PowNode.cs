@@ -1,5 +1,4 @@
 ﻿using System;
-using Math = System.Math;
 
 namespace Math.Nodes.Functions.Binary
 {
