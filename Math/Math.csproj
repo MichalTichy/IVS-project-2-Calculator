@@ -41,14 +41,17 @@
     <Compile Include="ExpressionTreeBuilder.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="MathOperatorDescription.cs" />
+    <Compile Include="Nodes\Functions\Binary\LogNode.cs" />
     <Compile Include="Nodes\Functions\Binary\PowNode.cs" />
     <Compile Include="Nodes\Functions\Binary\DivisionNode.cs" />
     <Compile Include="Nodes\Functions\Binary\IBinaryOperationNode.cs" />
     <Compile Include="Nodes\Functions\Binary\MultiplyNode.cs" />
+    <Compile Include="Nodes\Functions\Binary\RootNode.cs" />
     <Compile Include="Nodes\Functions\Binary\SubstractionNode.cs" />
     <Compile Include="Nodes\Functions\Binary\SumNode.cs" />
     <Compile Include="Nodes\Functions\IFunctionNode.cs" />
     <Compile Include="Nodes\Functions\OperationType.cs" />
+    <Compile Include="Nodes\Functions\Unary\SqrtNode.cs" />
     <Compile Include="Nodes\Functions\Unary\FactorialNode.cs" />
     <Compile Include="Nodes\Functions\Unary\IFollowingUnaryOperationNode.cs" />
     <Compile Include="Nodes\Functions\Unary\IPrecedingUnaryOperationNode.cs" />
