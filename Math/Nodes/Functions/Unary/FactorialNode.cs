@@ -14,10 +14,9 @@ namespace Math.Nodes.Functions.Unary
 
             CheckIfItsPossibleToCalculateFactorial(childNodeValue);
 
-            if (childNodeValue%1==0)
-            {
+            if (childNodeValue % 1 == 0)
                 return Factorial(childNodeValue);
-            }
+            
             return (decimal)Gamma((double)(childNodeValue + 1));
         }
 

@@ -62,8 +62,16 @@ namespace MathTests
         [TestMethod]
         public void ParenthesisTest2()
         {
-            var expressionParser=new ExpressionTreeBuilder();
+            var expressionParser = new ExpressionTreeBuilder();
             Assert.AreEqual(42, expressionParser.ParseExpression("3*(6+8)").Evaluate());
+        }
+
+
+        [TestMethod]
+        public void HardTest()
+        {
+            var expressionParser = new ExpressionTreeBuilder();
+            Assert.AreEqual(720, expressionParser.ParseExpression("(8*6/8)!").Evaluate());
         }
     }
 }
