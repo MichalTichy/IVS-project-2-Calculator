@@ -26,5 +26,10 @@ namespace Math
 
             OperationType = operationType;
         }
+
+        public override string ToString()
+        {
+            return TextRepresentation;
+        }
     }
 }
