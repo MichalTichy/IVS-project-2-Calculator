@@ -51,6 +51,7 @@
     <Compile Include="Nodes\Functions\Binary\SumNode.cs" />
     <Compile Include="Nodes\Functions\IFunctionNode.cs" />
     <Compile Include="Nodes\Functions\OperationType.cs" />
+    <Compile Include="Nodes\Functions\Unary\GammaNode.cs" />
     <Compile Include="Nodes\Functions\Unary\SqrtNode.cs" />
     <Compile Include="Nodes\Functions\Unary\FactorialNode.cs" />
     <Compile Include="Nodes\Functions\Unary\IFollowingUnaryOperationNode.cs" />

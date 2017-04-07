@@ -54,6 +54,7 @@ namespace Math
             RegisterOperator(new MathOperatorDescription(typeof(RootNode),"sqrt",OperationType.FunctionCalls)); //BinaryOperation
             //RegisterOperator(new MathOperatorDescription(typeof(SqrtNode),"sqrt",OperationType.FunctionCalls)); UnaryOperation
             RegisterOperator(new MathOperatorDescription(typeof(LogNode), "log", OperationType.FunctionCalls));
+            RegisterOperator(new MathOperatorDescription(typeof(GammaNode), "Γ", OperationType.FunctionCalls));
         }
 
         public INode ParseExpression(string expression)
@@ -65,7 +66,7 @@ namespace Math
             {
                 if (expressionPart.token == "(")
                 {
-                    currentNode = currentNode.GetLeftNode(); //BUG possible bug 5 + 3 + 4 Sqrt(10)
+                    currentNode = currentNode.GetLeftNode();
                 }
                 else if (expressionPart.token == ")")
                 {
