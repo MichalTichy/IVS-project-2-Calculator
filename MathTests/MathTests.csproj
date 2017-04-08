@@ -55,6 +55,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CosNodeTests.cs" />
     <Compile Include="GammaNodeTests.cs" />
     <Compile Include="LogNodeTests.cs" />
     <Compile Include="SinNodeTests.cs" />

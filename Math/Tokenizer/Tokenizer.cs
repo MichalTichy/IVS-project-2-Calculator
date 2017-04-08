@@ -41,6 +41,7 @@ namespace Math
             RegisterOperator(new MathOperatorDescription(typeof(LogNode), "log", OperationType.FunctionCalls));
             RegisterOperator(new MathOperatorDescription(typeof(GammaNode), "Γ", OperationType.FunctionCalls));
             RegisterOperator(new MathOperatorDescription(typeof(SinNode), "sin", OperationType.FunctionCalls));
+            RegisterOperator(new MathOperatorDescription(typeof(CosNode), "cos", OperationType.FunctionCalls));
         }
 
         public void RegisterOperator(MathOperatorDescription operatorDescription)

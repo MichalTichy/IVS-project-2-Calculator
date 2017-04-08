@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace Math.Nodes.Functions.Unary
 {
-    public class SinNode : IPrecedingUnaryOperationNode
+    public class CosNode : IPrecedingUnaryOperationNode
     {
         public INode Parent { get; set; }
         public INode ChildNode { get; set; }
 
         public decimal Evaluate()
         {
-            decimal NodeValue = ChildNode.Evaluate();
-            double sin = System.Math.Sin((double)NodeValue * (System.Math.PI / 180.0));
+            decimal NodeValue = ChildNode.Evaluate() ;
+            double cos = System.Math.Cos((double)NodeValue * (System.Math.PI / 180.0));
 
-            return (decimal)sin;
+            return (decimal)cos;
         }
 
     }
