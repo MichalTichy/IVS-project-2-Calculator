@@ -40,6 +40,7 @@ namespace Math
             RegisterOperator(new MathOperatorDescription(typeof(SqrtNode),"sqrt",OperationType.FunctionCalls)); 
             RegisterOperator(new MathOperatorDescription(typeof(LogNode), "log", OperationType.FunctionCalls));
             RegisterOperator(new MathOperatorDescription(typeof(GammaNode), "Γ", OperationType.FunctionCalls));
+            RegisterOperator(new MathOperatorDescription(typeof(SinNode), "sin", OperationType.FunctionCalls));
         }
 
         public void RegisterOperator(MathOperatorDescription operatorDescription)
