@@ -42,6 +42,9 @@ namespace Math
             RegisterOperator(new MathOperatorDescription(typeof(GammaNode), "Γ", OperationType.FunctionCalls));
             RegisterOperator(new MathOperatorDescription(typeof(SinNode), "sin", OperationType.FunctionCalls));
             RegisterOperator(new MathOperatorDescription(typeof(CosNode), "cos", OperationType.FunctionCalls));
+            RegisterOperator(new MathOperatorDescription(typeof(TanNode), "tan", OperationType.FunctionCalls));
+            RegisterOperator(new MathOperatorDescription(typeof(CotgNode), "cotg", OperationType.FunctionCalls));
+
         }
 
         public void RegisterOperator(MathOperatorDescription operatorDescription)
