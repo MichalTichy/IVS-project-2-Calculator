@@ -49,14 +49,15 @@ namespace MathTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(OverflowException))]
+        [ExpectedException(typeof(ArgumentException))]
         public void NegativeDecimaleOverflowNumbersPowerTest()
         {
             PowNode power = new PowNode();
             power.LeftNode = new NumberNode(-64.32m);
-            power.RightNode = new NumberNode(-0.8m);
+            power.RightNode = new NumberNode(0.8m);
 
             power.Evaluate();
+
         }
 
         [TestMethod]
@@ -97,6 +98,29 @@ namespace MathTests
             power.RightNode = new NumberNode(0);
 
             Assert.AreEqual(1, power.Evaluate());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void OddNegativePowNodeTests()
+        {
+            PowNode power = new PowNode();
+            power.LeftNode = new NumberNode(-8);
+            power.RightNode = new NumberNode(0.5m);
+
+            power.Evaluate();
+        }
+
+        [TestMethod]
+        public void EvenNegativePowNodeTests()
+        {
+            decimal i = Decimal.Divide(1, 3);
+       
+            PowNode power = new PowNode();
+            power.LeftNode = new NumberNode(-8);
+            power.RightNode = new NumberNode(i);
+
+            Assert.AreEqual(-2, power.Evaluate());
         }
 
 

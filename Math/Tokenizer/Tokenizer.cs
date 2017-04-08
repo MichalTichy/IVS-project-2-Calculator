@@ -36,8 +36,8 @@ namespace Math
             RegisterOperator(new MathOperatorDescription(typeof(FactorialNode), "!", OperationType.FunctionCalls));
             RegisterOperator(new MathOperatorDescription(typeof(PercentageNode), "%", OperationType.FunctionCalls));
             RegisterOperator(new MathOperatorDescription(typeof(PowNode), "^", OperationType.FunctionCalls));
-            RegisterOperator(new MathOperatorDescription(typeof(RootNode), "sqrt", OperationType.FunctionCalls)); //BinaryOperation
-            //RegisterOperator(new MathOperatorDescription(typeof(SqrtNode),"sqrt",OperationType.FunctionCalls)); UnaryOperation
+            RegisterOperator(new MathOperatorDescription(typeof(RootNode), "sqrt", OperationType.FunctionCalls)); 
+            RegisterOperator(new MathOperatorDescription(typeof(SqrtNode),"sqrt",OperationType.FunctionCalls)); 
             RegisterOperator(new MathOperatorDescription(typeof(LogNode), "log", OperationType.FunctionCalls));
             RegisterOperator(new MathOperatorDescription(typeof(GammaNode), "Γ", OperationType.FunctionCalls));
         }
