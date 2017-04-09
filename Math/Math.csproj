@@ -38,8 +38,16 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExpressionTreeBuilder.cs" />
-    <Compile Include="MathOperatorDescription.cs" />
+    <Compile Include="ExpressionTreeBuilder\ExpressionPartTypes.cs" />
+    <Compile Include="ExpressionTreeBuilder\ExpressionTreeBuilder.cs" />
+    <Compile Include="Extensions.cs" />
+    <Compile Include="ExpressionTreeBuilder\IExpressionTreeBuilder.cs" />
+    <Compile Include="Nodes\Functions\Unary\CotgNode.cs" />
+    <Compile Include="Nodes\Functions\Unary\TanNode.cs" />
+    <Compile Include="Nodes\Functions\Unary\CosNode.cs" />
+    <Compile Include="Nodes\Functions\Unary\SinNode.cs" />
+    <Compile Include="Tokenizer\ITokenizer.cs" />
+    <Compile Include="Tokenizer\MathOperatorDescription.cs" />
     <Compile Include="Nodes\Functions\Binary\LogNode.cs" />
     <Compile Include="Nodes\Functions\Binary\PowNode.cs" />
     <Compile Include="Nodes\Functions\Binary\DivisionNode.cs" />
@@ -50,15 +58,20 @@
     <Compile Include="Nodes\Functions\Binary\SumNode.cs" />
     <Compile Include="Nodes\Functions\IFunctionNode.cs" />
     <Compile Include="Nodes\Functions\OperationType.cs" />
+    <Compile Include="Nodes\Functions\Unary\GammaNode.cs" />
     <Compile Include="Nodes\Functions\Unary\SqrtNode.cs" />
     <Compile Include="Nodes\Functions\Unary\FactorialNode.cs" />
+    <Compile Include="Nodes\Functions\Unary\IFollowingUnaryOperationNode.cs" />
+    <Compile Include="Nodes\Functions\Unary\IPrecedingUnaryOperationNode.cs" />
     <Compile Include="Nodes\Functions\Unary\IUnaryOperationNode.cs" />
+    <Compile Include="Nodes\Functions\Unary\NegationNode.cs" />
     <Compile Include="Nodes\Functions\Unary\PercentageNode.cs" />
     <Compile Include="Nodes\INode.cs" />
     <Compile Include="Nodes\TemporaryNode.cs" />
     <Compile Include="Nodes\Values\NumberNode.cs" />
     <Compile Include="Nodes\Values\IValueNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tokenizer\Tokenizer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
 </Project>

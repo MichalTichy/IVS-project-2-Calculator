@@ -38,10 +38,10 @@ namespace MathTests
         [TestMethod]
         public void PercentageSum()
         {
-            var expression = new ExpressionTreeBuilder().ParseExpression("100+50%");
+            var expression = new ExpressionTreeBuilder<Tokenizer>().ParseExpression("100+50%");
             Assert.AreEqual(150,expression.Evaluate());
 
-            var expression2 = new ExpressionTreeBuilder().ParseExpression("50%+100");
+            var expression2 = new ExpressionTreeBuilder<Tokenizer>().ParseExpression("50%+100");
             Assert.AreEqual(100.5m,expression2.Evaluate());
         }
 
@@ -49,7 +49,7 @@ namespace MathTests
         [TestMethod]
         public void PercentageMultiply()
         {
-            var expression = new ExpressionTreeBuilder().ParseExpression("100*50%");
+            var expression = new ExpressionTreeBuilder<Tokenizer>().ParseExpression("100*50%");
             Assert.AreEqual(50, expression.Evaluate());
         }
 
@@ -58,14 +58,14 @@ namespace MathTests
         [TestMethod]
         public void Percentage0()
         {
-            var expression = new ExpressionTreeBuilder().ParseExpression("100*0%");
+            var expression = new ExpressionTreeBuilder<Tokenizer>().ParseExpression("100*0%");
             Assert.AreEqual(0, expression.Evaluate());
         }
 
         [TestMethod]
         public void Percentage150()
         {
-            var expression = new ExpressionTreeBuilder().ParseExpression("100*150%");
+            var expression = new ExpressionTreeBuilder<Tokenizer>().ParseExpression("100*150%");
             Assert.AreEqual(150, expression.Evaluate());
         }
 
@@ -73,7 +73,7 @@ namespace MathTests
         [TestMethod]
         public void PercentageInUnaryOperation()
         {
-            var expression = new ExpressionTreeBuilder().ParseExpression("300%!");
+            var expression = new ExpressionTreeBuilder<Tokenizer>().ParseExpression("300%!");
             Assert.AreEqual(6, expression.Evaluate());
         }
 
@@ -82,7 +82,7 @@ namespace MathTests
         [TestMethod]
         public void CalculatedPercentageValue()
         {
-            var expression = new ExpressionTreeBuilder().ParseExpression("100*(25*2)%");
+            var expression = new ExpressionTreeBuilder<Tokenizer>().ParseExpression("100*(25*2)%");
             Assert.AreEqual(50, expression.Evaluate());
         }
     }

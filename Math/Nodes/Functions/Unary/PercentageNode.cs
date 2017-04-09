@@ -2,7 +2,7 @@ using Math.Nodes.Functions.Binary;
 
 namespace Math.Nodes.Functions.Unary
 {
-    public class PercentageNode : IUnaryOperationNode
+    public class PercentageNode : IFollowingUnaryOperationNode
     {
         public INode Parent { get; set; }
 

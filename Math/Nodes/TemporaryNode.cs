@@ -112,6 +112,9 @@ namespace Math.Nodes
         {
             CheckBuildConditions();
 
+            if (Value == null && FutureType == null)
+                return BuildChildNode(parentNode);
+
             if (Value != null)
                 return new NumberNode(Value.Value)
                     { Parent = parentNode};
@@ -125,6 +128,17 @@ namespace Math.Nodes
                 return FillNode(binaryNode,parentNode);
 
             throw new NotSupportedException("Node type is not supported");
+        }
+
+        private INode BuildChildNode(INode parent)
+        {
+            if (RightNode == null && LeftNode == null)
+                return null;
+
+            if (RightNode!=null && LeftNode!=null)
+                throw new ArgumentException("Cannot build empty node with right and left child set");
+
+            return RightNode != null ? RightNode.Build(parent) : LeftNode.Build(parent);
         }
 
         private INode FillNode(IUnaryOperationNode node, INode parentNode)
@@ -155,8 +169,7 @@ namespace Math.Nodes
             {
                 ParentNode.LeftNode = null;
             }
-
-
+            
             if (ParentNode.RightNode == this)
             {
                 ParentNode.RightNode = null;
@@ -167,10 +180,7 @@ namespace Math.Nodes
         {
             if (Value != null && FutureType != null)
                 throw new ArgumentException($"{nameof(Value)} and {nameof(FutureType)} cannot be set simoutanously.");
-
-            if (Value == null && FutureType == null)
-                throw new ArgumentException($"{nameof(Value)} or {nameof(FutureType)} has to be set.");
-
+            
             var canBeUnaryNode = (LeftNode == null && RightNode != null) || (LeftNode != null && RightNode == null);
             if (FutureType != null && (FutureType.NodeType.IsInstanceOfType(typeof(IUnaryOperationNode)) && !canBeUnaryNode))
                 throw new ArgumentException($"Unary node needs exactly one child node.");
