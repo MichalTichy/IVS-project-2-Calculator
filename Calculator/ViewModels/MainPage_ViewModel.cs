@@ -16,15 +16,14 @@ namespace Calculator
 
         public MainPage_ViewModel()
         {
-            mathLib = new ExpressionTreeBuilder();      
-            lst = mathLib.RegisteredOperators;
+            tk = new Tokenizer();
+            lst = tk.RegisteredOperators;
             node = new Math.Nodes.Values.NumberNode("0");
             Result = node.Evaluate().ToString();
         }
-
-        
+        private Math.ITokenizer tk;
+        private ICollection<MathOperatorDescription> test;
         private IReadOnlyCollection<MathOperatorDescription> lst;
-        private Math.ExpressionTreeBuilder mathLib;
         private Math.Nodes.INode node;
         private string val = "0";
         private string result;
