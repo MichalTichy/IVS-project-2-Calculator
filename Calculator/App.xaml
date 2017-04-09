@@ -1,0 +1,12 @@
+﻿<Application
+    x:Class="Calculator.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Calculator"
+    RequestedTheme="Light">
+    <Application.Resources>
+        <SolidColorBrush x:Key="PivotHeaderForegroundSelectedBrush" Color="Red" />
+        <SolidColorBrush x:Key="PivotHeaderForegroundUnselectedBrush" Color="Cyan" />
+        <x:Double x:Key="PivotHeaderItemFontSize">20</x:Double>
+    </Application.Resources>
+</Application>
