@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 using Math;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
+
 namespace Calculator
 {
-    class MainPage_ViewModel : INotifyPropertyChanged
+   public class MainPage_ViewModel : INotifyPropertyChanged
     {
 
         public MainPage_ViewModel()
@@ -19,18 +21,21 @@ namespace Calculator
             node = new Math.Nodes.Values.NumberNode("0");
             Result = node.Evaluate().ToString();
         }
+
         
-        public event PropertyChangedEventHandler PropertyChanged;
         private IReadOnlyCollection<MathOperatorDescription> lst;
         private Math.ExpressionTreeBuilder mathLib;
         private Math.Nodes.INode node;
-        private string val = "";
+        private string val = "0";
         private string result;
+
+
         public string Values
         {
             get { return val; }
             set { val = value;
-                OnPropertyChanged("TXB_Value");
+                OnPropertyChanged("Values");
+                something();
                 }
         }
 
@@ -43,16 +48,24 @@ namespace Calculator
         public string Result
         {
             get { return result; }
-            private set { result = value; }
+            set { result = value;
+                OnPropertyChanged("Result");
+                        }
         }
 
-        protected void OnPropertyChanged(string name)
+        public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged(string propertyName)
         {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(name));
-            }
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+    
+
+    public void something()
+        {
+            Result = Values;
+            Debug.WriteLine($"result: {result}, Result: {Result}, value: {val}, Value: {Values}");
         }
 
         

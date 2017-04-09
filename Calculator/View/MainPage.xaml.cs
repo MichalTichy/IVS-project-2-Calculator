@@ -23,13 +23,17 @@ namespace Calculator
     /// </summary>
     public sealed partial class MainPage : Page
     {
+
+        private MainPage_ViewModel viewModel;
         public MainPage()
         {
             this.InitializeComponent();
             ApplicationView.PreferredLaunchViewSize = new Size(400, 800);
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
-            var viewModel = new Calculator.MainPage_ViewModel();
-            DataContext = viewModel;
+            viewModel = new Calculator.MainPage_ViewModel();
+            this.DataContext = viewModel;
         }
+
+       
     }
 }

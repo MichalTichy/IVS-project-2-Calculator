@@ -22,15 +22,15 @@
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
                     <StackPanel  BorderThickness="2" BorderBrush="Gray"  Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                        <TextBox x:Name="TXB_Value" BorderThickness="0" Text="{Binding Path=Values}" Padding="5" Height="53"/>
-                        <TextBlock x:Name="TXBL_Result"  FontSize="20"  Text="{Binding Path=Result}" Padding="5" HorizontalAlignment="Right" VerticalAlignment="Bottom" TextAlignment="Right" Height="39" Width="936"/>
+                        <TextBox x:Name="TXB_Value" BorderThickness="0" Text="{ Binding Path=Values, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Padding="5" Height="53"/>
+                        <TextBlock x:Name="TXBL_Result"  FontSize="20"  Text="{ x:Bind viewModel.Result, Mode=OneWay}" Padding="5" HorizontalAlignment="Right" VerticalAlignment="Bottom" TextAlignment="Right" Height="39" Width="936"/>
                     </StackPanel>
                     
-                    <Button x:Name="Btn_Equal" Grid.Column="1" Grid.Row="0" Content="=" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="2.5"/>
+                    <Button x:Name="Btn_Equal" Grid.Column="1" Grid.Row="0" Content="=" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="2.5" Click="{x:Bind viewModel.something}"/>
 
                     <Pivot x:Name="Pvot_Functions" Grid.ColumnSpan="2" Grid.Row="1">
                         <PivotItem Header="Základní">
-                            <ListView Height="60" ItemsSource="{Binding Lst}"
+                            <ListView Height="60" ItemsSource="{x:Bind viewModel.Lst}" SelectedIndex="{Binding }"
           ScrollViewer.HorizontalScrollMode="Enabled" 
           ScrollViewer.HorizontalScrollBarVisibility="Auto"
           ScrollViewer.VerticalScrollMode="Disabled"
