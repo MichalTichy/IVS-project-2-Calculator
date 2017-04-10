@@ -1,0 +1,97 @@
+﻿<Page
+    x:Class="Calculator.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MainWindow"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+     >
+    <Grid x:Name="Grid_Root" VerticalAlignment="Stretch" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Padding="0">
+
+        <Pivot x:Name="Pivot_Root" RenderTransformOrigin="0,0">
+            <PivotItem Header="Standartní">
+                <Grid>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="4*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel  BorderThickness="2" BorderBrush="Gray"  Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <TextBox x:Name="TXB_Value" BorderThickness="0" Text="{ Binding Path=Values, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Padding="5" Height="53"/>
+                        <TextBlock x:Name="TXBL_Result"  FontSize="20"  Text="{ x:Bind viewModel.Result, Mode=OneWay}" Padding="5" HorizontalAlignment="Right" VerticalAlignment="Bottom" TextAlignment="Right" Height="39" Width="936"/>
+                    </StackPanel>
+                    
+                    <Button x:Name="Btn_Equal" Grid.Column="1" Grid.Row="0" Content="=" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="2.5" Click="{x:Bind viewModel.something}"/>
+
+                    <Pivot x:Name="Pvot_Functions" Grid.ColumnSpan="2" Grid.Row="1">
+                        <PivotItem Header="Základní">
+                            <ListView Height="60" ItemsSource="{x:Bind viewModel.Lst}" SelectedIndex="{Binding }"
+          ScrollViewer.HorizontalScrollMode="Enabled" 
+          ScrollViewer.HorizontalScrollBarVisibility="Auto"
+          ScrollViewer.VerticalScrollMode="Disabled"
+          ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                                <ListView.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <ItemsStackPanel Orientation="Horizontal"/>
+                                    </ItemsPanelTemplate>
+                                </ListView.ItemsPanel>
+                                
+                            </ListView>
+                            
+
+                        </PivotItem>
+                        <PivotItem Header="Goniometrické">
+                            <ListView Height="60" 
+          ScrollViewer.HorizontalScrollMode="Enabled" 
+          ScrollViewer.HorizontalScrollBarVisibility="Auto"
+          ScrollViewer.VerticalScrollMode="Disabled"
+          ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                                <ListView.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <ItemsStackPanel Orientation="Horizontal"/>
+                                    </ItemsPanelTemplate>
+                                </ListView.ItemsPanel>
+                                <x:String>Item 1</x:String>
+                                <x:String>Item 2</x:String>
+                                <x:String>Item 3</x:String>
+                                <x:String>Item 4</x:String>
+                                <x:String>Item 5</x:String>
+                            </ListView>
+                        </PivotItem>
+                        <PivotItem Header="Speciální">
+                            <ListView Height="40" 
+          ScrollViewer.HorizontalScrollMode="Enabled" 
+          ScrollViewer.HorizontalScrollBarVisibility="Auto"
+          ScrollViewer.VerticalScrollMode="Disabled"
+          ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                                <ListView.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <ItemsStackPanel Orientation="Horizontal"/>
+                                    </ItemsPanelTemplate>
+                                </ListView.ItemsPanel>
+                                <x:String>Item 1</x:String>
+                                <x:String>Item 2</x:String>
+                                <x:String>Item 3</x:String>
+                                <x:String>Item 4</x:String>
+                                <x:String>Item 5</x:String>
+                            </ListView>
+                        </PivotItem>
+                    </Pivot>
+                    <Canvas Grid.ColumnSpan="2" Grid.Row="2"/>
+
+                </Grid>
+            </PivotItem>
+            <PivotItem Header="Programátorská">
+                <!--Pivot content goes here-->
+                <TextBlock Text="Content of pivot item 3."/>
+            </PivotItem>
+
+        </Pivot>
+
+    </Grid>
+</Page>

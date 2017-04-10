@@ -55,8 +55,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CotgNodeTests.cs" />
+    <Compile Include="TanNodeTests.cs" />
+    <Compile Include="CosNodeTests.cs" />
     <Compile Include="GammaNodeTests.cs" />
     <Compile Include="LogNodeTests.cs" />
+    <Compile Include="SinNodeTests.cs" />
     <Compile Include="SqrtNodeTests.cs" />
     <Compile Include="RootNodeTests.cs" />
     <Compile Include="PercentageNodeTests.cs" />

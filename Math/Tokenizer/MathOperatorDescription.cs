@@ -41,5 +41,10 @@ namespace Math
 
             return false;
         }
+
+        public override string ToString()
+        {
+            return TextRepresentation;
+        }
     }
 }

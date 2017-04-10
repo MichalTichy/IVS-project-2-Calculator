@@ -2,7 +2,7 @@
 
 namespace Math.Nodes.Functions.Unary
 {
-    public class SqrtNode : IUnaryOperationNode
+    public class SqrtNode : IPrecedingUnaryOperationNode
     {
         public INode Parent { get; set; }
         public INode ChildNode { get; set; }

@@ -42,6 +42,10 @@
     <Compile Include="ExpressionTreeBuilder\ExpressionTreeBuilder.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="ExpressionTreeBuilder\IExpressionTreeBuilder.cs" />
+    <Compile Include="Nodes\Functions\Unary\CotgNode.cs" />
+    <Compile Include="Nodes\Functions\Unary\TanNode.cs" />
+    <Compile Include="Nodes\Functions\Unary\CosNode.cs" />
+    <Compile Include="Nodes\Functions\Unary\SinNode.cs" />
     <Compile Include="Tokenizer\ITokenizer.cs" />
     <Compile Include="Tokenizer\MathOperatorDescription.cs" />
     <Compile Include="Nodes\Functions\Binary\LogNode.cs" />

@@ -16,14 +16,25 @@ namespace Math.Nodes.Functions.Binary
 
             CheckIfItsPossibleToCalculateSqrt(LeftNodeValue, RightNodeValue);
 
-            return (decimal)System.Math.Pow((double)RightNodeValue, 1.0 / (int)LeftNodeValue);
+            int negative = 1;
+            if (RightNodeValue < 0)
+            {
+                negative = -1;
+            }
+
+            return ((decimal)System.Math.Pow(System.Math.Abs((double)RightNodeValue), 1.0 / (int)LeftNodeValue)*negative);
         }
 
         void CheckIfItsPossibleToCalculateSqrt(decimal LeftValue, decimal RightValue)
         {
-            if (RightValue < 0)
+            if (RightValue < 0 && LeftValue%2 == 0)
             {
-                throw new ArgumentException("Number in square root cannot be smaller than zero!");
+                throw new ArgumentException("Number cannot be smaller than zero!");
+            }
+
+            if (LeftValue == 0)
+            {
+                throw new ArgumentException("Root cannot be zero!");
             }
         }
 
