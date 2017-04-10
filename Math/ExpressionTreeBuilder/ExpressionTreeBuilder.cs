@@ -17,7 +17,7 @@ namespace Math
 {
     public class ExpressionTreeBuilder<T> : IExpressionTreeBuilder where T : ITokenizer, new()
     {
-        protected T Tokenizer;
+        protected readonly T Tokenizer;
         public ExpressionTreeBuilder()
         {
             Tokenizer = new T();
