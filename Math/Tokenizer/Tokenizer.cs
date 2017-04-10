@@ -93,7 +93,7 @@ namespace Math
                     continue;
                 }
 
-                var precedingExpressionPartType = GetPrecedingExpressionPartType(expressionTokens);
+                var precedingExpressionPartType = GetPrecedingExpressionPartType(expressionTokens.Last());
 
                 description = GetMathOperatorThatMatchesTokenTheBest(matchingOperators, precedingExpressionPartType);
 
@@ -106,17 +106,17 @@ namespace Math
             return expressionTokens;
         }
 
-        public static ExpressionPartTypes? GetPrecedingExpressionPartType(ICollection<ValueTuple<string, MathOperatorDescription>> expressionTokens)
+        public static ExpressionPartTypes? GetPrecedingExpressionPartType((string token, MathOperatorDescription operatorDescription)? lastExpressionToken)
         {
             ExpressionPartTypes? precedingExpressionPartType;
-            if (expressionTokens.Count == 0)
+            if (!lastExpressionToken.HasValue)
                 precedingExpressionPartType = null;
-            else if (expressionTokens.Last().Item1 == "(" || expressionTokens.Last().Item1 == ")")
+            else if (lastExpressionToken.Value.token == "(" || lastExpressionToken.Value.token == ")")
                 precedingExpressionPartType = ExpressionPartTypes.Parentheses;
-            else if (NumberNode.IsNumber(expressionTokens.Last().Item1))
+            else if (NumberNode.IsNumber(lastExpressionToken.Value.token))
                 precedingExpressionPartType = ExpressionPartTypes.Number;
             else
-                precedingExpressionPartType = expressionTokens.Last().Item2.NodeType.ToExpressionPart();
+                precedingExpressionPartType = lastExpressionToken.Value.operatorDescription.NodeType.ToExpressionPart();
             return precedingExpressionPartType;
         }
 
