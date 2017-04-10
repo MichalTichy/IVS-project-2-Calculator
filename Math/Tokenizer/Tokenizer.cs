@@ -101,7 +101,7 @@ namespace Math
             return expressionTokens;
         }
 
-        protected static ExpressionPartTypes? GetPrecedingExpressionPartType(List<ValueTuple<string, MathOperatorDescription>> expressionTokens)
+        public static ExpressionPartTypes? GetPrecedingExpressionPartType(List<ValueTuple<string, MathOperatorDescription>> expressionTokens)
         {
             ExpressionPartTypes? precedingExpressionPartType;
             if (expressionTokens.Count == 0)
