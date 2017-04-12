@@ -10,7 +10,11 @@ using Math.Nodes.Values;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
-
+using Windows.UI.Xaml.Controls;
+using Windows.UI;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Input;
+using Windows.UI.Core;
 
 namespace Calculator
 {
@@ -22,6 +26,7 @@ namespace Calculator
             tk = new Tokenizer();
             lst = tk.GetPossibleNextMathOperators(ExpressionPartTypes.Number);
             extree = new ExpressionTreeBuilder<Math.Tokenizer>((Tokenizer)tk);
+            OutputColor.Color = Colors.Black;
             
         }
         private MathOperatorDescription selectedItem;
@@ -30,11 +35,13 @@ namespace Calculator
         private IExpressionTreeBuilder extree;
         private ICollection<MathOperatorDescription> lst;
         private Math.Nodes.INode node;
-        private string val = "";
-        private string result;
-        private bool isParsable;
+        private string val = "0";
+        private string result = "";
+        private bool isParsable =false;
         private ICollection<(string, MathOperatorDescription)> ts2;
         private int selection;
+        private Windows.UI.Xaml.Media.SolidColorBrush outputColor = new Windows.UI.Xaml.Media.SolidColorBrush();
+        
 
 
 
@@ -75,7 +82,7 @@ namespace Calculator
                 if (value != selectedItem)
                 {
                     selectedItem = value;
-                    Values += SelectedItem.TextRepresentation;
+                    Values += $" {SelectedItem.TextRepresentation}";
                     evaluate(true);
                     OnPropertyChanged("SelectedItem");
                     
@@ -93,6 +100,26 @@ namespace Calculator
             }
         }
 
+        public Windows.UI.Xaml.Media.SolidColorBrush OutputColor
+        {
+            get => outputColor;
+            set
+            {
+                outputColor = value;
+                OnPropertyChanged("OutputColor");
+            }
+        }
+
+        public bool IsParsable
+        {
+            get => isParsable;
+            set
+            {
+                isParsable = value;
+                OnPropertyChanged("IsParsable");
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged(string propertyName)
         {
@@ -102,9 +129,10 @@ namespace Calculator
 
     
 
-    public void something()
+    public void something(object sender, RoutedEventArgs e)
         {
             evaluate(false);
+            Debug.WriteLine(sender.ToString());
         }
 
         private void evaluate(bool edit)
@@ -117,7 +145,7 @@ namespace Calculator
 
             try
             {
-                isParsable = true;
+                IsParsable = true;
                 
                 node = extree.ParseExpression(valueToEvalution);
                 collectionWithExpressionPartTypes = tk.SplitExpressionToTokens(valueToEvalution);
@@ -128,26 +156,33 @@ namespace Calculator
             }
             catch
             {
-                isParsable = false;
+                IsParsable = false;
                 Debug.WriteLine("catch");
             }
             finally
             {
-                Debug.WriteLine($"last expr {collectionWithExpressionPartTypes.Last<string>()}");
+                //Debug.WriteLine($"last expr {collectionWithExpressionPartTypes.Last<string>()}");
                 Lst = tk.GetPossibleNextMathOperators(Tokenizer.GetPrecedingExpressionPartType(ts2.Last<(string, MathOperatorDescription)>()));
                 Debug.WriteLine($"test {ts2.Last<(string, MathOperatorDescription)>().Item1}");
-                if (isParsable)
+                if (IsParsable)
                 {
-                    int totalyNonUsefull;
-                    if (int.TryParse(collectionWithExpressionPartTypes.Last<string>(), out totalyNonUsefull))
-                    {
-                        
-                        Result = node.Evaluate().ToString();
-                    }
+                    
                 }
                 else
                 {
                     Lst = null;
+                }
+                if (!edit)
+                {
+                    if (!IsParsable)
+                    {
+                        OutputColor.Color = Colors.Red;
+                    }
+                    else
+                    {
+                        OutputColor.Color = Colors.Black;
+                    }
+                    
                 }
             }
             
@@ -170,6 +205,19 @@ namespace Calculator
 
         }
 
-        
+        public void KeyPressed(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Enter)
+            {
+                int totalyNonUsefull;
+                if (isParsable && (int.TryParse(collectionWithExpressionPartTypes.Last<string>(), out totalyNonUsefull)))
+                {
+                    Result = node.Evaluate().ToString();
+                }
+            }
+           
+
+          
+        }
     }
 }

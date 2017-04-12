@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using System.Windows.Input;
 
 // Dokumentaci k šabloně položky Prázdná stránka najdete na adrese https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x405
 
@@ -34,6 +35,12 @@ namespace Calculator
             this.DataContext = viewModel;
         }
 
-       
+
+        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            TXB_Value.Focus(FocusState.Keyboard);
+            TXB_Value.Select(TXB_Value.Text.Length, 0);
+        }
+        
     }
 }
