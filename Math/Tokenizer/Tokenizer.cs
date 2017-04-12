@@ -64,9 +64,10 @@ namespace Math
             {
                 case ExpressionPartTypes.Number:
                 case ExpressionPartTypes.UnaryFollowing:
+                case ExpressionPartTypes.RightParentheses:
                     return RegisteredOperators.Where(t => t.NodeType.isFollowingUnary() || t.NodeType.isBinary()).ToList();
 
-                case ExpressionPartTypes.Parentheses:
+                case ExpressionPartTypes.LeftParentheses:
                 case ExpressionPartTypes.UnaryPreceding:
                 case ExpressionPartTypes.Binary:
                 case null:
@@ -111,8 +112,10 @@ namespace Math
             ExpressionPartTypes? precedingExpressionPartType;
             if (!lastExpressionToken.HasValue)
                 precedingExpressionPartType = null;
-            else if (lastExpressionToken.Value.token == "(" || lastExpressionToken.Value.token == ")")
-                precedingExpressionPartType = ExpressionPartTypes.Parentheses;
+            else if (lastExpressionToken.Value.token == "(")
+                precedingExpressionPartType = ExpressionPartTypes.LeftParentheses;
+            else if (lastExpressionToken.Value.token == ")")
+                precedingExpressionPartType = ExpressionPartTypes.RightParentheses;
             else if (NumberNode.IsNumber(lastExpressionToken.Value.token))
                 precedingExpressionPartType = ExpressionPartTypes.Number;
             else

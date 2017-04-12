@@ -3,7 +3,8 @@
     public enum ExpressionPartTypes
     {
         Number,
-        Parentheses,
+        LeftParentheses,
+        RightParentheses,
         UnaryFollowing,
         UnaryPreceding,
         Binary
