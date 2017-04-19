@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Math.ExpressionTreeBuilder;
 using Math.Nodes.Functions.Binary;
 using Math.Nodes.Functions.Unary;
 using Math.Nodes.Values;

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Math.Nodes;
+using Math.ExpressionTreeBuilder;
 using Math.Nodes.Functions;
 using Math.Nodes.Functions.Binary;
 using Math.Nodes.Functions.Unary;
 using Math.Nodes.Values;
 
-namespace Math
+namespace Math.Tokenizer
 {
     public class Tokenizer : ITokenizer
     {

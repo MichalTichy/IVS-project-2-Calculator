@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Math;
+using Math.ExpressionTreeBuilder;
+using Math.Tokenizer;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace MathTests

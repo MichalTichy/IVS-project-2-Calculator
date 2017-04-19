@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using Math.ExpressionTreeBuilder;
 
-namespace Math
+namespace Math.Tokenizer
 {
     public interface ITokenizer
     {

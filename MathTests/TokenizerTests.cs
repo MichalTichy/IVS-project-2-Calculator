@@ -2,8 +2,10 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using Math;
+using Math.ExpressionTreeBuilder;
 using Math.Nodes.Functions;
 using Math.Nodes.Functions.Binary;
+using Math.Tokenizer;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace MathTests
