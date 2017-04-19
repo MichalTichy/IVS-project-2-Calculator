@@ -123,7 +123,47 @@ namespace MathTests
             Assert.AreEqual(-2, power.Evaluate());
         }
 
+        [TestMethod]
+        public void HardPowNodeTests()
+        {
+            PowNode power = new PowNode();
+            power.LeftNode = new NumberNode(31233.223232m);
+            power.RightNode = new NumberNode(-5.82412412421m);
 
+            Assert.AreEqual(0.0000000000000000000000000066m, power.Evaluate());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(OverflowException))]
+        public void Hard2PowNodeTests()
+        {
+            PowNode power = new PowNode();
+            power.LeftNode = new NumberNode(31233.223232m);
+            power.RightNode = new NumberNode(52.82412412421m);
+
+           power.Evaluate();
+        }
+
+        [TestMethod]
+        public void Hard3PowNodeTests()
+        {
+            PowNode power = new PowNode();
+            power.LeftNode = new NumberNode(31233.223232m);
+            power.RightNode = new NumberNode(5.82412412421m);
+
+            Assert.AreEqual(150385569356975000000000000m, power.Evaluate());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void Hard4PowNodeTests()
+        {
+            PowNode power = new PowNode();
+            power.LeftNode = new NumberNode(-8);
+            power.RightNode = new NumberNode(-0.5m);
+
+            power.Evaluate();
+        }
     }
 
 }
