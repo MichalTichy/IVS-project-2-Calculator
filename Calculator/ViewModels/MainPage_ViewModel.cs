@@ -15,6 +15,8 @@ using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Core;
+using Math.ExpressionTreeBuilder;
+using Math.Tokenizer;
 
 namespace Calculator
 {
@@ -25,12 +27,12 @@ namespace Calculator
         {
             tk = new Tokenizer();
             lst = tk.GetPossibleNextMathOperators(ExpressionPartTypes.Number);
-            extree = new ExpressionTreeBuilder<Math.Tokenizer>((Tokenizer)tk);
+            extree = new ExpressionTreeBuilder<Tokenizer>((Tokenizer)tk);
             OutputColor.Color = Colors.Black;
             
         }
         private MathOperatorDescription selectedItem;
-        private Math.ITokenizer tk;
+        private ITokenizer tk;
         private ICollection<string> collectionWithExpressionPartTypes;
         private IExpressionTreeBuilder extree;
         private ICollection<MathOperatorDescription> lst;
