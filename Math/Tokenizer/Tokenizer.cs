@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Math.Nodes;
+using Math.ExpressionTreeBuilder;
 using Math.Nodes.Functions;
 using Math.Nodes.Functions.Binary;
 using Math.Nodes.Functions.Unary;
 using Math.Nodes.Values;
 
-namespace Math
+namespace Math.Tokenizer
 {
     public class Tokenizer : ITokenizer
     {
@@ -64,9 +64,10 @@ namespace Math
             {
                 case ExpressionPartTypes.Number:
                 case ExpressionPartTypes.UnaryFollowing:
+                case ExpressionPartTypes.RightParentheses:
                     return RegisteredOperators.Where(t => t.NodeType.isFollowingUnary() || t.NodeType.isBinary()).ToList();
 
-                case ExpressionPartTypes.Parentheses:
+                case ExpressionPartTypes.LeftParentheses:
                 case ExpressionPartTypes.UnaryPreceding:
                 case ExpressionPartTypes.Binary:
                 case null:
@@ -93,7 +94,7 @@ namespace Math
                     continue;
                 }
 
-                var precedingExpressionPartType = GetPrecedingExpressionPartType(expressionTokens);
+                var precedingExpressionPartType = GetPrecedingExpressionPartType(expressionTokens.Last());
 
                 description = GetMathOperatorThatMatchesTokenTheBest(matchingOperators, precedingExpressionPartType);
 
@@ -106,17 +107,19 @@ namespace Math
             return expressionTokens;
         }
 
-        protected static ExpressionPartTypes? GetPrecedingExpressionPartType(List<ValueTuple<string, MathOperatorDescription>> expressionTokens)
+        public static ExpressionPartTypes? GetPrecedingExpressionPartType((string token, MathOperatorDescription operatorDescription)? lastExpressionToken)
         {
             ExpressionPartTypes? precedingExpressionPartType;
-            if (expressionTokens.Count == 0)
+            if (!lastExpressionToken.HasValue)
                 precedingExpressionPartType = null;
-            else if (expressionTokens.Last().Item1 == "(" || expressionTokens.Last().Item1 == ")")
-                precedingExpressionPartType = ExpressionPartTypes.Parentheses;
-            else if (NumberNode.IsNumber(expressionTokens.Last().Item1))
+            else if (lastExpressionToken.Value.token == "(")
+                precedingExpressionPartType = ExpressionPartTypes.LeftParentheses;
+            else if (lastExpressionToken.Value.token == ")")
+                precedingExpressionPartType = ExpressionPartTypes.RightParentheses;
+            else if (NumberNode.IsNumber(lastExpressionToken.Value.token))
                 precedingExpressionPartType = ExpressionPartTypes.Number;
             else
-                precedingExpressionPartType = expressionTokens.Last().Item2.NodeType.ToExpressionPart();
+                precedingExpressionPartType = lastExpressionToken.Value.operatorDescription.NodeType.ToExpressionPart();
             return precedingExpressionPartType;
         }
 

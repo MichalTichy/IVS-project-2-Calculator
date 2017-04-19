@@ -1,10 +1,8 @@
 using System;
 using System.Reflection;
 using Math.Nodes.Functions;
-using Math.Nodes.Functions.Binary;
-using Math.Nodes.Functions.Unary;
 
-namespace Math
+namespace Math.Tokenizer
 {
     public class MathOperatorDescription
     {
@@ -40,6 +38,11 @@ namespace Math
                 return true;
 
             return false;
+        }
+
+        public override string ToString()
+        {
+            return TextRepresentation;
         }
     }
 }

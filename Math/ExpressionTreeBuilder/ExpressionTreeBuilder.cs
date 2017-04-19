@@ -1,23 +1,12 @@
-﻿using System;
-
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Net.Http.Headers;
-using Math.Nodes.Functions;
-using Math.Nodes.Functions.Binary;
-using System.Reflection;
-using System.Security.Principal;
-using System.Text.RegularExpressions;
-using Math.Nodes;
-using Math.Nodes.Functions.Unary;
+﻿using Math.Nodes;
 using Math.Nodes.Values;
+using Math.Tokenizer;
 
-namespace Math
+namespace Math.ExpressionTreeBuilder
 {
     public class ExpressionTreeBuilder<T> : IExpressionTreeBuilder where T : ITokenizer, new()
     {
-        protected T Tokenizer;
+        protected readonly T Tokenizer;
         public ExpressionTreeBuilder()
         {
             Tokenizer = new T();

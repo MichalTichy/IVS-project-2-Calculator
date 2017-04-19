@@ -1,9 +1,10 @@
-﻿namespace Math
+﻿namespace Math.ExpressionTreeBuilder
 {
     public enum ExpressionPartTypes
     {
         Number,
-        Parentheses,
+        LeftParentheses,
+        RightParentheses,
         UnaryFollowing,
         UnaryPreceding,
         Binary

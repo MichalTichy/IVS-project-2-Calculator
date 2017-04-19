@@ -1,8 +1,10 @@
 ﻿using System;
 using Math;
+using Math.ExpressionTreeBuilder;
 using Math.Nodes.Functions.Binary;
 using Math.Nodes.Functions.Unary;
 using Math.Nodes.Values;
+using Math.Tokenizer;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace MathTests
