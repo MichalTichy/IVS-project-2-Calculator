@@ -96,6 +96,13 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Graph\DPoint.cs" />
+    <Compile Include="Graph\ITreeNode.cs" />
+    <Compile Include="Graph\LayeredTreeDraw.cs" />
+    <Compile Include="Graph\TreeConnection.cs" />
+    <Compile Include="Graph\TreeNodeGroup.cs" />
+    <Compile Include="Tree\TreeContainer.cs" />
+    <Compile Include="Tree\TreeNode.cs" />
     <Compile Include="View\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

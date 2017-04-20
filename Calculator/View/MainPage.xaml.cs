@@ -14,6 +14,10 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using System.Windows.Input;
+using Windows.UI.Xaml.Shapes;
+using TreeContainer;
+using GraphLayout;
+using Windows.UI;
 
 // Dokumentaci k šabloně položky Prázdná stránka najdete na adrese https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x405
 
@@ -24,23 +28,85 @@ namespace Calculator
     /// </summary>
     public sealed partial class MainPage : Page
     {
-
+      
+       
         private MainPage_ViewModel viewModel;
         public MainPage()
         {
             this.InitializeComponent();
             ApplicationView.PreferredLaunchViewSize = new Size(400, 800);
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
-            viewModel = new Calculator.MainPage_ViewModel();
+            viewModel = new Calculator.MainPage_ViewModel(Tree);
             this.DataContext = viewModel;
+            dt.Tick += Dt_Tick;
+            dt.Interval = new TimeSpan(0, 0, 1);
+            dt.Start();
+            
+
+
+
         }
+
+        private void Dt_Tick(object sender, object e)
+        {
+            //cosi();
+
+            Tree.AddNode("ss", "test", "O");
+        }
+
 
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            viewModel.SelectedItem = (Math.MathOperatorDescription)LstVw.SelectedItem;
+            LstVw.DeselectRange(new ItemIndexRange(0, 100));
             TXB_Value.Focus(FocusState.Keyboard);
-            TXB_Value.Select(TXB_Value.Text.Length, 0);
+            TXB_Value.Select(viewModel.Selection, 0);
         }
-        
+
+        static Point PtFromDPoint(DPoint dpt)
+        {
+            return new Point(dpt.X, dpt.Y);
+        }
+        public void cosi()
+        {
+            if (Tree.Connections != null)
+            {
+                SolidColorBrush brsh = new SolidColorBrush(Colors.Black);
+                brsh.Opacity = 0.5;
+                Line ln = new Line();
+                ln.Stroke = brsh;
+                ln.StrokeThickness = 1.0;
+                Point ptLast = new Point(0, 0);
+                bool fHaveLastPoint = false;
+
+                foreach (TreeConnection tcn in Tree.Connections)
+                {
+                    fHaveLastPoint = false;
+                    foreach (DPoint dpt in tcn.LstPt)
+                    {
+                        
+                        if (!fHaveLastPoint)
+                        {
+                            ptLast = PtFromDPoint(tcn.LstPt[0]);
+                            fHaveLastPoint = true;
+                            continue;
+                        }
+                        ln.X1 = PtFromDPoint(tcn.LstPt[0]).X;
+                        ln.Y1 = PtFromDPoint(tcn.LstPt[0]).Y;
+                        ln.X2 = PtFromDPoint(dpt).X;
+                        ln.Y2 = PtFromDPoint(dpt).Y;
+                        //Tree.Children.Add(ln);
+                        
+
+                    }
+
+                }
+            }
+
+
+        }
+
+        DispatcherTimer dt = new DispatcherTimer();
     }
 }
