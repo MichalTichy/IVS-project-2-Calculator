@@ -10,14 +10,19 @@ namespace Math.Nodes.Functions.Unary
     {
         public INode Parent { get; set; }
         public INode ChildNode { get; set; }
+        public Guid Gid { get; set; }
 
         public decimal Evaluate()
         {
             decimal NodeValue = ChildNode.Evaluate();
             double tan = System.Math.Tan((double)NodeValue * (System.Math.PI / 180.0));
 
-            return (decimal) (1.0/tan);
+            return System.Math.Round((decimal)(1.0 / tan), 14, MidpointRounding.AwayFromZero);
         }
 
+        public CotgNode()
+        {
+            Gid = Guid.NewGuid();
+        }
     }
 }

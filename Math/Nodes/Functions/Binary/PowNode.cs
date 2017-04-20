@@ -8,7 +8,7 @@ namespace Math.Nodes.Functions.Binary
         public INode LeftNode { get; set; }
 
         public INode Parent { get; set; }
-
+        public Guid Gid { get; set; }
         public decimal Evaluate()
         {
             decimal LeftNodeValue = LeftNode.Evaluate();
@@ -29,7 +29,7 @@ namespace Math.Nodes.Functions.Binary
             if (LeftValue < 0 && RightValue%1 != 0 && RightValue != 0)
             {
                 RightValue = System.Math.Round(Decimal.Divide(1, RightValue), 10, MidpointRounding.AwayFromZero);
-                if (RightValue%2 != 0)
+                if (RightValue%1 != 0 && RightValue %2 != 0)
                 {
                     throw new ArgumentException("Negative number divided by even number cannot be smaller than zero!");
                 }
@@ -41,6 +41,10 @@ namespace Math.Nodes.Functions.Binary
             }
          
 
+        }
+        public PowNode()
+        {
+            Gid = Guid.NewGuid();
         }
     }
 }

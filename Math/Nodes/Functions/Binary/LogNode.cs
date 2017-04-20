@@ -12,6 +12,7 @@ namespace Math.Nodes.Functions.Binary
         public INode LeftNode { get; set; }
 
         public INode Parent { get; set; }
+        public Guid Gid { get; set; }
 
         public decimal Evaluate()
         {
@@ -29,6 +30,11 @@ namespace Math.Nodes.Functions.Binary
             {
                 throw new ArgumentException("Value in logarithm have to be bigger than zero.");
             }
+        }
+
+        public LogNode()
+        {
+            Gid = Guid.NewGuid();
         }
     }
 }

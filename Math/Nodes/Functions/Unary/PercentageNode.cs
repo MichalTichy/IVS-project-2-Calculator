@@ -1,4 +1,5 @@
 using Math.Nodes.Functions.Binary;
+using System;
 
 namespace Math.Nodes.Functions.Unary
 {
@@ -7,7 +8,7 @@ namespace Math.Nodes.Functions.Unary
         public INode Parent { get; set; }
 
         public INode ChildNode { get; set; }
-
+        public Guid Gid { get; set; }
         public virtual decimal Evaluate()
         {
 
@@ -25,6 +26,10 @@ namespace Math.Nodes.Functions.Unary
         private decimal CovertPercentageToFraction(decimal percentage)
         {
             return percentage / 100;
+        }
+        public PercentageNode()
+        {
+            Gid = Guid.NewGuid();
         }
     }
 }
