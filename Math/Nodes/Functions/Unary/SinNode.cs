@@ -16,7 +16,7 @@ namespace Math.Nodes.Functions.Unary
             decimal NodeValue = ChildNode.Evaluate();
             double sin = System.Math.Sin((double)NodeValue * (System.Math.PI / 180.0));
 
-            return (decimal)sin;
+            return System.Math.Round((decimal)sin, 14, MidpointRounding.AwayFromZero);
         }
 
     }

@@ -13,7 +13,7 @@ namespace MathTests
         public void PosistiveNumberTanTest()
         {
             var tan = new TanNode() { ChildNode = new NumberNode(3) };
-            Assert.AreEqual(0.0524077792830412m, tan.Evaluate());
+            Assert.AreEqual(0.05240777928304m, tan.Evaluate());
         }
         [TestMethod]
         public void AnotherPosistiveNumberTanTest()
@@ -26,14 +26,14 @@ namespace MathTests
         public void BigPosistiveNumberTanTest()
         {
             var tan = new TanNode() { ChildNode = new NumberNode(754) };
-            Assert.AreEqual(0.674508516842426m, tan.Evaluate());
+            Assert.AreEqual(0.67450851684243m, tan.Evaluate());
         }
 
         [TestMethod]
         public void NegativeNumberTanTest()
         {
             var tan = new TanNode() { ChildNode = new NumberNode(-8) };
-            Assert.AreEqual(-0.140540834702391m, tan.Evaluate());
+            Assert.AreEqual(-0.14054083470239m, tan.Evaluate());
         }
 
         [TestMethod]

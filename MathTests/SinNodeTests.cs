@@ -13,14 +13,14 @@ namespace MathTests
         public void PosistiveNumberSinTest()
         {
             var sin = new SinNode() { ChildNode = new NumberNode(4) };
-            Assert.AreEqual(0.0697564737441253m, sin.Evaluate());
+            Assert.AreEqual(0.06975647374413m, sin.Evaluate());
         }
 
         [TestMethod]
         public void NegativeNumberSinTest()
         {
             var sin = new SinNode() { ChildNode = new NumberNode(-1) };
-            Assert.AreEqual(-0.0174524064372835m, sin.Evaluate());
+            Assert.AreEqual(-0.01745240643728m, sin.Evaluate());
         }
 
         [TestMethod]

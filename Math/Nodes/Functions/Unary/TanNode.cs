@@ -16,7 +16,7 @@ namespace Math.Nodes.Functions.Unary
             decimal NodeValue = ChildNode.Evaluate();
             double tan = System.Math.Tan((double)NodeValue * (System.Math.PI / 180.0));
 
-            return (decimal)tan;
+            return System.Math.Round((decimal)tan, 14, MidpointRounding.AwayFromZero);
         }
 
     }
