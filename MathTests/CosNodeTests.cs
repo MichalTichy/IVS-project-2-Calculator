@@ -10,23 +10,23 @@ namespace MathTests
     public class CosNodeTests
     {
         [TestMethod]
-        public void PosistiveNumberCosTest()
+        public void PositiveNumberCosTest()
         {
             var cos = new CosNode() { ChildNode = new NumberNode(3) };
-            Assert.AreEqual(0.998629534754574m, cos.Evaluate());
+            Assert.AreEqual(0.99862953475457m, cos.Evaluate());
         }
         [TestMethod]
-        public void AnotherPosistiveNumberCosTest()
+        public void AnotherPositiveNumberCosTest()
         {
             var cos = new CosNode() { ChildNode = new NumberNode(45) };
-            Assert.AreEqual(0.707106781186548m, cos.Evaluate());
+            Assert.AreEqual(0.70710678118655m, cos.Evaluate());
         }
 
         [TestMethod]
-        public void BigPosistiveNumberCosTest()
+        public void BigPositiveNumberCosTest()
         {
             var cos = new CosNode() { ChildNode = new NumberNode(754) };
-            Assert.AreEqual(0.829037572555042m, cos.Evaluate());
+            Assert.AreEqual(0.82903757255504m, cos.Evaluate());
         }
 
         [TestMethod]

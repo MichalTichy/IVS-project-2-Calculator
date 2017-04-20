@@ -16,7 +16,7 @@ namespace Math.Nodes.Functions.Unary
             decimal NodeValue = ChildNode.Evaluate() ;
             double cos = System.Math.Cos((double)NodeValue * (System.Math.PI / 180.0));
 
-            return (decimal)cos;
+            return System.Math.Round((decimal)cos, 14, MidpointRounding.AwayFromZero);
         }
         public CosNode()
         {

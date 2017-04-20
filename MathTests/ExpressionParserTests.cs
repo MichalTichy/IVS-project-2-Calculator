@@ -9,8 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Math.Nodes.Values;
 
 namespace MathTests
-{  
-    [TestClass]
+{
     public class ExpressionParserTests
     {
         [TestMethod]
@@ -93,5 +92,27 @@ namespace MathTests
             var expressionParser = new ExpressionTreeBuilder<Tokenizer>();
             Assert.ThrowsException<DivideByZeroException>(()=>expressionParser.ParseExpression("(2 - 1 + 14/0 + 7").Evaluate());
         }
+
+        [TestMethod]
+        public void FollowingBracketInPowTest()
+        {
+            var expressionParser = new ExpressionTreeBuilder<Tokenizer>();
+            Assert.AreEqual(2, expressionParser.ParseExpression("2^(4/4)").Evaluate());
+        }
+
+        [TestMethod]
+        public void CosTest()
+        {
+            var expressionParser = new ExpressionTreeBuilder<Tokenizer>();
+            Assert.AreEqual(0, expressionParser.ParseExpression("cos 90").Evaluate());
+        }
+
+        [TestMethod]
+        public void CosWithMultiplyTest()
+        {
+            var expressionParser = new ExpressionTreeBuilder<Tokenizer>();
+            Assert.AreEqual(0, expressionParser.ParseExpression("2 * cos 90").Evaluate());
+        }
+
     }
 }
