@@ -1,4 +1,4 @@
-﻿namespace Math
+﻿namespace Math.ExpressionTreeBuilder
 {
     public enum ExpressionPartTypes
     {

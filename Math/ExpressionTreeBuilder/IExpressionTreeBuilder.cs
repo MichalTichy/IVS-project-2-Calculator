@@ -1,6 +1,6 @@
 ﻿using Math.Nodes;
 
-namespace Math
+namespace Math.ExpressionTreeBuilder
 {
     public interface IExpressionTreeBuilder
     {
