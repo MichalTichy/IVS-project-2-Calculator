@@ -8,7 +8,7 @@ namespace Math.Nodes.Functions.Binary
         public INode LeftNode { get; set; }
 
         public INode Parent { get; set; }
-
+        public Guid Gid { get; set; }
         public decimal Evaluate()
         {
             decimal LeftNodeValue = LeftNode.Evaluate();
@@ -41,6 +41,10 @@ namespace Math.Nodes.Functions.Binary
             }
          
 
+        }
+        public PowNode()
+        {
+            Gid = Guid.NewGuid();
         }
     }
 }

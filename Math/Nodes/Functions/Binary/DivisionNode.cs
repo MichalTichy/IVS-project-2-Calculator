@@ -8,10 +8,16 @@ namespace Math.Nodes.Functions.Binary
         public INode LeftNode { get; set; }
 
         public INode Parent { get; set; }
+        public Guid Gid { get; set; }
 
         public decimal Evaluate()
         {
             return Decimal.Divide(LeftNode.Evaluate(), RightNode.Evaluate());
+        }
+
+        public DivisionNode()
+        {
+            Gid = Guid.NewGuid();
         }
 
     }

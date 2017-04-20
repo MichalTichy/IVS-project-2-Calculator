@@ -8,6 +8,7 @@ namespace Math.Nodes.Functions.Unary
     {
         public INode Parent { get; set; }
         public INode ChildNode { get; set; }
+        public Guid Gid { get; set; }
 
         public decimal Evaluate()
         {
@@ -47,7 +48,10 @@ namespace Math.Nodes.Functions.Unary
                 throw new ArgumentException("Cannot calculate factorial of negative number");
             }
         }
-
+        public FactorialNode()
+        {
+            Gid = Guid.NewGuid();
+        }
 
     }
 }
