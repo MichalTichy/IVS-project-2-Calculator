@@ -183,11 +183,11 @@ namespace Math.Nodes
                 throw new ArgumentException($"{nameof(Value)} and {nameof(FutureType)} cannot be set simoutanously.");
             
             var canBeUnaryNode = (LeftNode == null && RightNode != null) || (LeftNode != null && RightNode == null);
-            if (FutureType != null && (FutureType.NodeType.IsInstanceOfType(typeof(IUnaryOperationNode)) && !canBeUnaryNode))
+            if (FutureType != null && (FutureType.NodeType.GetTypeInfo().IsSubclassOf(typeof(IUnaryOperationNode)) && !canBeUnaryNode))
                 throw new ArgumentException($"Unary node needs exactly one child node.");
 
             var canBeBinaryNode = LeftNode != null && RightNode != null;
-            if (FutureType != null && (FutureType.NodeType.IsInstanceOfType(typeof(IBinaryOperationNode)) && !canBeBinaryNode))
+            if (FutureType != null && (FutureType.NodeType.GetTypeInfo().IsSubclassOf(typeof(IBinaryOperationNode)) && !canBeBinaryNode))
                 throw new ArgumentException($"Binary node needs exactly two child nodes.");
         }
     }

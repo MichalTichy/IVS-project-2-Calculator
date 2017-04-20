@@ -12,7 +12,7 @@ namespace Math.Tokenizer
 
         public MathOperatorDescription(Type nodeType, string textRepresentation, OperationType operationType)
         {
-            if (!typeof(IFunctionNode).IsAssignableFrom(nodeType))
+            if (!nodeType.isFunctionNode())
                 throw new ArgumentException($"{nameof(nodeType)} is not implementation of {nameof(IFunctionNode)}");
             NodeType = nodeType;
 
