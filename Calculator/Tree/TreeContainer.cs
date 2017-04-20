@@ -242,7 +242,7 @@ namespace TreeContainer
 		{
 			return AddRoot(objContent, StrNextName());
 		}
-
+        
 		public TreeNode AddNode(Object objContent, string strName, string strParent)
 		{
 			TreeNode tnNew = new TreeNode();
@@ -250,7 +250,8 @@ namespace TreeContainer
 			tnNew.Content = objContent;
 			tnNew.TreeParent = strParent;
 			Children.Add(tnNew);
-			return tnNew;
+            ReDraw();
+            return tnNew;
 		}
 
 		private string StrNextName()
@@ -337,7 +338,41 @@ namespace TreeContainer
             }
         }
 
-        
+        public void ReDraw()
+        {
+            if (Connections != null)
+            {
+                SolidColorBrush brsh = new SolidColorBrush(Colors.Black);
+                brsh.Opacity = 0.5;
+
+
+
+                Point ptLast = new Point(120, 120);
+                bool fHaveLastPoint = false;
+
+                foreach (TreeConnection tcn in Connections)
+                {
+                    fHaveLastPoint = false;
+                    foreach (DPoint dpt in tcn.LstPt)
+                    {
+                        if (!fHaveLastPoint)
+                        {
+                            ptLast = PtFromDPoint(tcn.LstPt[0]);
+                            fHaveLastPoint = true;
+                            continue;
+                        }
+                        Line pen = new Line();
+                        pen.Stroke = brsh;
+                        pen.X1 = PtFromDPoint(tcn.LstPt[0]).X;
+                        pen.Y1 = PtFromDPoint(tcn.LstPt[0]).Y;
+                        pen.X2 = PtFromDPoint(dpt).X;
+                        pen.Y2 = PtFromDPoint(dpt).Y;
+                        Children.Add(pen);
+                        ptLast = PtFromDPoint(dpt);
+                    }
+                }
+            }
+        }
         //protected override void OnLoad(Windows.UI.Xaml.Media.DrawingContext dc)
         //{
         //    base.OnRender(dc);

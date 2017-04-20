@@ -50,8 +50,8 @@ namespace Calculator
         public int oldsel;
         public string oldselected;
         private List<TreeConnection> conn;
-
-    public string Values
+#region Bindings
+        public string Values
         {
             get => val; 
             set
@@ -149,15 +149,15 @@ namespace Calculator
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
+        #endregion
 
+        #region TreeNodeHandling
         Math.Nodes.INode getLeftNode(Math.Nodes.INode n)
         {
             if (!(n is Math.Nodes.Values.NumberNode))
             {
-                while (!(n is Math.Nodes.Values.NumberNode) &&((Math.Nodes.Functions.Binary.IBinaryOperationNode)n).LeftNode != null)
-                {
-                  
-                    
+                while (!(n is Math.Nodes.Values.NumberNode) && ((Math.Nodes.Functions.Binary.IBinaryOperationNode)n).LeftNode != null)
+                { 
                         n = ((Math.Nodes.Functions.Binary.IBinaryOperationNode)n).LeftNode;
                 
                 }
@@ -189,25 +189,45 @@ namespace Calculator
                 }
         }
 
+        string GetNodeTextRepre(Math.Nodes.INode n)
+        {
+            IReadOnlyCollection<MathOperatorDescription> mod = tk.RegisteredOperators;
+            foreach (MathOperatorDescription ss in mod)
+            {
+                if (ss.NodeType == n.GetType())
+                {
+                    return ss.TextRepresentation;
+                }
+                
+            }
+            if (n is Math.Nodes.Values.NumberNode)
+            {
+                return ((Math.Nodes.Values.NumberNode)n).Evaluate().ToString();
+            }
+            else
+            {
+                return "x";
+            }
+        }
        
         void foo(Math.Nodes.INode n)
         {
-            Dictionary<int, Math.Nodes.INode> dt = new Dictionary<int, Math.Nodes.INode>();
             tre.Clear();
-            tre.Root = n.Gid.ToString();
-            tre.AddNode(n, n.Gid.ToString(), (string)null);
+            tre.Root = n.GetHashCode().ToString();
+            tre.AddNode(GetNodeTextRepre(n), n.GetHashCode().ToString(), (string)null);
+
             n = getFirst(n);
             
             int i = 0;
-            
-           
+            ICollection<string> mc;
+
             Debug.WriteLine($"{i} .. {n.Gid} .. {n.ToString()}");
             while (n!=null)
             {
                
                 if (n.Parent != null)
                 {
-                    tre.AddNode(n, n.Gid.ToString(), (n.Parent).Gid.ToString());
+                    tre.AddNode(GetNodeTextRepre(n), n.GetHashCode().ToString(), (n.Parent).GetHashCode().ToString());
                 }
                 Debug.WriteLine($"{i} .. {n.Gid} .. {n.ToString()}");
                 n = getNext(n);
@@ -216,56 +236,65 @@ namespace Calculator
             }
         }
 
-
+#endregion
         private void parse(bool edit)
         {
-            string valueToParse = val;
-            if (edit)
+            if (val != "")
             {
-                valueToParse = val.Substring(0, selection);
-            }  
 
-            try
-            {
-                IsParsable = true;
-                
-                node = extree.ParseExpression(valueToParse);
-                
 
-                collectionWithExpressionPartTypes = tk.SplitExpressionToTokens(valueToParse);
-                ts2 = tk.AssignOperatorDescriptionToTokens(collectionWithExpressionPartTypes);
-            }
-            catch(Exception)
-            {
-                IsParsable = false;
-            }
-            finally
-            {                
-                if (!IsParsable)
+                string valueToParse = val;
+                if (edit)
                 {
-                    Lst = null;
+                    valueToParse = val.Substring(0, selection);
                 }
-                else
+
+                try
                 {
-                    Lst = tk.GetPossibleNextMathOperators(Tokenizer.GetPrecedingExpressionPartType(ts2.Last<(string, MathOperatorDescription)>()));
+                    IsParsable = true;
+
+                    node = extree.ParseExpression(valueToParse);
                     foo(node);
+
+                    collectionWithExpressionPartTypes = tk.SplitExpressionToTokens(valueToParse);
+                    ts2 = tk.AssignOperatorDescriptionToTokens(collectionWithExpressionPartTypes);
                 }
-                if (!edit)
+                catch (Exception)
+                {
+                    IsParsable = false;
+                }
+                finally
                 {
                     if (!IsParsable)
                     {
-                        OutputColor.Color = Colors.Red;
+                        Lst = null;
                     }
                     else
                     {
-                        OutputColor.Color = Colors.Black;
+                        Lst = tk.GetPossibleNextMathOperators(Tokenizer.GetPrecedingExpressionPartType(ts2.Last<(string, MathOperatorDescription)>()));
+
                     }
-                    
+                    if (!edit)
+                    {
+                        if (!IsParsable)
+                        {
+                            OutputColor.Color = Colors.Red;
+                        }
+                        else
+                        {
+                            OutputColor.Color = Colors.Black;
+                        }
+
+                    }
                 }
+
+
             }
-
-          
-
+            else
+            {
+                Result = "";
+                tre.Clear();
+            }
         }
 
        
@@ -294,8 +323,8 @@ namespace Calculator
         }
         public void Eval()
         {
-            int totalyNonUsefull;
-            if (isParsable && (int.TryParse(collectionWithExpressionPartTypes.Last<string>(), out totalyNonUsefull)))
+            int parseOutput;
+            if (isParsable && (int.TryParse(collectionWithExpressionPartTypes.Last<string>(), out parseOutput)))
             {
                 try
                 {

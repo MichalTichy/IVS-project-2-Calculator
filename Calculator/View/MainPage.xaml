@@ -89,22 +89,8 @@
                     <!--Grid.ColumnSpan="2" Grid.Row="2" -->
                     <Grid x:Name="Gridmap" Grid.ColumnSpan="2" Grid.Row="2">
                         <Rectangle Stroke="#FF000000" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="Auto" Margin="0,0,0,0"/>
-                        <tc:TreeContainer tc:TreeContainer.Root="O" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="Tree" HorizontalBuffer="10" VerticalBuffer="10" HorizontalBufferSubtree="10" VerticalJustification="top">
-                            <tc:TreeNode x:Name="O" Content="+"/>
-                            <tc:TreeNode Content="+" TreeParent="O" x:Name="E" />
-                            <tc:TreeNode Content="F" TreeParent="O" x:Name="F"/>
-                            <tc:TreeNode Content="N" TreeParent="O" x:Name="N"/>
-                            <tc:TreeNode Content="A" TreeParent="E" x:Name="A"/>
-                            <tc:TreeNode Content="D" x:Name="D" TreeParent="E"/>
-                            <tc:TreeNode Content="B" x:Name="B" TreeParent="D"/>
-                            <tc:TreeNode Content="C" x:Name="C" TreeParent="D"/>
-                            <tc:TreeNode Content="G" x:Name="G" TreeParent="N"/>
-                            <tc:TreeNode Content="M" x:Name="M" TreeParent="N"/>
-                            <tc:TreeNode Content="H" x:Name="H" TreeParent="M"/>
-                            <tc:TreeNode Content="I" x:Name="I" TreeParent="M"/>
-                            <tc:TreeNode Content="J" x:Name="J" TreeParent="M"/>
-                            <tc:TreeNode Content="K" x:Name="K" TreeParent="M"/>
-                            <tc:TreeNode Content="L" x:Name="L" TreeParent="M"/>
+                        <tc:TreeContainer tc:TreeContainer.Root="O" HorizontalAlignment="Center" VerticalAlignment="Stretch" x:Name="Tree" HorizontalBuffer="40" VerticalBuffer="20" HorizontalBufferSubtree="40" VerticalJustification="top">
+
                         </tc:TreeContainer>
                     </Grid>
                

@@ -6,11 +6,22 @@ using Math;
 using Math.ExpressionTreeBuilder;
 using Math.Tokenizer;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Math.Nodes.Values;
 
 namespace MathTests
-{
+{  
+    [TestClass]
     public class ExpressionParserTests
     {
+        [TestMethod]
+        public void EqualityTest()
+        {
+            NumberNode n1 = new NumberNode(3);
+            NumberNode n2 = new NumberNode(3);
+            Assert.AreNotEqual(n1, n2);
+            Assert.AreNotSame(n1, n2);
+            Assert.AreNotEqual(n1.GetHashCode() , n2.GetHashCode());
+        }
 
         [TestMethod]
         public void MathOperationsOrderTest1()
