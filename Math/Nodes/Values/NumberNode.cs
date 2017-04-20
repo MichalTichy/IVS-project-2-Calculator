@@ -6,15 +6,18 @@ namespace Math.Nodes.Values
     {
 
         protected readonly decimal value;
+        public Guid Gid { get; set; }
 
         public NumberNode(decimal value)
         {
             this.value = value;
+            Gid = Guid.NewGuid();
         }
 
         public NumberNode(string value)
         {
             this.value = Decimal.Parse(value);
+            Gid = Guid.NewGuid();
         }
 
         public INode Parent { get; set; }

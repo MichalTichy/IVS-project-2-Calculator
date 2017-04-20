@@ -7,7 +7,7 @@ namespace Math.Nodes.Functions.Unary
         public INode Parent { get; set; }
         public INode ChildNode { get; set; }
 
-
+        public Guid Gid { get; set; }
         public decimal Evaluate()
         {
             var NodeValue = ChildNode.Evaluate();
@@ -23,6 +23,10 @@ namespace Math.Nodes.Functions.Unary
             {
                 throw new ArgumentException("Number in square root cannot be smaller than zero!");
             }
+        }
+        public SqrtNode()
+        {
+            Gid = Guid.NewGuid();
         }
 
     }

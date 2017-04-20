@@ -8,10 +8,14 @@ namespace Math.Nodes.Functions.Binary
         public INode LeftNode { get; set; }
 
         public INode Parent { get; set; }
-
+        public Guid Gid { get; set; }
         public decimal Evaluate()
         {
             return LeftNode.Evaluate() -  RightNode.Evaluate();
+        }
+        public SubstractionNode()
+        {
+            Gid = Guid.NewGuid();
         }
     }
 }

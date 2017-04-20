@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Shapes;
 using TreeContainer;
 using GraphLayout;
 using Windows.UI;
+using Math.Tokenizer;
 
 // Dokumentaci k šabloně položky Prázdná stránka najdete na adrese https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x405
 
@@ -38,27 +39,19 @@ namespace Calculator
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
             viewModel = new Calculator.MainPage_ViewModel(Tree);
             this.DataContext = viewModel;
-            dt.Tick += Dt_Tick;
-            dt.Interval = new TimeSpan(0, 0, 1);
-            dt.Start();
-            
+          
 
 
 
         }
 
-        private void Dt_Tick(object sender, object e)
-        {
-            //cosi();
-
-            Tree.AddNode("ss", "test", "O");
-        }
+      
 
 
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            viewModel.SelectedItem = (Math.MathOperatorDescription)LstVw.SelectedItem;
+            viewModel.SelectedItem = (MathOperatorDescription)LstVw.SelectedItem;
             LstVw.DeselectRange(new ItemIndexRange(0, 100));
             TXB_Value.Focus(FocusState.Keyboard);
             TXB_Value.Select(viewModel.Selection, 0);

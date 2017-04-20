@@ -10,6 +10,7 @@ namespace Math.Nodes.Functions.Unary
     {
         public INode Parent { get; set; }
         public INode ChildNode { get; set; }
+        public Guid Gid { get; set; }
 
         public decimal Evaluate()
         {
@@ -17,6 +18,11 @@ namespace Math.Nodes.Functions.Unary
             double tan = System.Math.Tan((double)NodeValue * (System.Math.PI / 180.0));
 
             return (decimal)tan;
+        }
+
+        public TanNode()
+        {
+            Gid = Guid.NewGuid();
         }
 
     }

@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Math;
+using Math.ExpressionTreeBuilder;
+using Math.Tokenizer;
 using Math.Nodes.Functions;
 using Math.Nodes.Values;
 using System.Collections.ObjectModel;
@@ -15,16 +17,18 @@ using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Core;
+using TreeContainer;
+using GraphLayout;
 
 namespace Calculator
 {
    public class MainPage_ViewModel : INotifyPropertyChanged
     {
 
-
         private TreeContainer.TreeContainer tre;
         public MainPage_ViewModel(TreeContainer.TreeContainer tree)
         {
+            
             tk = new Tokenizer();
             lst = tk.GetPossibleNextMathOperators(ExpressionPartTypes.Number);
             extree = new ExpressionTreeBuilder<Tokenizer>((Tokenizer)tk);
@@ -185,37 +189,31 @@ namespace Calculator
                 }
         }
 
+       
         void foo(Math.Nodes.INode n)
         {
             Dictionary<int, Math.Nodes.INode> dt = new Dictionary<int, Math.Nodes.INode>();
-
-            string ss = "";
-            n = getFirst(n);
             tre.Clear();
-            tre.Root = n.GetHashCode().ToString();
-            tre.AddNode(n, n.GetHashCode().ToString(),(string)null);
+            tre.Root = n.Gid.ToString();
+            tre.AddNode(n, n.Gid.ToString(), (string)null);
+            n = getFirst(n);
+            
+            int i = 0;
+            
+           
+            Debug.WriteLine($"{i} .. {n.Gid} .. {n.ToString()}");
             while (n!=null)
             {
-                Debug.WriteLine(n.ToString());
-                if (n is Math.Nodes.Values.NumberNode)
-                {
-                    Debug.WriteLine($"Leaf {((Math.Nodes.Values.NumberNode)n).Evaluate().ToString()}");
-                    ss += ((Math.Nodes.Values.NumberNode)n).Evaluate().ToString();
-                }
-                else
-                {
-                    Debug.WriteLine($"op {((Math.Nodes.Functions.Binary.IBinaryOperationNode)n).ToString()}");
-                    ss += n.ToString();
-                    
-                }
+               
                 if (n.Parent != null)
                 {
-                    tre.AddNode(n, n.GetHashCode().ToString(), (n.Parent).GetHashCode().ToString());
+                    tre.AddNode(n, n.Gid.ToString(), (n.Parent).Gid.ToString());
                 }
+                Debug.WriteLine($"{i} .. {n.Gid} .. {n.ToString()}");
                 n = getNext(n);
                 
+                i++;
             }
-            Debug.WriteLine(ss);
         }
 
 

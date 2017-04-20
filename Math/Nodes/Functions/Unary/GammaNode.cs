@@ -1,3 +1,5 @@
+using System;
+
 namespace Math.Nodes.Functions.Unary
 {
     public class GammaNode : IPrecedingUnaryOperationNode
@@ -5,7 +7,7 @@ namespace Math.Nodes.Functions.Unary
         public INode Parent { get; set; }
         
         public INode ChildNode { get; set; }
-
+        public Guid Gid { get; set; }
         public decimal Evaluate()
         {
             return (decimal)Gamma((double)ChildNode.Evaluate());
@@ -38,6 +40,9 @@ namespace Math.Nodes.Functions.Unary
                 return System.Math.Sqrt(2 * System.Math.PI) * (System.Math.Pow(t, z + 0.5)) * System.Math.Exp(-t) * x;
             }
         }
-
+        public GammaNode()
+        {
+            Gid = Guid.NewGuid();
+        }
     }
 }
