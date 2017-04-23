@@ -34,7 +34,7 @@ namespace Calculator
             tre = tree;
             //lst = tk.GetPossibleNextMathOperators(ExpressionPartTypes.Number);
             extree = new ExpressionTreeBuilder<Tokenizer>((Tokenizer)tk);
-            parse(false);
+            Parse(false);
             OutputColor.Color = Colors.Black;
 
         }
@@ -51,6 +51,7 @@ namespace Calculator
         private int selection;
         private Windows.UI.Xaml.Media.SolidColorBrush outputColor = new Windows.UI.Xaml.Media.SolidColorBrush();
         public int oldsel;
+        public bool LostBySelection = false;
 #region Bindings
         public string Values
         {
@@ -58,7 +59,7 @@ namespace Calculator
             set
             {
                 val = value;
-                parse(true);
+                Parse(true);
                 OnPropertyChanged("Values");
             }
         }
@@ -104,9 +105,15 @@ namespace Calculator
             get => selection;
             set
             {
-                oldsel = selection;
+                if (!LostBySelection)
+                {
                     selection = value;
-                    OnPropertyChanged("Selection");
+                }
+                else
+                {
+                    selection = selection += selectedItem.TextRepresentation.Length;
+                }
+                OnPropertyChanged("Selection");
                 
             }
         }
@@ -154,9 +161,17 @@ namespace Calculator
         {
             if (!(n is Math.Nodes.Values.NumberNode))
             {
-                while (!(n is Math.Nodes.Values.NumberNode) && ((Math.Nodes.Functions.Binary.IBinaryOperationNode)n).LeftNode != null)
-                { 
+                while (!(n is Math.Nodes.Values.NumberNode) && n != null)
+                {
+                    if (n is Math.Nodes.Functions.Binary.IBinaryOperationNode)
+                    {
                         n = ((Math.Nodes.Functions.Binary.IBinaryOperationNode)n).LeftNode;
+                    }
+                    else
+                    {
+                        n = ((Math.Nodes.Functions.Unary.IUnaryOperationNode)n).ChildNode;
+                    }
+                    
                 
                 }
             }
@@ -217,9 +232,6 @@ namespace Calculator
             n = getFirst(n);
             
             int i = 0;
-            ICollection<string> mc;
-
-            Debug.WriteLine($"{i} .. {n.Gid} .. {n.ToString()}");
             while (n!=null)
             {
                
@@ -234,7 +246,7 @@ namespace Calculator
         }
 
 #endregion
-        private void parse(bool edit)
+        private void Parse(bool edit)
         {
             if (val != "")
             {
@@ -255,8 +267,9 @@ namespace Calculator
                     collectionWithExpressionPartTypes = tk.SplitExpressionToTokens(valueToParse);
                     ts2 = tk.AssignOperatorDescriptionToTokens(collectionWithExpressionPartTypes);
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
+                    Debug.WriteLine(e.Message);
                     IsParsable = false;
                 }
                 finally
@@ -292,9 +305,9 @@ namespace Calculator
             Debug.WriteLine($"xxxx {selection} .. {Values.Length}");
             if (selection != Values.Length)
             {
-                parse(true);
+                Parse(true);
             }
-            else parse(false);
+            else Parse(false);
 
 
         }
