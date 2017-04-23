@@ -1,14 +1,23 @@
 ﻿namespace Math.Nodes.Functions
 {
     /// <summary>
-    /// LowPriorityOperation - summation, substraction
-    /// HighPriorityOperation - multiplication, division, ... 
-    /// FunctionCalls - Function call, scope : sqrt , root , factorial , ..
+    /// Operation type degfines order of operations.
     /// </summary>
     public enum OperationType
     {
+        /// <summary>
+        /// subtractions, summations, ...
+        /// </summary>
         LowPriorityOperation,
+
+        /// <summary>
+        /// multiplications, divisions,...
+        /// </summary>
         HighPriorityOperation,
+
+        /// <summary>
+        /// sqrt, factorial ...
+        /// </summary>
         FunctionCalls
     }
 }

@@ -217,6 +217,7 @@ namespace Calculator
             n = getFirst(n);
             
             int i = 0;
+            ICollection<string> mc;
 
             Debug.WriteLine($"{i} .. {n.Gid} .. {n.ToString()}");
             while (n!=null)
@@ -226,7 +227,6 @@ namespace Calculator
                 {
                     tre.AddNode(GetNodeTextRepre(n), n.GetHashCode().ToString(), (n.Parent).GetHashCode().ToString());
                 }
-                Debug.WriteLine($"{i} .. {n.Gid} .. {n.ToString()}");
                 n = getNext(n);
                 
                 i++;

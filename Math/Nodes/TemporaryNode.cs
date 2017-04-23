@@ -83,13 +83,13 @@ namespace Math.Nodes
             node.ParentNode = tmp;
             ParentNode = node;
 
-            if (tmp!=null)
+            if (tmp != null)
             {
-                if (tmp.LeftNode==this)
+                if (tmp.LeftNode == this)
                 {
                     tmp.LeftNode = node;
                 }
-                if (tmp.RightNode==this)
+                if (tmp.RightNode == this)
                 {
                     tmp.RightNode = node;
                 }
@@ -102,7 +102,7 @@ namespace Math.Nodes
         public virtual TemporaryNode GetRoot()
         {
             var root = this;
-            while (root.ParentNode!=null)
+            while (root.ParentNode != null)
             {
                 root = root.ParentNode;
             }
@@ -118,15 +118,15 @@ namespace Math.Nodes
 
             if (Value != null)
                 return new NumberNode(Value.Value)
-                    { Parent = parentNode};
+                    {Parent = parentNode};
 
-            var node = (INode)Activator.CreateInstance(FutureType.NodeType);
+            var node = (INode) Activator.CreateInstance(FutureType.NodeType);
 
             if (node is IUnaryOperationNode unaryNode)
-                return FillNode(unaryNode,parentNode);
-            
+                return FillNode(unaryNode, parentNode);
+
             if (node is IBinaryOperationNode binaryNode)
-                return FillNode(binaryNode,parentNode);
+                return FillNode(binaryNode, parentNode);
 
             throw new NotSupportedException("Node type is not supported");
         }
@@ -136,7 +136,7 @@ namespace Math.Nodes
             if (RightNode == null && LeftNode == null)
                 return null;
 
-            if (RightNode!=null && LeftNode!=null)
+            if (RightNode != null && LeftNode != null)
                 throw new ArgumentException("Cannot build empty node with right and left child set");
 
             return RightNode != null ? RightNode.Build(parent) : LeftNode.Build(parent);
@@ -170,7 +170,7 @@ namespace Math.Nodes
             {
                 ParentNode.LeftNode = null;
             }
-            
+
             if (ParentNode.RightNode == this)
             {
                 ParentNode.RightNode = null;
@@ -181,13 +181,15 @@ namespace Math.Nodes
         {
             if (Value != null && FutureType != null)
                 throw new ArgumentException($"{nameof(Value)} and {nameof(FutureType)} cannot be set simoutanously.");
-            
+
             var canBeUnaryNode = (LeftNode == null && RightNode != null) || (LeftNode != null && RightNode == null);
-            if (FutureType != null && (FutureType.NodeType.GetTypeInfo().IsSubclassOf(typeof(IUnaryOperationNode)) && !canBeUnaryNode))
+            if (FutureType != null &&
+                (FutureType.NodeType.GetTypeInfo().IsSubclassOf(typeof(IUnaryOperationNode)) && !canBeUnaryNode))
                 throw new ArgumentException($"Unary node needs exactly one child node.");
 
             var canBeBinaryNode = LeftNode != null && RightNode != null;
-            if (FutureType != null && (FutureType.NodeType.GetTypeInfo().IsSubclassOf(typeof(IBinaryOperationNode)) && !canBeBinaryNode))
+            if (FutureType != null &&
+                (FutureType.NodeType.GetTypeInfo().IsSubclassOf(typeof(IBinaryOperationNode)) && !canBeBinaryNode))
                 throw new ArgumentException($"Binary node needs exactly two child nodes.");
         }
     }

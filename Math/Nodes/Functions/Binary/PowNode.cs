@@ -2,34 +2,44 @@
 
 namespace Math.Nodes.Functions.Binary
 {
+    /// <summary>
+    /// Node used to calculate power of
+    /// </summary>
     public class PowNode : IBinaryOperationNode
     {
+        /// <inheritdoc />
         public INode RightNode { get; set; }
+
+        /// <inheritdoc />
         public INode LeftNode { get; set; }
 
+        /// <inheritdoc />
         public INode Parent { get; set; }
-        public Guid Gid { get; set; }
+
+        /// <inheritdoc />
         public decimal Evaluate()
         {
-            decimal LeftNodeValue = LeftNode.Evaluate();
-            decimal RightNodeValue = RightNode.Evaluate();
+            decimal leftNodeValue = LeftNode.Evaluate();
+            decimal rightNodeValue = RightNode.Evaluate();
 
-            CheckIfItsPossibleToCalculatePow(LeftNodeValue, RightNodeValue);
+            CheckIfItsPossibleToCalculatePow(leftNodeValue, rightNodeValue);
 
             int negative = 1;
-            if (LeftNodeValue < 0)
+            if (leftNodeValue < 0)
             {
                 negative = -1;
             }
 
-            return (decimal)System.Math.Pow(System.Math.Abs((double)LeftNodeValue), (double)RightNodeValue)*negative;
+            return (decimal) System.Math.Pow(System.Math.Abs((double) leftNodeValue), (double) rightNodeValue) *
+                   negative;
         }
+
         void CheckIfItsPossibleToCalculatePow(decimal LeftValue, decimal RightValue)
         {
-            if (LeftValue < 0 && RightValue%1 != 0 && RightValue != 0)
+            if (LeftValue < 0 && RightValue % 1 != 0 && RightValue != 0)
             {
                 RightValue = System.Math.Round(Decimal.Divide(1, RightValue), 10, MidpointRounding.AwayFromZero);
-                if (RightValue%1 != 0 && RightValue %2 != 0)
+                if (RightValue % 1 != 0 && RightValue % 2 != 0)
                 {
                     throw new ArgumentException("Negative number divided by even number cannot be smaller than zero!");
                 }
@@ -39,12 +49,6 @@ namespace Math.Nodes.Functions.Binary
             {
                 throw new ArgumentException("Negative number divided by even number cannot be smaller than zero!");
             }
-         
-
-        }
-        public PowNode()
-        {
-            Gid = Guid.NewGuid();
         }
     }
 }

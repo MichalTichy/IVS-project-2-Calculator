@@ -6,35 +6,35 @@ using System.Threading.Tasks;
 
 namespace Math.Nodes.Functions.Binary
 {
+    /// <summary>
+    ///  Node used to calculate logarithm.
+    /// </summary>
     public class LogNode : IBinaryOperationNode
     {
+        /// <inheritdoc />
         public INode RightNode { get; set; }
+
+        /// <inheritdoc />
         public INode LeftNode { get; set; }
 
+        /// <inheritdoc />
         public INode Parent { get; set; }
-        public Guid Gid { get; set; }
 
+        /// <inheritdoc />
         public decimal Evaluate()
         {
-            decimal NumberNodeValue = RightNode.Evaluate();
-            decimal ArgumentNodeValue = LeftNode.Evaluate();
+            decimal numberNodeValue = RightNode.Evaluate();
+            decimal argumentNodeValue = LeftNode.Evaluate();
 
-            CheckIfItsPossibleToCalculateLog(NumberNodeValue, ArgumentNodeValue);
+            CheckIfItsPossibleToCalculateLog(numberNodeValue, argumentNodeValue);
 
-            return (decimal)System.Math.Log((double)NumberNodeValue, (double)ArgumentNodeValue);
+            return (decimal) System.Math.Log((double) numberNodeValue, (double) argumentNodeValue);
         }
 
-        void CheckIfItsPossibleToCalculateLog(decimal Numbervalue, decimal ArgumentValue)
+        void CheckIfItsPossibleToCalculateLog(decimal numbervalue, decimal argumentValue)
         {
-            if (Numbervalue < 1 | ArgumentValue < 1)
-            {
+            if (numbervalue < 1 | argumentValue < 1)
                 throw new ArgumentException("Value in logarithm have to be bigger than zero.");
-            }
-        }
-
-        public LogNode()
-        {
-            Gid = Guid.NewGuid();
         }
     }
 }

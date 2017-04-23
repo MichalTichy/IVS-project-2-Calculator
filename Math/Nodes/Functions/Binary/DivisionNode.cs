@@ -2,23 +2,24 @@
 
 namespace Math.Nodes.Functions.Binary
 {
+    /// <summary>
+    /// Node used to calculate division.
+    /// </summary>
     public class DivisionNode : IBinaryOperationNode
     {
+        /// <inheritdoc />
         public INode RightNode { get; set; }
+
+        /// <inheritdoc />
         public INode LeftNode { get; set; }
 
+        /// <inheritdoc />
         public INode Parent { get; set; }
-        public Guid Gid { get; set; }
 
+        /// <inheritdoc />
         public decimal Evaluate()
         {
-            return Decimal.Divide(LeftNode.Evaluate(), RightNode.Evaluate());
+            return decimal.Divide(LeftNode.Evaluate(), RightNode.Evaluate());
         }
-
-        public DivisionNode()
-        {
-            Gid = Guid.NewGuid();
-        }
-
     }
 }

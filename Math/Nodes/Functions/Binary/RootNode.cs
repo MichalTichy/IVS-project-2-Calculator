@@ -2,46 +2,42 @@
 
 namespace Math.Nodes.Functions.Binary
 {
+    /// <summary>
+    /// Node used to calculate root
+    /// </summary>
     public class RootNode : IBinaryOperationNode
     {
+        /// <inheritdoc />
         public INode RightNode { get; set; }
+
+        /// <inheritdoc />
         public INode LeftNode { get; set; }
 
+        /// <inheritdoc />
         public INode Parent { get; set; }
-        public Guid Gid { get; set; }
+
+        /// <inheritdoc />
         public decimal Evaluate()
         {
-            decimal LeftNodeValue = LeftNode.Evaluate();
-            decimal RightNodeValue = RightNode.Evaluate();
+            decimal leftNodeValue = LeftNode.Evaluate();
+            decimal rightNodeValue = RightNode.Evaluate();
 
-            CheckIfItsPossibleToCalculateSqrt(LeftNodeValue, RightNodeValue);
+            CheckIfItsPossibleToCalculateSqrt(leftNodeValue, rightNodeValue);
 
-            int negative = 1;
-            if (RightNodeValue < 0)
-            {
-                negative = -1;
-            }
+            bool isNegative = rightNodeValue < 0;
 
-            return ((decimal)System.Math.Pow(System.Math.Abs((double)RightNodeValue), 1.0 / (int)LeftNodeValue)*negative);
+            var value = (decimal) System.Math.Pow(System.Math.Abs((double) rightNodeValue), 1.0 / (int) leftNodeValue);
+
+            return isNegative ? value * -1 : value;
         }
 
-        void CheckIfItsPossibleToCalculateSqrt(decimal LeftValue, decimal RightValue)
+        void CheckIfItsPossibleToCalculateSqrt(decimal leftValue, decimal rightValue)
         {
-            if (RightValue < 0 && LeftValue%2 == 0)
-            {
+            if (rightValue < 0 && leftValue % 2 == 0)
                 throw new ArgumentException("Number cannot be smaller than zero!");
-            }
 
-            if (LeftValue == 0)
-            {
+            if (leftValue == 0)
                 throw new ArgumentException("Root cannot be zero!");
-            }
         }
-
-        public RootNode()
-        {
-            Gid = Guid.NewGuid();
-        }
-
     }
 }
