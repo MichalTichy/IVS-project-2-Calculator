@@ -135,7 +135,7 @@ namespace Math.Tokenizer
         /// <summary>
         /// Gets type of preceding token.
         /// </summary>
-        /// <param name="lastExpressionToken"></param>
+        /// <param name="lastExpressionToken">token to analyze</param>
         /// <returns>Type of preceding token.</returns>
         public static ExpressionPartTypes? GetPrecedingExpressionPartType(
             (string token, MathOperatorDescription operatorDescription)? lastExpressionToken)
@@ -222,7 +222,7 @@ namespace Math.Tokenizer
         /// </summary>
         /// <param name="text">source text</param>
         /// <param name="operatorTextRepresentation">operator to exprect</param>
-        /// <returns></returns>
+        /// <returns>Collection with extracted operator and rest of the string.</returns>
         protected virtual ICollection<string> SeparateOperatorFromText(string text, string operatorTextRepresentation)
         {
             var indexOfOperatorOccurrence = text.IndexOf(operatorTextRepresentation, StringComparison.Ordinal);

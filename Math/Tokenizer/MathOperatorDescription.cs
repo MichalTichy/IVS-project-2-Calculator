@@ -46,7 +46,11 @@ namespace Math.Tokenizer
             OperationType = operationType;
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Compares given object and current instance.
+        /// </summary>
+        /// <param name="obj">Object to compare</param>
+        /// <returns>Whether given objects is same as current instance.</returns>
         public override bool Equals(object obj)
         {
             if (!(obj is MathOperatorDescription desc))
@@ -64,7 +68,10 @@ namespace Math.Tokenizer
             return false;
         }
 
-        /// <inheritdoc />
+        /// <summary>
+        /// Returns text representation
+        /// </summary>
+        /// <returns>text representation</returns>
         public override string ToString()
         {
             return TextRepresentation;

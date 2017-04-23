@@ -218,8 +218,6 @@ namespace Calculator
             
             int i = 0;
             ICollection<string> mc;
-
-            Debug.WriteLine($"{i} .. {n.Gid} .. {n.ToString()}");
             while (n!=null)
             {
                
