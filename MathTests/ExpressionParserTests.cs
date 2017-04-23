@@ -90,7 +90,7 @@ namespace MathTests
         public void DivisionByZeroTest()
         {
             var expressionParser = new ExpressionTreeBuilder<Tokenizer>();
-            Assert.ThrowsException<DivideByZeroException>(()=>expressionParser.ParseExpression("(2 - 1 + 14/0 + 7").Evaluate());
+            Assert.ThrowsException<DivideByZeroException>(()=>expressionParser.ParseExpression("(2 - 1 + 14)/0 + 7").Evaluate());
         }
 
         [TestMethod]
