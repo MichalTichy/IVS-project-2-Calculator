@@ -25,14 +25,7 @@ namespace TreeContainer
 		{
 			get
 			{
-				if (_ltd != null)
-				{
-					return _ltd.Connections;
-				}
-				else
-				{
-					return null;
-				}
+			    return _ltd?.Connections;
 			}
 		}
         #endregion
@@ -361,12 +354,14 @@ namespace TreeContainer
                             fHaveLastPoint = true;
                             continue;
                         }
-                        Line pen = new Line();
-                        pen.Stroke = brsh;
-                        pen.X1 = PtFromDPoint(tcn.LstPt[0]).X;
-                        pen.Y1 = PtFromDPoint(tcn.LstPt[0]).Y;
-                        pen.X2 = PtFromDPoint(dpt).X;
-                        pen.Y2 = PtFromDPoint(dpt).Y;
+                        Line pen = new Line
+                        {
+                            Stroke = brsh,
+                            X1 = PtFromDPoint(tcn.LstPt[0]).X,
+                            Y1 = PtFromDPoint(tcn.LstPt[0]).Y,
+                            X2 = PtFromDPoint(dpt).X,
+                            Y2 = PtFromDPoint(dpt).Y
+                        };
                         Children.Add(pen);
                         ptLast = PtFromDPoint(dpt);
                     }
