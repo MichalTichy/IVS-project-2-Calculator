@@ -119,7 +119,7 @@ namespace Math.Tokenizer
                     continue;
                 }
 
-                var precedingExpressionPartType = GetPrecedingExpressionPartType(expressionTokens.Last());
+                var precedingExpressionPartType = GetPrecedingExpressionPartType(expressionTokens.LastOrDefault());
 
                 description = GetMathOperatorThatMatchesTokenTheBest(matchingOperators, precedingExpressionPartType);
 
@@ -141,7 +141,7 @@ namespace Math.Tokenizer
             (string token, MathOperatorDescription operatorDescription)? lastExpressionToken)
         {
             ExpressionPartTypes? precedingExpressionPartType;
-            if (!lastExpressionToken.HasValue)
+            if (lastExpressionToken == null || (lastExpressionToken.Value.Item1==null && lastExpressionToken.Value.Item2 == null))
                 precedingExpressionPartType = null;
             else if (lastExpressionToken.Value.token == "(")
                 precedingExpressionPartType = ExpressionPartTypes.LeftParentheses;
