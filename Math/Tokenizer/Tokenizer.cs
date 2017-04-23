@@ -95,13 +95,13 @@ namespace Math.Tokenizer
                 case ExpressionPartTypes.Number:
                 case ExpressionPartTypes.UnaryFollowing:
                 case ExpressionPartTypes.RightParentheses:
-                    return RegisteredOperators.Where(t => t.NodeType.isFollowingUnary() || t.NodeType.isBinary()).ToList();
+                    return RegisteredOperators.Where(t => t.NodeType.IsFollowingUnary() || t.NodeType.IsBinary()).ToList();
 
                 case ExpressionPartTypes.LeftParentheses:
                 case ExpressionPartTypes.UnaryPreceding:
                 case ExpressionPartTypes.Binary:
                 case null:
-                    return RegisteredOperators.Where(t => t.NodeType.isPrecedingUnary()).ToList();
+                    return RegisteredOperators.Where(t => t.NodeType.IsPrecedingUnary()).ToList();
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(previousExpressionPart), previousExpressionPart, null);

@@ -56,7 +56,7 @@ namespace Math.ExpressionTreeBuilder
                         currentNode = currentNode.InsertToRight(new TemporaryNode() {FutureType = operatorDescription});
                     }
 
-                    if (currentNode.FutureType.NodeType.isBinary() || currentNode.FutureType.NodeType.isPrecedingUnary())
+                    if (currentNode.FutureType.NodeType.IsBinary() || currentNode.FutureType.NodeType.IsPrecedingUnary())
                     {
                         currentNode = currentNode.GetRightNode();
                     }

@@ -12,42 +12,51 @@ using Math.Nodes.Values;
 
 namespace Math
 {
+    /// <summary>
+    /// Helper class with extension methods.
+    /// </summary>
     public static class Extensions
     {
-        internal static bool isUnary(this Type type)
+        internal static bool IsUnary(this Type type)
         {
             return typeof(IUnaryOperationNode).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo());
         }
-        internal static bool isPrecedingUnary(this Type type)
+        internal static bool IsPrecedingUnary(this Type type)
         {
             return typeof(IPrecedingUnaryOperationNode).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo());
         }
-        internal static bool isFollowingUnary(this Type type)
+        internal static bool IsFollowingUnary(this Type type)
         {
             return typeof(IFollowingUnaryOperationNode).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo());
         }
 
-        internal static bool isBinary(this Type type)
+        internal static bool IsBinary(this Type type)
         {
             return typeof(IBinaryOperationNode).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo());
         }
-        internal static bool isFunctionNode(this Type type)
+        internal static bool IsFunctionNode(this Type type)
         {
             return typeof(IFunctionNode).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo());
         }
         
+        /// <summary>
+        /// Transforms Node type to Expression part
+        /// </summary>
+        /// <param name="type">Node type</param>
+        /// <returns> resulting expression part </returns>
+        /// <exception cref="NotSupportedException"> Throws when given node cannot be translated to ExpressionPartType </exception>
         public static ExpressionPartTypes ToExpressionPart(this Type type)
         {
             if (typeof(NumberNode).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo()))
             return ExpressionPartTypes.Number;
 
-            if (type.isPrecedingUnary())
+            if (type.IsPrecedingUnary())
                 return ExpressionPartTypes.UnaryPreceding;
 
-            if (type.isFollowingUnary())
+            if (type.IsFollowingUnary())
                 return ExpressionPartTypes.UnaryFollowing;
 
-            if (type.isBinary())
+            if (type.IsBinary())
                 return ExpressionPartTypes.Binary;
 
             throw new NotSupportedException($"{nameof(type)} cannot be converted into {nameof(ExpressionPartTypes)}");

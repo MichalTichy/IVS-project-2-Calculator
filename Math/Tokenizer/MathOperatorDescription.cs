@@ -32,7 +32,7 @@ namespace Math.Tokenizer
         /// <exception cref="ArgumentException"> Throws when provided arguments are not correct. </exception>
         public MathOperatorDescription(Type nodeType, string textRepresentation, OperationType operationType)
         {
-            if (!nodeType.isFunctionNode())
+            if (!nodeType.IsFunctionNode())
                 throw new ArgumentException($"{nameof(nodeType)} is not implementation of {nameof(IFunctionNode)}");
             NodeType = nodeType;
 
@@ -52,10 +52,10 @@ namespace Math.Tokenizer
             if (desc.TextRepresentation != TextRepresentation)
                 return false;
 
-            if (NodeType.isBinary() && desc.NodeType.isBinary())
+            if (NodeType.IsBinary() && desc.NodeType.IsBinary())
                 return true;
 
-            if (NodeType.isUnary() && desc.NodeType.isUnary())
+            if (NodeType.IsUnary() && desc.NodeType.IsUnary())
                 return true;
 
             return false;
