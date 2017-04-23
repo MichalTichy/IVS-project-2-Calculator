@@ -6,10 +6,30 @@ namespace Math.Tokenizer
 {
     public class MathOperatorDescription
     {
+        /// <summary>
+        /// Text representation of mathematical operator (eq. + , sqrt , ...)
+        /// </summary>
         public readonly string TextRepresentation;
+
+
+        /// <summary>
+        /// Type of Node that will be created.
+        /// </summary>
         public readonly Type NodeType;
+
+        /// <summary>
+        /// Operation type, this determines priority of operations.
+        /// </summary>
         public readonly OperationType OperationType;
 
+
+        /// <summary>
+        /// Initializes new operator description.
+        /// </summary>
+        /// <param name="nodeType"> Type of node that will be created. </param>
+        /// <param name="textRepresentation"> Text representation of mathematical operator (eq. + , sqrt , ...) </param>
+        /// <param name="operationType"> Type of operation </param>
+        /// <exception cref="ArgumentException"> Throws when provided arguments are not correct. </exception>
         public MathOperatorDescription(Type nodeType, string textRepresentation, OperationType operationType)
         {
             if (!nodeType.isFunctionNode())
@@ -23,6 +43,7 @@ namespace Math.Tokenizer
             OperationType = operationType;
         }
 
+        /// <inheritdoc />
         public override bool Equals(object obj)
         {
             if (!(obj is MathOperatorDescription desc))
@@ -40,6 +61,7 @@ namespace Math.Tokenizer
             return false;
         }
 
+        /// <inheritdoc />
         public override string ToString()
         {
             return TextRepresentation;
