@@ -2,7 +2,6 @@ using System;
 
 namespace Math.Nodes.Functions.Unary
 {
-
     /// <summary>
     /// Node used to calculate gamma function
     /// </summary>
@@ -17,7 +16,7 @@ namespace Math.Nodes.Functions.Unary
         /// <inheritdoc />
         public decimal Evaluate()
         {
-            return (decimal)Gamma((double)ChildNode.Evaluate());
+            return (decimal) Gamma((double) ChildNode.Evaluate());
         }
 
         private static int g = 7;
@@ -49,7 +48,8 @@ namespace Math.Nodes.Functions.Unary
                     x += p[i] / (value + i);
                 }
                 var t = value + g + 0.5;
-                return System.Math.Sqrt(2 * System.Math.PI) * (System.Math.Pow(t, value + 0.5)) * System.Math.Exp(-t) * x;
+                return System.Math.Sqrt(2 * System.Math.PI) * (System.Math.Pow(t, value + 0.5)) * System.Math.Exp(-t) *
+                       x;
             }
         }
     }

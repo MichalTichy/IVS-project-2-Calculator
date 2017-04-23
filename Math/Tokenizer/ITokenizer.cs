@@ -19,7 +19,8 @@ namespace Math.Tokenizer
         /// </summary>
         /// <param name="tokens">Collection of expression tokens.</param>
         /// <returns>Collection of token and its operator description.</returns>
-        ICollection<(string token, MathOperatorDescription operatorDescription)> AssignOperatorDescriptionToTokens(ICollection<string> tokens);
+        ICollection<(string token, MathOperatorDescription operatorDescription)> AssignOperatorDescriptionToTokens(
+            ICollection<string> tokens);
 
         /// <summary>
         /// Gets all next possible math operators.

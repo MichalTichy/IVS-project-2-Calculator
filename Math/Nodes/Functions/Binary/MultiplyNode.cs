@@ -2,7 +2,6 @@
 
 namespace Math.Nodes.Functions.Binary
 {
-
     /// <summary>
     /// Node used to calculate multiplication.
     /// </summary>
@@ -16,7 +15,7 @@ namespace Math.Nodes.Functions.Binary
 
         /// <inheritdoc />
         public INode Parent { get; set; }
-        
+
         /// <inheritdoc />
         public decimal Evaluate()
         {

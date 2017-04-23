@@ -14,7 +14,7 @@ namespace Math.ExpressionTreeBuilder
         /// Tokenizer used to parse given expressions.
         /// </summary>
         protected readonly T Tokenizer;
-        
+
         /// <summary>
         /// Initializes new expression tree builder 
         /// </summary>
@@ -82,9 +82,8 @@ namespace Math.ExpressionTreeBuilder
                     }
                 }
             }
-            
+
             return currentNode.GetRoot().Build();
         }
-        
     }
 }

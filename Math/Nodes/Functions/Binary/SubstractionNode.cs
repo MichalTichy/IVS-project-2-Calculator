@@ -19,7 +19,7 @@ namespace Math.Nodes.Functions.Binary
         /// <inheritdoc />
         public decimal Evaluate()
         {
-            return LeftNode.Evaluate() -  RightNode.Evaluate();
+            return LeftNode.Evaluate() - RightNode.Evaluate();
         }
     }
 }

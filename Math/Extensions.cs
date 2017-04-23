@@ -21,10 +21,12 @@ namespace Math
         {
             return typeof(IUnaryOperationNode).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo());
         }
+
         internal static bool IsPrecedingUnary(this Type type)
         {
             return typeof(IPrecedingUnaryOperationNode).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo());
         }
+
         internal static bool IsFollowingUnary(this Type type)
         {
             return typeof(IFollowingUnaryOperationNode).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo());
@@ -34,11 +36,12 @@ namespace Math
         {
             return typeof(IBinaryOperationNode).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo());
         }
+
         internal static bool IsFunctionNode(this Type type)
         {
             return typeof(IFunctionNode).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo());
         }
-        
+
         /// <summary>
         /// Transforms Node type to Expression part
         /// </summary>
@@ -48,7 +51,7 @@ namespace Math
         public static ExpressionPartTypes ToExpressionPart(this Type type)
         {
             if (typeof(NumberNode).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo()))
-            return ExpressionPartTypes.Number;
+                return ExpressionPartTypes.Number;
 
             if (type.IsPrecedingUnary())
                 return ExpressionPartTypes.UnaryPreceding;

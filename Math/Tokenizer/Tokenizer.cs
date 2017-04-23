@@ -9,7 +9,6 @@ using Math.Nodes.Values;
 
 namespace Math.Tokenizer
 {
-
     /// <summary>
     /// Parses math expression to individual tokens.
     /// </summary>
@@ -27,7 +26,7 @@ namespace Math.Tokenizer
         {
             RegisterDefaultOperators();
         }
-        
+
         /// <summary>
         /// Initializes new tokenizer and registers given operators.
         /// Default operators are not registered.
@@ -45,22 +44,22 @@ namespace Math.Tokenizer
         protected void RegisterDefaultOperators()
         {
             RegisterOperator(new MathOperatorDescription(typeof(SumNode), "+", OperationType.LowPriorityOperation));
-            RegisterOperator(new MathOperatorDescription(typeof(SubstractionNode), "-", OperationType.LowPriorityOperation));
+            RegisterOperator(new MathOperatorDescription(typeof(SubstractionNode), "-",
+                OperationType.LowPriorityOperation));
             RegisterOperator(new MathOperatorDescription(typeof(NegationNode), "-", OperationType.FunctionCalls));
             RegisterOperator(new MathOperatorDescription(typeof(MultiplyNode), "*", OperationType.HighPriorityOperation));
             RegisterOperator(new MathOperatorDescription(typeof(DivisionNode), "/", OperationType.HighPriorityOperation));
             RegisterOperator(new MathOperatorDescription(typeof(FactorialNode), "!", OperationType.FunctionCalls));
             RegisterOperator(new MathOperatorDescription(typeof(PercentageNode), "%", OperationType.FunctionCalls));
             RegisterOperator(new MathOperatorDescription(typeof(PowNode), "^", OperationType.FunctionCalls));
-            RegisterOperator(new MathOperatorDescription(typeof(RootNode), "sqrt", OperationType.FunctionCalls)); 
-            RegisterOperator(new MathOperatorDescription(typeof(SqrtNode),"sqrt",OperationType.FunctionCalls)); 
+            RegisterOperator(new MathOperatorDescription(typeof(RootNode), "sqrt", OperationType.FunctionCalls));
+            RegisterOperator(new MathOperatorDescription(typeof(SqrtNode), "sqrt", OperationType.FunctionCalls));
             RegisterOperator(new MathOperatorDescription(typeof(LogNode), "log", OperationType.FunctionCalls));
             RegisterOperator(new MathOperatorDescription(typeof(GammaNode), "Γ", OperationType.FunctionCalls));
             RegisterOperator(new MathOperatorDescription(typeof(SinNode), "sin", OperationType.FunctionCalls));
             RegisterOperator(new MathOperatorDescription(typeof(CosNode), "cos", OperationType.FunctionCalls));
             RegisterOperator(new MathOperatorDescription(typeof(TanNode), "tan", OperationType.FunctionCalls));
             RegisterOperator(new MathOperatorDescription(typeof(CotgNode), "cotg", OperationType.FunctionCalls));
-
         }
 
 
@@ -81,14 +80,16 @@ namespace Math.Tokenizer
 
 
         /// <inheritdoc />
-        public virtual ICollection<MathOperatorDescription> GetPossibleNextMathOperators(ExpressionPartTypes? previousExpressionPart)
+        public virtual ICollection<MathOperatorDescription> GetPossibleNextMathOperators(
+            ExpressionPartTypes? previousExpressionPart)
         {
             switch (previousExpressionPart)
             {
                 case ExpressionPartTypes.Number:
                 case ExpressionPartTypes.UnaryFollowing:
                 case ExpressionPartTypes.RightParentheses:
-                    return RegisteredOperators.Where(t => t.NodeType.IsFollowingUnary() || t.NodeType.IsBinary()).ToList();
+                    return
+                        RegisteredOperators.Where(t => t.NodeType.IsFollowingUnary() || t.NodeType.IsBinary()).ToList();
 
                 case ExpressionPartTypes.LeftParentheses:
                 case ExpressionPartTypes.UnaryPreceding:
@@ -102,9 +103,9 @@ namespace Math.Tokenizer
         }
 
         /// <inheritdoc />
-        public virtual ICollection<(string token, MathOperatorDescription operatorDescription)> AssignOperatorDescriptionToTokens(ICollection<string> tokens)
+        public virtual ICollection<(string token, MathOperatorDescription operatorDescription)>
+            AssignOperatorDescriptionToTokens(ICollection<string> tokens)
         {
-
             var expressionTokens = new List<(string token, MathOperatorDescription operatorDescription)>();
 
             foreach (var token in tokens)
@@ -114,7 +115,7 @@ namespace Math.Tokenizer
 
                 if (!matchingOperators.Any())
                 {
-                    expressionTokens.Add((token, (MathOperatorDescription)null));
+                    expressionTokens.Add((token, (MathOperatorDescription) null));
                     continue;
                 }
 
@@ -136,7 +137,8 @@ namespace Math.Tokenizer
         /// </summary>
         /// <param name="lastExpressionToken"></param>
         /// <returns>Type of preceding token.</returns>
-        public static ExpressionPartTypes? GetPrecedingExpressionPartType((string token, MathOperatorDescription operatorDescription)? lastExpressionToken)
+        public static ExpressionPartTypes? GetPrecedingExpressionPartType(
+            (string token, MathOperatorDescription operatorDescription)? lastExpressionToken)
         {
             ExpressionPartTypes? precedingExpressionPartType;
             if (!lastExpressionToken.HasValue)
@@ -159,7 +161,8 @@ namespace Math.Tokenizer
         /// <param name="previousExpressionPart">Preceding expression part.</param>
         /// <returns>Best matching operator description.</returns>
         /// <exception cref="ArgumentException">Throws when no or multiple matching operators were found.</exception>
-        protected virtual MathOperatorDescription GetMathOperatorThatMatchesTokenTheBest(ICollection<MathOperatorDescription> possibleDescriptions, ExpressionPartTypes? previousExpressionPart)
+        protected virtual MathOperatorDescription GetMathOperatorThatMatchesTokenTheBest(
+            ICollection<MathOperatorDescription> possibleDescriptions, ExpressionPartTypes? previousExpressionPart)
         {
             if (possibleDescriptions.Count == 1)
                 return possibleDescriptions.First();
@@ -179,13 +182,14 @@ namespace Math.Tokenizer
         /// <inheritdoc />
         public virtual ICollection<string> SplitExpressionToTokens(string expression)
         {
-            var tokens = new List<string> { expression.Replace(" ", "").ToLower() };
+            var tokens = new List<string> {expression.Replace(" ", "").ToLower()};
 
             for (var i = 0; i < tokens.Count; i++)
             {
                 string token = tokens[i];
 
-                var matchingOperator = registeredOperators.FirstOrDefault(t => token.Contains(t.TextRepresentation))?.TextRepresentation;
+                var matchingOperator =
+                    registeredOperators.FirstOrDefault(t => token.Contains(t.TextRepresentation))?.TextRepresentation;
 
                 if (matchingOperator == null)
                 {
@@ -212,6 +216,7 @@ namespace Math.Tokenizer
 
             return tokens;
         }
+
         /// <summary>
         /// Pulls operator from text.
         /// </summary>
@@ -223,11 +228,12 @@ namespace Math.Tokenizer
             var indexOfOperatorOccurrence = text.IndexOf(operatorTextRepresentation, StringComparison.Ordinal);
 
             if (indexOfOperatorOccurrence == -1)
-                return new[] { text };
+                return new[] {text};
 
             var textParts = new List<string>();
             var precedingText = new string(text.Take(indexOfOperatorOccurrence).ToArray());
-            var followingText = new string(text.Skip(indexOfOperatorOccurrence + operatorTextRepresentation.Length).ToArray());
+            var followingText =
+                new string(text.Skip(indexOfOperatorOccurrence + operatorTextRepresentation.Length).ToArray());
 
             if (!string.IsNullOrWhiteSpace(precedingText))
                 textParts.Add(precedingText);

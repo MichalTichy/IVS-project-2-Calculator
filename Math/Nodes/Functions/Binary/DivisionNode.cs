@@ -21,6 +21,5 @@ namespace Math.Nodes.Functions.Binary
         {
             return decimal.Divide(LeftNode.Evaluate(), RightNode.Evaluate());
         }
-
     }
 }

@@ -30,14 +30,16 @@ namespace Math.Nodes.Functions.Binary
                 negative = -1;
             }
 
-            return (decimal)System.Math.Pow(System.Math.Abs((double)leftNodeValue), (double)rightNodeValue)*negative;
+            return (decimal) System.Math.Pow(System.Math.Abs((double) leftNodeValue), (double) rightNodeValue) *
+                   negative;
         }
+
         void CheckIfItsPossibleToCalculatePow(decimal LeftValue, decimal RightValue)
         {
-            if (LeftValue < 0 && RightValue%1 != 0 && RightValue != 0)
+            if (LeftValue < 0 && RightValue % 1 != 0 && RightValue != 0)
             {
                 RightValue = System.Math.Round(Decimal.Divide(1, RightValue), 10, MidpointRounding.AwayFromZero);
-                if (RightValue%1 != 0 && RightValue %2 != 0)
+                if (RightValue % 1 != 0 && RightValue % 2 != 0)
                 {
                     throw new ArgumentException("Negative number divided by even number cannot be smaller than zero!");
                 }
@@ -47,8 +49,6 @@ namespace Math.Nodes.Functions.Binary
             {
                 throw new ArgumentException("Negative number divided by even number cannot be smaller than zero!");
             }
-         
-
         }
     }
 }

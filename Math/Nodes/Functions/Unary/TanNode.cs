@@ -21,9 +21,9 @@ namespace Math.Nodes.Functions.Unary
         public decimal Evaluate()
         {
             decimal nodeValue = ChildNode.Evaluate();
-            double tan = System.Math.Tan((double)nodeValue * (System.Math.PI / 180.0));
+            double tan = System.Math.Tan((double) nodeValue * (System.Math.PI / 180.0));
 
-            return System.Math.Round((decimal)tan, 14, MidpointRounding.AwayFromZero);
+            return System.Math.Round((decimal) tan, 14, MidpointRounding.AwayFromZero);
         }
     }
 }

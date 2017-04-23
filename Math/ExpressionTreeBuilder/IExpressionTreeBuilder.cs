@@ -7,7 +7,6 @@ namespace Math.ExpressionTreeBuilder
     /// </summary>
     public interface IExpressionTreeBuilder
     {
-
         /// <summary>
         /// Creates node tree from given expression
         /// </summary>

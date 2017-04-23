@@ -18,10 +18,9 @@ namespace Math.Nodes.Functions.Unary
         /// <inheritdoc />
         public virtual decimal Evaluate()
         {
-
-            if (   Parent is IBinaryOperationNode binaryNode
-                   && binaryNode.RightNode==this
-                   && (binaryNode is SumNode || binaryNode is SubstractionNode ))
+            if (Parent is IBinaryOperationNode binaryNode
+                && binaryNode.RightNode == this
+                && (binaryNode is SumNode || binaryNode is SubstractionNode))
             {
                 var leftPart = binaryNode.LeftNode.Evaluate();
                 return CovertPercentageToFraction(ChildNode.Evaluate()) * leftPart;

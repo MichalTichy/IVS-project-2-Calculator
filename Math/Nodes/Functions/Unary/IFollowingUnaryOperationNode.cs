@@ -5,6 +5,5 @@ namespace Math.Nodes.Functions.Unary
     /// </summary>
     public interface IFollowingUnaryOperationNode : IUnaryOperationNode
     {
-        
     }
 }

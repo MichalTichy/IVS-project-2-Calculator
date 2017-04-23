@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace Math.Nodes.Functions.Binary
 {
-
     /// <summary>
     ///  Node used to calculate logarithm.
     /// </summary>
@@ -29,7 +28,7 @@ namespace Math.Nodes.Functions.Binary
 
             CheckIfItsPossibleToCalculateLog(numberNodeValue, argumentNodeValue);
 
-            return (decimal)System.Math.Log((double)numberNodeValue, (double)argumentNodeValue);
+            return (decimal) System.Math.Log((double) numberNodeValue, (double) argumentNodeValue);
         }
 
         void CheckIfItsPossibleToCalculateLog(decimal numbervalue, decimal argumentValue)

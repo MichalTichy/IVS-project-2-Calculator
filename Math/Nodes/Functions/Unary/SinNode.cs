@@ -22,9 +22,9 @@ namespace Math.Nodes.Functions.Unary
         {
             decimal nodeValue = ChildNode.Evaluate();
 
-            double sin = System.Math.Sin((double)nodeValue * (System.Math.PI / 180.0));
+            double sin = System.Math.Sin((double) nodeValue * (System.Math.PI / 180.0));
 
-            return System.Math.Round((decimal)sin, 14, MidpointRounding.AwayFromZero);
+            return System.Math.Round((decimal) sin, 14, MidpointRounding.AwayFromZero);
         }
     }
 }
