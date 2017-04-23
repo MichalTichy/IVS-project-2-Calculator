@@ -9,23 +9,41 @@ using Math.Nodes.Values;
 
 namespace Math.Tokenizer
 {
+    /// <summary>
+    /// Parses math expression to individual tokens.
+    /// </summary>
     public class Tokenizer : ITokenizer
     {
+
+        /// <summary>
+        /// Collection of all currently registered mathematical operations.
+        /// </summary>
         public IReadOnlyCollection<MathOperatorDescription> RegisteredOperators => registeredOperators.AsReadOnly();
 
         private List<MathOperatorDescription> registeredOperators = new List<MathOperatorDescription>();
 
+        /// <summary>
+        /// Initializes new tokenizer class and registers default operators.
+        /// </summary>
         public Tokenizer()
         {
             RegisterDefaultOperators();
         }
         
+        /// <summary>
+        /// Initializes new tokenizer and registers given operators.
+        /// Default operators are not registered.
+        /// </summary>
+        /// <param name="operators">Math operator descriptions to be registered.</param>
         public Tokenizer(ICollection<MathOperatorDescription> operators)
         {
             foreach (var mathOperatorDescription in operators)
                 RegisterOperator(mathOperatorDescription);
         }
 
+        /// <summary>
+        /// Registers default operators.
+        /// </summary>
         protected void RegisterDefaultOperators()
         {
             RegisterOperator(new MathOperatorDescription(typeof(SumNode), "+", OperationType.LowPriorityOperation));
@@ -47,6 +65,12 @@ namespace Math.Tokenizer
 
         }
 
+
+        /// <summary>
+        /// Registers given operator.
+        /// </summary>
+        /// <param name="operatorDescription">description of operator</param>
+        /// <exception cref="ArgumentException">Throws argument exception when the same operator is allready registered.</exception>
         public void RegisterOperator(MathOperatorDescription operatorDescription)
         {
             if (registeredOperators.Any(t => t.Equals(operatorDescription)))
@@ -58,6 +82,12 @@ namespace Math.Tokenizer
         }
         
 
+        /// <summary>
+        /// Gets all next possible math operators.
+        /// </summary>
+        /// <param name="previousExpressionPart">Type of preceding token.</param>
+        /// <returns>Collection of possible math operators.</returns>
+        /// <exception cref="ArgumentOutOfRangeException">Throws when given Expression type is not supported.</exception>
         public virtual ICollection<MathOperatorDescription> GetPossibleNextMathOperators(ExpressionPartTypes? previousExpressionPart)
         {
             switch (previousExpressionPart)
@@ -78,6 +108,12 @@ namespace Math.Tokenizer
             }
         }
 
+        /// <summary>
+        /// Assigns string tokens to matching operator descriptions.
+        /// </summary>
+        /// <param name="tokens">Collection of expression tokens.</param>
+        /// <returns>Collection of token and its operator description.</returns>
+        /// <exception cref="ArgumentException">Throws if not suitable operator description was found.</exception>
         public virtual ICollection<(string token, MathOperatorDescription operatorDescription)> AssignOperatorDescriptionToTokens(ICollection<string> tokens)
         {
 
@@ -107,6 +143,11 @@ namespace Math.Tokenizer
             return expressionTokens;
         }
 
+        /// <summary>
+        /// Gets type of preceding token.
+        /// </summary>
+        /// <param name="lastExpressionToken"></param>
+        /// <returns>Type of preceding token.</returns>
         public static ExpressionPartTypes? GetPrecedingExpressionPartType((string token, MathOperatorDescription operatorDescription)? lastExpressionToken)
         {
             ExpressionPartTypes? precedingExpressionPartType;
@@ -123,6 +164,13 @@ namespace Math.Tokenizer
             return precedingExpressionPartType;
         }
 
+        /// <summary>
+        /// Picks most suiting operator from collection of possible operators.
+        /// </summary>
+        /// <param name="possibleDescriptions">Collection of possible operators.</param>
+        /// <param name="previousExpressionPart">Preceding expression part.</param>
+        /// <returns>Best matching operator description.</returns>
+        /// <exception cref="ArgumentException">Throws when no or multiple matching operators were found.</exception>
         protected virtual MathOperatorDescription GetMathOperatorThatMatchesTokenTheBest(ICollection<MathOperatorDescription> possibleDescriptions, ExpressionPartTypes? previousExpressionPart)
         {
             if (possibleDescriptions.Count == 1)
@@ -140,6 +188,12 @@ namespace Math.Tokenizer
             return results.First();
         }
 
+        /// <summary>
+        /// Splits expression to individual tokens.
+        /// </summary>
+        /// <param name="expression">Mathematical expression. </param>
+        /// <returns>Collection of tokens.</returns>
+        /// <exception cref="ArgumentException">Throws if given expression is invalid.</exception>
         public virtual ICollection<string> SplitExpressionToTokens(string expression)
         {
             var tokens = new List<string> { expression.Replace(" ", "").ToLower() };
@@ -175,6 +229,12 @@ namespace Math.Tokenizer
 
             return tokens;
         }
+        /// <summary>
+        /// Pulls operator from text.
+        /// </summary>
+        /// <param name="text">source text</param>
+        /// <param name="operatorTextRepresentation">operator to exprect</param>
+        /// <returns></returns>
         protected virtual ICollection<string> SeparateOperatorFromText(string text, string operatorTextRepresentation)
         {
             var indexOfOperatorOccurrence = text.IndexOf(operatorTextRepresentation, StringComparison.Ordinal);
