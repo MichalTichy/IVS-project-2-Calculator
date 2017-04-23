@@ -25,7 +25,7 @@ namespace Math.Nodes.Functions.Binary
             CheckIfItsPossibleToCalculatePow(leftNodeValue, rightNodeValue);
 
             int negative = 1;
-            if (leftNodeValue < 0)
+            if (leftNodeValue < 0 && rightNodeValue %2 != 0)
             {
                 negative = -1;
             }
@@ -38,16 +38,12 @@ namespace Math.Nodes.Functions.Binary
         {
             if (LeftValue < 0 && RightValue % 1 != 0 && RightValue != 0)
             {
-                RightValue = System.Math.Round(Decimal.Divide(1, RightValue), 10, MidpointRounding.AwayFromZero);
-                if (RightValue % 1 != 0 && RightValue % 2 != 0)
+                RightValue = Decimal.Divide(1, RightValue);
+                RightValue = RightValue % 2; 
+                if (RightValue % 1 == 0 && RightValue % 2 == 0)
                 {
                     throw new ArgumentException("Negative number divided by even number cannot be smaller than zero!");
                 }
-            }
-
-            if (LeftValue < 0 && RightValue % 2 == 0)
-            {
-                throw new ArgumentException("Negative number divided by even number cannot be smaller than zero!");
             }
         }
     }
