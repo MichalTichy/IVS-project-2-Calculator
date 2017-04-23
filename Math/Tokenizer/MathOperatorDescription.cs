@@ -4,6 +4,9 @@ using Math.Nodes.Functions;
 
 namespace Math.Tokenizer
 {
+    /// <summary>
+    /// Description of mathematical operation.
+    /// </summary>
     public class MathOperatorDescription
     {
         /// <summary>

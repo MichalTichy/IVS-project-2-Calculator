@@ -10,6 +10,9 @@ namespace Math.ExpressionTreeBuilder
     /// <typeparam name="T">Tokenizer used to parse expression</typeparam>
     public class ExpressionTreeBuilder<T> : IExpressionTreeBuilder where T : ITokenizer, new()
     {
+        /// <summary>
+        /// Tokenizer used to parse given expressions.
+        /// </summary>
         protected readonly T Tokenizer;
         
         /// <summary>
