@@ -10,6 +10,7 @@ using Math.Nodes.Values;
 
 namespace MathTests
 {
+    [TestClass]
     public class ExpressionParserTests
     {
         [TestMethod]

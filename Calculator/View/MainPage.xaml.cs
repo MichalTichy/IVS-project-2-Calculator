@@ -31,7 +31,7 @@ namespace Calculator
     {
       
        
-        private MainPage_ViewModel viewModel;
+        private readonly MainPage_ViewModel viewModel;
         public MainPage()
         {
             this.InitializeComponent();
@@ -51,6 +51,7 @@ namespace Calculator
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            viewModel.LostBySelection = true;
             viewModel.SelectedItem = (MathOperatorDescription)LstVw.SelectedItem;
             LstVw.DeselectRange(new ItemIndexRange(0, 100));
             TXB_Value.Focus(FocusState.Keyboard);
@@ -99,7 +100,5 @@ namespace Calculator
 
 
         }
-
-        DispatcherTimer dt = new DispatcherTimer();
     }
 }
