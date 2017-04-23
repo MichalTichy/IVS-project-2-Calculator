@@ -30,10 +30,13 @@ namespace Calculator
         {
             
             tk = new Tokenizer();
-            lst = tk.GetPossibleNextMathOperators(ExpressionPartTypes.Number);
-            extree = new ExpressionTreeBuilder<Tokenizer>((Tokenizer)tk);
-            OutputColor.Color = Colors.Black;
+
             tre = tree;
+            //lst = tk.GetPossibleNextMathOperators(ExpressionPartTypes.Number);
+            extree = new ExpressionTreeBuilder<Tokenizer>((Tokenizer)tk);
+            parse(false);
+            OutputColor.Color = Colors.Black;
+
         }
         private MathOperatorDescription selectedItem;
         private ITokenizer tk;
@@ -41,15 +44,13 @@ namespace Calculator
         private IExpressionTreeBuilder extree;
         private ICollection<MathOperatorDescription> lst;
         private Math.Nodes.INode node;
-        private string val = "0";
+        private string val = "";
         private string result = "";
         private bool isParsable =false;
         private ICollection<(string, MathOperatorDescription)> ts2;
         private int selection;
         private Windows.UI.Xaml.Media.SolidColorBrush outputColor = new Windows.UI.Xaml.Media.SolidColorBrush();
         public int oldsel;
-        public string oldselected;
-        private List<TreeConnection> conn;
 #region Bindings
         public string Values
         {
@@ -104,11 +105,8 @@ namespace Calculator
             set
             {
                 oldsel = selection;
-                if (value != 0)
-                {
                     selection = value;
                     OnPropertyChanged("Selection");
-                }
                 
             }
         }
@@ -219,7 +217,6 @@ namespace Calculator
             n = getFirst(n);
             
             int i = 0;
-            ICollection<string> mc;
 
             Debug.WriteLine($"{i} .. {n.Gid} .. {n.ToString()}");
             while (n!=null)
@@ -255,7 +252,6 @@ namespace Calculator
 
                     node = extree.ParseExpression(valueToParse);
                     foo(node);
-
                     collectionWithExpressionPartTypes = tk.SplitExpressionToTokens(valueToParse);
                     ts2 = tk.AssignOperatorDescriptionToTokens(collectionWithExpressionPartTypes);
                 }
@@ -276,15 +272,7 @@ namespace Calculator
                     }
                     if (!edit)
                     {
-                        if (!IsParsable)
-                        {
-                            OutputColor.Color = Colors.Red;
-                        }
-                        else
-                        {
-                            OutputColor.Color = Colors.Black;
-                        }
-
+                        OutputColor.Color = (!isParsable) ? Colors.Red : Colors.Black;
                     }
                 }
 
@@ -311,6 +299,12 @@ namespace Calculator
 
         }
 
+
+        public void InputLostFocus(object sender, RoutedEventArgs e)
+        {
+            Selection = oldsel;
+        }
+
         public void KeyPressed(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == Windows.System.VirtualKey.Enter)
@@ -323,8 +317,7 @@ namespace Calculator
         }
         public void Eval()
         {
-            int parseOutput;
-            if (isParsable && (int.TryParse(collectionWithExpressionPartTypes.Last<string>(), out parseOutput)))
+            if (isParsable)
             {
                 try
                 {
