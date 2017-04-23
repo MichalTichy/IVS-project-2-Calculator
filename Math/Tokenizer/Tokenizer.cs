@@ -9,15 +9,13 @@ using Math.Nodes.Values;
 
 namespace Math.Tokenizer
 {
+
     /// <summary>
     /// Parses math expression to individual tokens.
     /// </summary>
     public class Tokenizer : ITokenizer
     {
-
-        /// <summary>
-        /// Collection of all currently registered mathematical operations.
-        /// </summary>
+        /// <inheritdoc />
         public IReadOnlyCollection<MathOperatorDescription> RegisteredOperators => registeredOperators.AsReadOnly();
 
         private List<MathOperatorDescription> registeredOperators = new List<MathOperatorDescription>();
@@ -80,14 +78,9 @@ namespace Math.Tokenizer
 
             registeredOperators.Add(operatorDescription);
         }
-        
 
-        /// <summary>
-        /// Gets all next possible math operators.
-        /// </summary>
-        /// <param name="previousExpressionPart">Type of preceding token.</param>
-        /// <returns>Collection of possible math operators.</returns>
-        /// <exception cref="ArgumentOutOfRangeException">Throws when given Expression type is not supported.</exception>
+
+        /// <inheritdoc />
         public virtual ICollection<MathOperatorDescription> GetPossibleNextMathOperators(ExpressionPartTypes? previousExpressionPart)
         {
             switch (previousExpressionPart)
@@ -108,12 +101,7 @@ namespace Math.Tokenizer
             }
         }
 
-        /// <summary>
-        /// Assigns string tokens to matching operator descriptions.
-        /// </summary>
-        /// <param name="tokens">Collection of expression tokens.</param>
-        /// <returns>Collection of token and its operator description.</returns>
-        /// <exception cref="ArgumentException">Throws if not suitable operator description was found.</exception>
+        /// <inheritdoc />
         public virtual ICollection<(string token, MathOperatorDescription operatorDescription)> AssignOperatorDescriptionToTokens(ICollection<string> tokens)
         {
 
@@ -188,12 +176,7 @@ namespace Math.Tokenizer
             return results.First();
         }
 
-        /// <summary>
-        /// Splits expression to individual tokens.
-        /// </summary>
-        /// <param name="expression">Mathematical expression. </param>
-        /// <returns>Collection of tokens.</returns>
-        /// <exception cref="ArgumentException">Throws if given expression is invalid.</exception>
+        /// <inheritdoc />
         public virtual ICollection<string> SplitExpressionToTokens(string expression)
         {
             var tokens = new List<string> { expression.Replace(" ", "").ToLower() };
