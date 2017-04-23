@@ -21,4 +21,4 @@ Calculator can be easily expanded by new features.
 
 ## License
 
-This project is licensed under the BSD 2-clause "Simplified" License - see the [license.md](license.md) file for details
+This project is licensed under the BSD 2-clause "Simplified" License - see the [licence.md](licence.md) file for details
