@@ -8,10 +8,19 @@ which is graphicaly ilustrated.
 Calculator can be easily expanded by new features.
 
 ## Platforms
+**GUI**
 
-* Windows 32bit
-* Windows 64bit
-* Windows Phone
+*Windows UWP*
+  * Windows 32bit / 64bit
+  * Windows Phone
+  
+ **Math library**
+
+*Portable library*
+  * .Net Framework 4.6
+  * ASP.NET Core 1.0
+  * Windows Universal 10.0 
+  
 
 ## Authors
 
