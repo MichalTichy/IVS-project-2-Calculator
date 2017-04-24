@@ -16,7 +16,7 @@ Calculator can be easily expanded by new features.
 ## Authors
 
 * **xmastn02 - Gabriel Mastný** - *front-end, UX* - [GabrielMastny](https://github.com/GabrielMastny)
-* **xtichy26 - Michal Tichý** - *Architecture, back-end * - [MichalTichy](https://github.com/MichalTichy)
+* **xtichy26 - Michal Tichý** - *Architecture, back-end* - [MichalTichy](https://github.com/MichalTichy)
 * **xmarti78 - Michal Martinů** - *Math expertise, back-end* - [Misanovy](https://github.com/Misanovy)
 
 ## License
