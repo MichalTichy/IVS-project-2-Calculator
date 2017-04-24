@@ -1,18 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace GraphLayout
+﻿namespace Calculator.Graph
 {
-	// Since I'm trying to allow GraphLayout to be used from various
-	// platforms which have different definitions of points, I make
-	// my own point structure here to be used by all platforms.
+	/// <summary>
+	/// Point representation on XY axis
+	/// </summary>
 	public struct DPoint
 	{
+		/// <summary>
+		/// x axis
+		/// </summary>
 		public double X;
+		/// <summary>
+		/// y axis
+		/// </summary>
 		public double Y;
 
+		/// <summary>
+		/// Constructor representing point on xy axis
+		/// </summary>
+		/// <param name="x"></param>
+		/// <param name="y"></param>
 		public DPoint(double x, double y)
 		{
 			X = x;
