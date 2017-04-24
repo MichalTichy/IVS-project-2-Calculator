@@ -52,7 +52,20 @@ namespace Calculator
         private Windows.UI.Xaml.Media.SolidColorBrush outputColor = new Windows.UI.Xaml.Media.SolidColorBrush();
         public int oldsel;
         public bool LostBySelection = false;
-#region Bindings
+        private MathOperatorDescription lastSelecetedItem;
+        private List<TreeConnection> conn;
+
+        public MathOperatorDescription LastSelecetedItem
+        {
+            get => lastSelecetedItem;
+            set
+            {
+                lastSelecetedItem = value;
+                OnPropertyChanged("LastSelectedItem");
+            }
+        } 
+
+        #region Bindings
         public string Values
         {
             get => val; 
@@ -86,13 +99,14 @@ namespace Calculator
         { get => selectedItem;
           set
           {
-                Debug.WriteLine("tets");
+                //Debug.WriteLine("tets");
                     selectedItem = value;
                 if (selectedItem != null)
                 {
                     int i = selectedItem.TextRepresentation.Length;
-                    Values = Values.Insert(selection, selectedItem.TextRepresentation);
-                    Selection += i;
+                    string newValues = val.Insert(selection, selectedItem.TextRepresentation);
+                    Selection +=i;
+                    Values = newValues;
                     //Values += $" {SelectedItem.TextRepresentation}";
                 }
                     
@@ -105,13 +119,10 @@ namespace Calculator
             get => selection;
             set
             {
-                if (!LostBySelection)
+                oldsel = selection;
+                if ((oldsel == 0 && value == 0) || value != 0)
                 {
                     selection = value;
-                }
-                else
-                {
-                    selection = selection += selectedItem.TextRepresentation.Length;
                 }
                 OnPropertyChanged("Selection");
                 
@@ -140,10 +151,10 @@ namespace Calculator
 
         public List<TreeConnection> Conn
         {
-            get => Conn;
+            get => conn;
             set
             {
-                Conn = value;
+                conn = value;
                 OnPropertyChanged("Conn");
             }
         }
@@ -188,18 +199,19 @@ namespace Calculator
         Math.Nodes.INode getNext(Math.Nodes.INode n)
         {
            
-                if (!(n is Math.Nodes.Values.NumberNode) &&((Math.Nodes.Functions.Binary.IBinaryOperationNode)n).RightNode != null)
+                if (!(n is Math.Nodes.Values.NumberNode) && (!(n is Math.Nodes.Functions.Unary.IUnaryOperationNode)) && ((Math.Nodes.Functions.Binary.IBinaryOperationNode)n).RightNode != null)
                 {
                     return getLeftNode(((Math.Nodes.Functions.Binary.IBinaryOperationNode)n).RightNode);
                 }
-                else
+                else 
                 {
-                    while (n.Parent != null && n == ((Math.Nodes.Functions.Binary.IBinaryOperationNode)n.Parent).RightNode)
+                    while ((n.Parent != null) && (n.Parent is Math.Nodes.Functions.Binary.IBinaryOperationNode) && n == ((Math.Nodes.Functions.Binary.IBinaryOperationNode) n.Parent).RightNode)
                     {
                         n = n.Parent;
                     }
-                    return n.Parent;
                 }
+                    return n.Parent;
+                
         }
 
         string GetNodeTextRepre(Math.Nodes.INode n)
@@ -281,6 +293,7 @@ namespace Calculator
                     else
                     {
                         Lst = tk.GetPossibleNextMathOperators(Tokenizer.GetPrecedingExpressionPartType(ts2.Last<(string, MathOperatorDescription)>()));
+                        LostBySelection = false;
 
                     }
                     if (!edit)

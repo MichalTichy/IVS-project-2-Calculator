@@ -53,9 +53,14 @@ namespace Calculator
         {
             viewModel.LostBySelection = true;
             viewModel.SelectedItem = (MathOperatorDescription)LstVw.SelectedItem;
-            LstVw.DeselectRange(new ItemIndexRange(0, 100));
             TXB_Value.Focus(FocusState.Keyboard);
             TXB_Value.Select(viewModel.Selection, 0);
+            if (LstVw.SelectedItem != null)
+            {
+                viewModel.SelectedItem = (MathOperatorDescription)LstVw.SelectedItem;
+            }
+            
+            //LstVw.DeselectRange(new ItemIndexRange(0, 100));
         }
 
         static Point PtFromDPoint(DPoint dpt)
