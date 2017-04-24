@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Proffiling
+namespace ProffilingTestApp
 {
     public static class Extensions
     {

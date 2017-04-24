@@ -21,9 +21,11 @@ namespace Math.Tokenizer
         public readonly Type NodeType;
 
         /// <summary>
-        /// Operation type, this determines priority of operations.
+        /// Determines priority of operations.
         /// </summary>
-        public readonly OperationType OperationType;
+        public readonly OperationPriority OperationPriority;
+
+        public readonly OperationCategory OperationCategory;
 
 
         /// <summary>
@@ -31,9 +33,10 @@ namespace Math.Tokenizer
         /// </summary>
         /// <param name="nodeType"> Type of node that will be created. </param>
         /// <param name="textRepresentation"> Text representation of mathematical operator (eq. + , sqrt , ...) </param>
-        /// <param name="operationType"> Type of operation </param>
+        /// <param name="operationPriority"> Type of operation </param>
+        /// <param name="operationCategory">Category of operation</param>
         /// <exception cref="ArgumentException"> Throws when provided arguments are not correct. </exception>
-        public MathOperatorDescription(Type nodeType, string textRepresentation, OperationType operationType)
+        public MathOperatorDescription(Type nodeType, string textRepresentation, OperationPriority operationPriority, OperationCategory operationCategory)
         {
             if (!nodeType.IsFunctionNode())
                 throw new ArgumentException($"{nameof(nodeType)} is not implementation of {nameof(IFunctionNode)}");
@@ -43,7 +46,8 @@ namespace Math.Tokenizer
                 throw new ArgumentException($"{nameof(textRepresentation)} cannot be empty or whitespace.");
             TextRepresentation = textRepresentation;
 
-            OperationType = operationType;
+            OperationPriority = operationPriority;
+            OperationCategory = operationCategory;
         }
 
         /// <summary>

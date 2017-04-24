@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Proffiling
+﻿namespace ProffilingTestApp
 {
     public interface IDataProvider
     {

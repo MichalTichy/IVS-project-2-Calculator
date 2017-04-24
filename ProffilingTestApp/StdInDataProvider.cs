@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Proffiling
+namespace ProffilingTestApp
 {
     public class StdInDataProvider : IDataProvider
     {

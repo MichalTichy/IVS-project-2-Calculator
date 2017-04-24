@@ -6,7 +6,7 @@ using Math.Nodes.Functions.Unary;
 using Math.Nodes.Values;
 using Math.Tokenizer;
 
-namespace Proffiling
+namespace ProffilingTestApp
 {
     public class StandartDeviationTreeBuilder : ExpressionTreeBuilder<Tokenizer>
     {
