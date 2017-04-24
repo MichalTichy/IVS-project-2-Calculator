@@ -1,0 +1,3 @@
+xmastn02 100 (GUI, binary tree parser, install)
+xtichy26 100 (expressionparser, profiling, documentation, debuging, tests)
+xmarti78 100 (mathlib, tests, manual, skutecnost, makefile, uninstall)
