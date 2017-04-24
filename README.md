@@ -8,17 +8,26 @@ which is graphicaly ilustrated.
 Calculator can be easily expanded by new features.
 
 ## Platforms
+**GUI**
 
-* Windows 32bit
-* Windows 64bit
-* Windows Phone
+*Windows UWP*
+  * Windows 32bit / 64bit
+  * Windows Phone
+  
+ **Math library**
+
+*Portable library*
+  * .Net Framework 4.6
+  * ASP.NET Core 1.0
+  * Windows Universal 10.0 
+  
 
 ## Authors
 
-* **xmastn02 - Gabriel Mastný** - *GUI* - [GabrielMastny](https://github.com/GabrielMastny)
-* **xtichy26 - Michal Tichý** - *Expression parser* - [MichalTichy](https://github.com/MichalTichy)
-* **xmarti78 - Michal Martinů** - *Math library* - [Misanovy](https://github.com/Misanovy)
+* **xmastn02 - [Gabriel Mastný](https://github.com/GabrielMastny)** - *front-end, UX*
+* **xtichy26 - [Michal Tichý](https://github.com/MichalTichy)** - *Architecture, back-end*
+* **xmarti78 - [Michal Martinů](https://github.com/Misanovy)** - *Math expertise, back-end*
 
 ## License
 
-This project is licensed under the BSD 2-clause "Simplified" License - see the [licence.md](licence.md) file for details
+This project is licensed under the GNU General Public License v3.0 - see the [licence.md](licence.md) file for details
