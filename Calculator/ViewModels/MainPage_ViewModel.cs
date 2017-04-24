@@ -1,169 +1,190 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Math;
-using Math.ExpressionTreeBuilder;
-using Math.Tokenizer;
-using Math.Nodes.Functions;
-using Math.Nodes.Values;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Runtime.CompilerServices;
-using Windows.UI.Xaml.Controls;
+using System.Globalization;
+using System.Linq;
 using Windows.UI;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Core;
-using TreeContainer;
-using GraphLayout;
+using Calculator.Graph;
+using Math.ExpressionTreeBuilder;
+using Math.Tokenizer;
 
-namespace Calculator
+namespace Calculator.ViewModels
 {
-   public class MainPage_ViewModel : INotifyPropertyChanged
+   /// <summary>
+   /// ViewModel layer for MainPage
+   /// </summary>
+   public class MainPageViewModel : INotifyPropertyChanged
     {
 
-        private TreeContainer.TreeContainer tre;
-        public MainPage_ViewModel(TreeContainer.TreeContainer tree)
+        private Tree.TreeContainer tre;
+        /// <summary>
+        /// Constructor for MainPage
+        /// </summary>
+        /// <param name="tree"></param>
+        public MainPageViewModel(Tree.TreeContainer tree)
         {
             
-            tk = new Tokenizer();
+            _tokenizer = new Tokenizer();
 
             tre = tree;
             //lst = tk.GetPossibleNextMathOperators(ExpressionPartTypes.Number);
-            extree = new ExpressionTreeBuilder<Tokenizer>((Tokenizer)tk);
+            extree = new ExpressionTreeBuilder<Tokenizer>((Tokenizer)_tokenizer);
             Parse(false);
             OutputColor.Color = Colors.Black;
 
         }
-        private MathOperatorDescription selectedItem;
-        private ITokenizer tk;
-        private ICollection<string> collectionWithExpressionPartTypes;
+        private MathOperatorDescription _selectedItem;
+        private readonly ITokenizer _tokenizer;
+        private ICollection<string> _collectionWithExpressionPartTypes;
         private IExpressionTreeBuilder extree;
-        private ICollection<MathOperatorDescription> lst;
-        private Math.Nodes.INode node;
-        private string val = "";
-        private string result = "";
-        private bool isParsable =false;
-        private ICollection<(string, MathOperatorDescription)> ts2;
-        private int selection;
-        private Windows.UI.Xaml.Media.SolidColorBrush outputColor = new Windows.UI.Xaml.Media.SolidColorBrush();
-        public int oldsel;
-        public bool LostBySelection = false;
-        private MathOperatorDescription lastSelecetedItem;
-        private List<TreeConnection> conn;
+        private ICollection<MathOperatorDescription> _lst;
+        private Math.Nodes.INode _node;
+        private string _inputValue = "";
+        private string _result = "";
+        private bool _isParsable;
+        private ICollection<(string, MathOperatorDescription)> _tokenCollection;
+        private int _selection;
+        private Windows.UI.Xaml.Media.SolidColorBrush _outputColor = new Windows.UI.Xaml.Media.SolidColorBrush();
+        private int _oldsel;
+        private List<TreeConnection> _treeConnection;
+        /// <summary>
+        /// Flag signalizing on SelectedItemLostFocus
+        /// </summary>
+        public bool LostBySelection;
 
-        public MathOperatorDescription LastSelecetedItem
-        {
-            get => lastSelecetedItem;
-            set
-            {
-                lastSelecetedItem = value;
-                OnPropertyChanged("LastSelectedItem");
-            }
-        } 
+       
 
         #region Bindings
+        /// <summary>
+        /// Binding for Textbox text
+        /// </summary>
         public string Values
         {
-            get => val; 
+            get => _inputValue; 
             set
             {
-                val = value;
+                _inputValue = value;
                 Parse(true);
                 OnPropertyChanged("Values");
             }
         }
 
-        public ICollection<MathOperatorDescription> Lst
+        /// <summary>
+        /// Binding for ListView
+        /// </summary>
+        public ICollection<MathOperatorDescription> List
         {
-            get => lst;
+            get => _lst;
             set
             {
-                lst = value;
+                _lst = value;
                 OnPropertyChanged("Lst");
             }
         }
 
+        /// <summary>
+        /// Binding for TextBlock
+        /// </summary>
         public string Result
         {
-            get { return result; }
-            set { result = value;
-                OnPropertyChanged("Result");
-                        }
+            get => _result;
+            set {
+                    _result = value;
+                    OnPropertyChanged("Result");
+                }
         }
 
+        /// <summary>
+        /// Binding for Currently sellected MathOpertorDescription from ListView
+        /// </summary>
         public MathOperatorDescription SelectedItem
-        { get => selectedItem;
+        { get => _selectedItem;
           set
           {
-                //Debug.WriteLine("tets");
-                    selectedItem = value;
-                if (selectedItem != null)
+                _selectedItem = value;
+                if (_selectedItem != null)
                 {
-                    int i = selectedItem.TextRepresentation.Length;
-                    string newValues = val.Insert(selection, selectedItem.TextRepresentation);
+                    int i = _selectedItem.TextRepresentation.Length;
+                    string newValues = _inputValue.Insert(_selection, _selectedItem.TextRepresentation);
                     Selection +=i;
                     Values = newValues;
                     //Values += $" {SelectedItem.TextRepresentation}";
                 }
-                    
-                    OnPropertyChanged("SelectedItem");
+                     OnPropertyChanged("SelectedItem");
           }
         }
 
+        /// <summary>
+        /// Possition of Caret
+        /// </summary>
         public int Selection
         {
-            get => selection;
+            get => _selection;
             set
             {
-                oldsel = selection;
-                if ((oldsel == 0 && value == 0) || value != 0)
+                _oldsel = _selection;
+                if ((_oldsel == 0 && value == 0) || value != 0)
                 {
-                    selection = value;
+                    _selection = value;
                 }
                 OnPropertyChanged("Selection");
-                
             }
         }
 
+        /// <summary>
+        /// Color for Input frame
+        /// </summary>
         public Windows.UI.Xaml.Media.SolidColorBrush OutputColor
         {
-            get => outputColor;
+            get => _outputColor;
             set
             {
-                outputColor = value;
+                _outputColor = value;
                 OnPropertyChanged("OutputColor");
             }
         }
 
+        /// <summary>
+        /// Flag representing if is given expression parsable
+        /// </summary>
         public bool IsParsable
         {
-            get => isParsable;
+            get => _isParsable;
             set
             {
-                isParsable = value;
+                _isParsable = value;
                 OnPropertyChanged("IsParsable");
             }
         }
 
-        public List<TreeConnection> Conn
+        /// <summary>
+        /// List of Nodes to be drawn on canvas
+        /// </summary>
+        public List<TreeConnection> TreeConection
         {
-            get => conn;
+            get => _treeConnection;
             set
             {
-                conn = value;
+                _treeConnection = value;
                 OnPropertyChanged("Conn");
             }
         }
 
+        /// <summary>
+        /// Event controling consistency between ViewModel and View
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
+        /// <summary>
+        /// Event controling consistency between ViewModel and View
+        /// </summary>
+        /// <param name="propertyName"></param>
         public void OnPropertyChanged(string propertyName)
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
 
@@ -190,13 +211,13 @@ namespace Calculator
             return n;
         }
 
-        Math.Nodes.INode getFirst(Math.Nodes.INode n)
+        Math.Nodes.INode GetFirst(Math.Nodes.INode n)
         {
             if (n == null) return null;
             else return getLeftNode(n);
         }
 
-        Math.Nodes.INode getNext(Math.Nodes.INode n)
+        Math.Nodes.INode GetNext(Math.Nodes.INode n)
         {
            
                 if (!(n is Math.Nodes.Values.NumberNode) && (!(n is Math.Nodes.Functions.Unary.IUnaryOperationNode)) && ((Math.Nodes.Functions.Binary.IBinaryOperationNode)n).RightNode != null)
@@ -216,7 +237,7 @@ namespace Calculator
 
         string GetNodeTextRepre(Math.Nodes.INode n)
         {
-            IReadOnlyCollection<MathOperatorDescription> mod = tk.RegisteredOperators;
+            IReadOnlyCollection<MathOperatorDescription> mod = _tokenizer.RegisteredOperators;
             foreach (MathOperatorDescription ss in mod)
             {
                 if (ss.NodeType == n.GetType())
@@ -227,7 +248,7 @@ namespace Calculator
             }
             if (n is Math.Nodes.Values.NumberNode)
             {
-                return ((Math.Nodes.Values.NumberNode)n).Evaluate().ToString();
+                return ((Math.Nodes.Values.NumberNode)n).Evaluate().ToString(CultureInfo.InvariantCulture);
             }
             else
             {
@@ -235,15 +256,14 @@ namespace Calculator
             }
         }
        
-        void foo(Math.Nodes.INode n)
+        void TreeParser(Math.Nodes.INode n)
         {
             tre.Clear();
             tre.Root = n.GetHashCode().ToString();
             tre.AddNode(GetNodeTextRepre(n), n.GetHashCode().ToString(), (string)null);
 
-            n = getFirst(n);
-            
-            int i = 0;
+            n = GetFirst(n);
+
             while (n!=null)
             {
                
@@ -251,33 +271,31 @@ namespace Calculator
                 {
                     tre.AddNode(GetNodeTextRepre(n), n.GetHashCode().ToString(), (n.Parent).GetHashCode().ToString());
                 }
-                n = getNext(n);
-                
-                i++;
+                n = GetNext(n);
             }
         }
 
 #endregion
         private void Parse(bool edit)
         {
-            if (val != "")
+            if (_inputValue != "")
             {
 
 
-                string valueToParse = val;
+                string valueToParse = _inputValue;
                 if (edit)
                 {
-                    valueToParse = val.Substring(0, selection);
+                    valueToParse = _inputValue.Substring(0, _selection);
                 }
 
                 try
                 {
                     IsParsable = true;
 
-                    node = extree.ParseExpression(valueToParse);
-                    foo(node);
-                    collectionWithExpressionPartTypes = tk.SplitExpressionToTokens(valueToParse);
-                    ts2 = tk.AssignOperatorDescriptionToTokens(collectionWithExpressionPartTypes);
+                    _node = extree.ParseExpression(valueToParse);
+                    TreeParser(_node);
+                    _collectionWithExpressionPartTypes = _tokenizer.SplitExpressionToTokens(valueToParse);
+                    _tokenCollection = _tokenizer.AssignOperatorDescriptionToTokens(_collectionWithExpressionPartTypes);
                 }
                 catch (Exception e)
                 {
@@ -288,17 +306,17 @@ namespace Calculator
                 {
                     if (!IsParsable)
                     {
-                        Lst = null;
+                        List = null;
                     }
                     else
                     {
-                        Lst = tk.GetPossibleNextMathOperators(Tokenizer.GetPrecedingExpressionPartType(ts2.Last<(string, MathOperatorDescription)>()));
+                        List = _tokenizer.GetPossibleNextMathOperators(Tokenizer.GetPrecedingExpressionPartType(_tokenCollection.Last()));
                         LostBySelection = false;
 
                     }
                     if (!edit)
                     {
-                        OutputColor.Color = (!isParsable) ? Colors.Red : Colors.Black;
+                        OutputColor.Color = (!_isParsable) ? Colors.Red : Colors.Black;
                     }
                 }
 
@@ -313,24 +331,31 @@ namespace Calculator
 
        
        
+        /// <summary>
+        /// Event firing after every newly selected matemathical function
+        /// </summary>
         public void SelectionChanged()
         {
-            Debug.WriteLine($"xxxx {selection} .. {Values.Length}");
-            if (selection != Values.Length)
-            {
-                Parse(true);
-            }
-            else Parse(false);
-
-
+            Debug.WriteLine($"xxxx {_selection} .. {Values.Length}");
+            Parse(_selection != Values.Length);
         }
 
 
+        /// <summary>
+        /// Event firing after losing focus of textbox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void InputLostFocus(object sender, RoutedEventArgs e)
         {
-            Selection = oldsel;
+            Selection = _oldsel;
         }
 
+        /// <summary>
+        /// Event firing after pressed key, has purpose for pressing Enter key
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void KeyPressed(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == Windows.System.VirtualKey.Enter)
@@ -341,13 +366,16 @@ namespace Calculator
 
           
         }
+        /// <summary>
+        /// Evaluating expression given by user
+        /// </summary>
         public void Eval()
         {
-            if (isParsable)
+            if (_isParsable)
             {
                 try
                 {
-                    Result = node.Evaluate().ToString();
+                    Result = _node.Evaluate().ToString(CultureInfo.CurrentCulture);
                 }
                 catch (Exception ex)
                 {
@@ -360,15 +388,13 @@ namespace Calculator
 
         private async void DisplayErrDialog(string cont)
         {
-            
             ContentDialog errDialog = new ContentDialog
             {
                 Title = "Chyba",
                 Content = cont, PrimaryButtonText="ok"
             };
 
-            ContentDialogResult result = await errDialog.ShowAsync();
-            
+            await errDialog.ShowAsync();
         }
 
     }

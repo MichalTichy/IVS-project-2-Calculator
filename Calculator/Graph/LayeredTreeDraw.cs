@@ -3,51 +3,73 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace GraphLayout
+namespace Calculator.Graph
 {
 	#region Enums
+	/// <summary>
+	/// Justification of connections between nodes in Tree
+	/// </summary>
 	public enum VerticalJustification
 	{
-		top,
-		center,
-		bottom
+		/// <summary>
+		/// top point
+		/// </summary>
+		Top,
+		/// <summary>
+		/// center justification of text
+		/// </summary>
+		Center,
+		/// <summary>
+		/// bottom point
+		/// </summary>
+		Bottom
 	}
 	#endregion
+	/// <summary>
+	/// Build Tree overlay
+	/// </summary>
 	public class LayeredTreeDraw
 	{
 
 		#region Private variables
-		ITreeNode _tnRoot;
-		double _pxBufferHorizontal;
-		double _pxBufferHorizontalSubtree;
-		double _pxBufferVertical;
-		List<TreeConnection> _lsttcn = new List<TreeConnection>();
-		List<double> _lstLayerHeight = new List<double>();
-		VerticalJustification _vj;
-		static TreeNodeGroup _tngEmpty = new TreeNodeGroup();
+
+	    readonly ITreeNode _tnRoot;
+	    readonly double _pxBufferHorizontal;
+	    readonly double _pxBufferHorizontalSubtree;
+	    readonly double _pxBufferVertical;
+	    readonly List<TreeConnection> _lsttcn = new List<TreeConnection>();
+	    readonly List<double> _lstLayerHeight = new List<double>();
+	    readonly VerticalJustification _vj;
+		static readonly TreeNodeGroup TngEmpty = new TreeNodeGroup();
 		#endregion
 
 		#region Properties
+		/// <summary>
+		/// Size of whole tree
+		/// </summary>
 		public double PxOverallHeight { get; private set;  }
 
-		public double PxOverallWidth
-		{
-			get
-			{
-				return Info(_tnRoot).SubTreeWidth;
-			}
-		}
+		/// <summary>
+		/// size of whole tree
+		/// </summary>
+		public double PxOverallWidth => Info(_tnRoot).SubTreeWidth;
 
-		public List<TreeConnection> Connections
-		{
-			get
-			{
-				return _lsttcn;
-			}
-		}
-		#endregion
+	    /// <summary>
+	    /// List storing connection information of all nodes
+	    /// </summary>
+	    public List<TreeConnection> Connections => _lsttcn;
+
+	    #endregion
 
 		#region Constructor
+		/// <summary>
+		/// Init constructor
+		/// </summary>
+		/// <param name="tnRoot"></param>
+		/// <param name="pxBufferHorizontal"></param>
+		/// <param name="pxBufferHorizontalSubtree"></param>
+		/// <param name="pxBufferVertical"></param>
+		/// <param name="vj"></param>
 		public LayeredTreeDraw(
 			ITreeNode tnRoot,
 			double pxBufferHorizontal,
@@ -70,33 +92,49 @@ namespace GraphLayout
 			return (LayeredTreeInfo)ign.PrivateNodeInfo;
 		}
 
+		/// <summary>
+		/// x position
+		/// </summary>
+		/// <param name="tn"></param>
+		/// <returns></returns>
 		public double X(ITreeNode tn)
 		{
 			if (Info(tn) == null)
 			{
 				return 0;
 			}
-			return Info(tn).pxFromLeft;
+			return Info(tn).PxFromLeft;
 		}
 
+		/// <summary>
+		/// y position
+		/// </summary>
+		/// <param name="tn"></param>
+		/// <returns></returns>
 		public double Y(ITreeNode tn)
 		{
 			if (Info(tn) == null)
 			{
 				return 0;
 			}
-			return Info(tn).pxFromTop;
+			return Info(tn).PxFromTop;
 		}
 		#endregion
 
 		#region Enumerations over nodes
-		static public IEnumerable<T> VisibleDescendants<T>(ITreeNode tn)
+		/// <summary>
+		/// extension for Collapsable
+		/// </summary>
+		/// <param name="tn">TreeNode instance</param>
+		/// <typeparam name="T">T for Type</typeparam>
+		/// <returns></returns>
+		public static IEnumerable<T> VisibleDescendants<T>(ITreeNode tn)
 		{
-			foreach (ITreeNode tnCur in tn.TreeChildren)
+			foreach (var tnCur in tn.TreeChildren)
 			{
 				if (!tnCur.Collapsed)
 				{
-					foreach (T item in VisibleDescendants<T>(tnCur))
+					foreach (var item in VisibleDescendants<T>(tnCur))
 					{
 						yield return item;
 					}
@@ -106,11 +144,17 @@ namespace GraphLayout
 		}
 
 
-		static public IEnumerable<T> Descendants<T>(ITreeNode tn)
+		/// <summary>
+		/// Extension for Collapsables
+		/// </summary>
+		/// <param name="tn"></param>
+		/// <typeparam name="T"></typeparam>
+		/// <returns></returns>
+		public static IEnumerable<T> Descendants<T>(ITreeNode tn)
 		{
-			foreach (ITreeNode tnCur in tn.TreeChildren)
+			foreach (var tnCur in tn.TreeChildren)
 			{
-				foreach (T item in Descendants<T>(tnCur))
+				foreach (var item in Descendants<T>(tnCur))
 				{
 					yield return item;
 				}
@@ -121,10 +165,13 @@ namespace GraphLayout
 
 		#region Layout
 		#region Top Level Layout routines
+		/// <summary>
+		/// make layout Tree
+		/// </summary>
 		public void LayoutTree()
 		{
 			LayoutTree(_tnRoot, 0);
-			DetermineFinalPositions(_tnRoot, 0, 0, Info(_tnRoot).pxLeftPosRelativeToBoundingBox);
+			DetermineFinalPositions(_tnRoot, 0, 0, Info(_tnRoot).PxLeftPosRelativeToBoundingBox);
 		}
 
 		private void LayoutTree(ITreeNode tnRoot, int iLayer)
@@ -144,23 +191,20 @@ namespace GraphLayout
 		private static void LayoutLeafNode(ITreeNode tnRoot)
 		{
 			double width = tnRoot.TreeWidth;
-			LayeredTreeInfo lti = new LayeredTreeInfo(width, tnRoot);
-			lti.lstPosLeftBoundaryRelativeToRoot.Add(0);
-			lti.lstPosRightBoundaryRelativeToRoot.Add(width);
+			LayeredTreeInfo lti = new LayeredTreeInfo(width);
+			lti.LstPosLeftBoundaryRelativeToRoot.Add(0);
+			lti.LstPosRightBoundaryRelativeToRoot.Add(width);
 			tnRoot.PrivateNodeInfo = lti;
 		}
 
 		private void LayoutInteriorNode(ITreeNode tnRoot, int iLayer)
 		{
-			ITreeNode tnLast = null;
-			TreeNodeGroup tng = GetChildren(tnRoot);
-			ITreeNode itn = tng[0];
-			LayeredTreeInfo ltiThis;
+		    TreeNodeGroup tng = GetChildren(tnRoot);
 
-			LayoutAllOurChildren(iLayer, tnLast, tng);
+		    LayoutAllOurChildren(iLayer, tng);
 
 			// This width doesn't account for the parent node's width...
-			ltiThis = new LayeredTreeInfo(CalculateWidthFromInterChildDistances(tnRoot), tnRoot);
+			var ltiThis = new LayeredTreeInfo(CalculateWidthFromInterChildDistances(tnRoot));
 			tnRoot.PrivateNodeInfo = ltiThis;
 
 			// ...so that this centering may place the parent node negatively while the "width" is the width of
@@ -170,16 +214,15 @@ namespace GraphLayout
 			CalculateBoundaryLists(tnRoot);
 		}
 
-		private void LayoutAllOurChildren(int iLayer, ITreeNode tnLast, TreeNodeGroup tng)
+		private void LayoutAllOurChildren(int iLayer, TreeNodeGroup tng)
 		{
-			List<Double> lstLeftToBB = new List<double>();
+			List<Double> lstLeftToBb = new List<double>();
 			List<int> lstResponsible = new List<int>();
 			for (int i = 0; i < tng.Count; i++)
 			{
 				ITreeNode tn = tng[i];
 				LayoutTree(tn, iLayer + 1);
-				RepositionSubtree(i, tng, lstLeftToBB, lstResponsible);
-				tnLast = tn;
+				RepositionSubtree(i, tng, lstLeftToBb, lstResponsible);
 			}
 		}
 		#endregion
@@ -188,32 +231,30 @@ namespace GraphLayout
 		private static void CenterOverChildren(ITreeNode tnRoot, LayeredTreeInfo ltiThis)
 		{
 			// We should be centered between  the connection points of our children...
-			ITreeNode tnLeftMost = tnRoot.TreeChildren.LeftMost();
-			double pxLeftChild = Info(tnLeftMost).pxLeftPosRelativeToBoundingBox + tnLeftMost.TreeWidth / 2;
-			ITreeNode tnRightMost = tnRoot.TreeChildren.RightMost();
-			double pxRightChild = Info(tnRightMost).pxLeftPosRelativeToBoundingBox + tnRightMost.TreeWidth / 2;
-			ltiThis.pxLeftPosRelativeToBoundingBox = (pxLeftChild + pxRightChild - tnRoot.TreeWidth) / 2;
+			var tnLeftMost = tnRoot.TreeChildren.LeftMost();
+			var pxLeftChild = Info(tnLeftMost).PxLeftPosRelativeToBoundingBox + tnLeftMost.TreeWidth / 2;
+			var tnRightMost = tnRoot.TreeChildren.RightMost();
+			var pxRightChild = Info(tnRightMost).PxLeftPosRelativeToBoundingBox + tnRightMost.TreeWidth / 2;
+			ltiThis.PxLeftPosRelativeToBoundingBox = (pxLeftChild + pxRightChild - tnRoot.TreeWidth) / 2;
 
 			// If the root node was wider than the subtree, then we'll have a negative position for it.  We need
 			// to readjust things so that the left of the root node represents the left of the bounding box and
 			// the child distances to the Bounding box need to be adjusted accordingly.
-			if (ltiThis.pxLeftPosRelativeToBoundingBox < 0)
-			{
-				foreach (ITreeNode tnChildCur in tnRoot.TreeChildren)
-				{
-					Info(tnChildCur).pxLeftPosRelativeToBoundingBox -= ltiThis.pxLeftPosRelativeToBoundingBox;
-				}
-				ltiThis.pxLeftPosRelativeToBoundingBox = 0;
-			}
+		    if (!(ltiThis.PxLeftPosRelativeToBoundingBox < 0)) return;
+		    foreach (var tnChildCur in tnRoot.TreeChildren)
+		    {
+		        Info(tnChildCur).PxLeftPosRelativeToBoundingBox -= ltiThis.PxLeftPosRelativeToBoundingBox;
+		    }
+		    ltiThis.PxLeftPosRelativeToBoundingBox = 0;
 		}
 
 		private void DetermineParentRelativePositionsOfChildren(ITreeNode tnRoot)
 		{
-			LayeredTreeInfo ltiRoot = Info(tnRoot);
+			var ltiRoot = Info(tnRoot);
 			foreach (ITreeNode tn in GetChildren(tnRoot))
 			{
 				LayeredTreeInfo ltiCur = Info(tn);
-				ltiCur.pxLeftPosRelativeToParent = ltiCur.pxLeftPosRelativeToBoundingBox - ltiRoot.pxLeftPosRelativeToBoundingBox;
+				ltiCur.PxLeftPosRelativeToParent = ltiCur.PxLeftPosRelativeToBoundingBox - ltiRoot.PxLeftPosRelativeToBoundingBox;
 			}
 		}
 		#endregion
@@ -226,7 +267,7 @@ namespace GraphLayout
 			double pxWidth = 0.0;
 
 			lti = Info(tnRoot.TreeChildren.LeftMost());
-			pxWidthCur = lti.pxLeftPosRelativeToBoundingBox;
+			pxWidthCur = lti.PxLeftPosRelativeToBoundingBox;
 
 			// If a subtree extends deeper than it's left neighbors then at that lower level it could potentially extend beyond those neighbors
 			// on the left.  We have to check for this and make adjustements after the loop if it occurred.
@@ -235,26 +276,26 @@ namespace GraphLayout
 			foreach (ITreeNode tn in tnRoot.TreeChildren)
 			{
 				lti = Info(tn);
-				pxWidthCur += lti.pxToLeftSibling;
+				pxWidthCur += lti.PxToLeftSibling;
 
-				if (lti.pxLeftPosRelativeToBoundingBox > pxWidthCur)
+				if (lti.PxLeftPosRelativeToBoundingBox > pxWidthCur)
 				{
-					pxUndercut = System.Math.Max(pxUndercut, lti.pxLeftPosRelativeToBoundingBox - pxWidthCur);
+					pxUndercut = System.Math.Max(pxUndercut, lti.PxLeftPosRelativeToBoundingBox - pxWidthCur);
 				}
 				
 				// pxWidth might already be wider than the current node's subtree if earlier nodes "undercut" on the
 				// right hand side so we have to take the Max here...
-				pxWidth = System.Math.Max(pxWidth, pxWidthCur + lti.SubTreeWidth - lti.pxLeftPosRelativeToBoundingBox);
+				pxWidth = System.Math.Max(pxWidth, pxWidthCur + lti.SubTreeWidth - lti.PxLeftPosRelativeToBoundingBox);
 
 				// After this next statement, the BoundingBox we're relative to is the one of our parent's subtree rather than
 				// our own subtree (with the exception of undercut considerations)
-				lti.pxLeftPosRelativeToBoundingBox = pxWidthCur;
+				lti.PxLeftPosRelativeToBoundingBox = pxWidthCur;
 			}
 			if (pxUndercut > 0.0)
 			{
 				foreach (ITreeNode tn in tnRoot.TreeChildren)
 				{
-					Info(tn).pxLeftPosRelativeToBoundingBox += pxUndercut;
+					Info(tn).PxLeftPosRelativeToBoundingBox += pxUndercut;
 				}
 				pxWidth += pxUndercut;
 			}
@@ -269,10 +310,10 @@ namespace GraphLayout
 		private void CalculateBoundaryLists(ITreeNode tnRoot)
 		{
 			LayeredTreeInfo lti = Info(tnRoot);
-			lti.lstPosLeftBoundaryRelativeToRoot.Add(0.0);
-			lti.lstPosRightBoundaryRelativeToRoot.Add(tnRoot.TreeWidth);
-			DetermineBoundary(tnRoot.TreeChildren, true /* fLeft */, lti.lstPosLeftBoundaryRelativeToRoot);
-			DetermineBoundary(tnRoot.TreeChildren.Reverse(), false /* fLeft */, lti.lstPosRightBoundaryRelativeToRoot);
+			lti.LstPosLeftBoundaryRelativeToRoot.Add(0.0);
+			lti.LstPosRightBoundaryRelativeToRoot.Add(tnRoot.TreeWidth);
+			DetermineBoundary(tnRoot.TreeChildren, true /* fLeft */, lti.LstPosLeftBoundaryRelativeToRoot);
+			DetermineBoundary(tnRoot.TreeChildren.Reverse(), false /* fLeft */, lti.LstPosRightBoundaryRelativeToRoot);
 
 		}
 
@@ -286,11 +327,11 @@ namespace GraphLayout
 
 				if (fLeft)
 				{
-					lstPosCur = ltiChild.lstPosLeftBoundaryRelativeToRoot;
+					lstPosCur = ltiChild.LstPosLeftBoundaryRelativeToRoot;
 				}
 				else
 				{
-					lstPosCur = ltiChild.lstPosRightBoundaryRelativeToRoot;
+					lstPosCur = ltiChild.LstPosRightBoundaryRelativeToRoot;
 				}
 
 				if (lstPosCur.Count >= lstPos.Count)
@@ -304,7 +345,7 @@ namespace GraphLayout
 
 						while (enPosCur.MoveNext())
 						{
-							lstPos.Add(enPosCur.Current + ltiChild.pxLeftPosRelativeToParent);
+							lstPos.Add(enPosCur.Current + ltiChild.PxLeftPosRelativeToParent);
 							cLayersDeep++;
 						}
 					}
@@ -319,21 +360,21 @@ namespace GraphLayout
 			LayeredTreeInfo lti = Info(tngSiblings[itn]);
 			ITreeNode tnLeft = tngSiblings[itn - 1];
 
-			double pxSlop = lti.pxToLeftSibling - tnLeft.TreeWidth - _pxBufferHorizontal;
+			double pxSlop = lti.PxToLeftSibling - tnLeft.TreeWidth - _pxBufferHorizontal;
 			if (pxSlop > 0)
 			{
 				for (int i = itnResponsible + 1; i < itn; i++)
 				{
-					Info(tngSiblings[i]).pxToLeftSibling += pxSlop * (i - itnResponsible) / (itn - itnResponsible);
+					Info(tngSiblings[i]).PxToLeftSibling += pxSlop * (i - itnResponsible) / (itn - itnResponsible);
 				}
-				lti.pxToLeftSibling -= (itn - itnResponsible - 1) * pxSlop / (itn - itnResponsible);
+				lti.PxToLeftSibling -= (itn - itnResponsible - 1) * pxSlop / (itn - itnResponsible);
 			}
 		}
 
 		private void RepositionSubtree(
 			int itn,
 			TreeNodeGroup tngSiblings,
-			List<double> lstLeftToBB,
+			List<double> lstLeftToBb,
 			List<int> lsttnResponsible)
 		{
 			int itnResponsible;
@@ -344,36 +385,36 @@ namespace GraphLayout
 			{
 				// No shifting but we still have to prepare the initial version of the
 				// left hand skeleton list
-				foreach (double pxRelativeToRoot in lti.lstPosRightBoundaryRelativeToRoot)
+				foreach (double pxRelativeToRoot in lti.LstPosRightBoundaryRelativeToRoot)
 				{
-					lstLeftToBB.Add(pxRelativeToRoot + lti.pxLeftPosRelativeToBoundingBox);
+					lstLeftToBb.Add(pxRelativeToRoot + lti.PxLeftPosRelativeToBoundingBox);
 					lsttnResponsible.Add(0);
 				}
 				return;
 			}
 
 			ITreeNode tnLeft = tngSiblings[itn - 1];
-			LayeredTreeInfo ltiLeft = Info(tnLeft);
+			Info(tnLeft);
 			int iLayer;
 			double pxHorizontalBuffer = _pxBufferHorizontal;
 
-			double pxNewPosFromBB = PxCalculateNewPos(lti, lstLeftToBB, lsttnResponsible, out itnResponsible, out iLayer);
+			double pxNewPosFromBb = PxCalculateNewPos(lti, lstLeftToBb, lsttnResponsible, out itnResponsible, out iLayer);
 			if (iLayer != 0)
 			{
 				pxHorizontalBuffer = _pxBufferHorizontalSubtree;
 			}
 
-			lti.pxToLeftSibling = pxNewPosFromBB - lstLeftToBB.First() + tnLeft.TreeWidth + pxHorizontalBuffer;
+			lti.PxToLeftSibling = pxNewPosFromBb - lstLeftToBb.First() + tnLeft.TreeWidth + pxHorizontalBuffer;
 
-			int cLevels = System.Math.Min(lti.lstPosRightBoundaryRelativeToRoot.Count, lstLeftToBB.Count);
+			int cLevels = System.Math.Min(lti.LstPosRightBoundaryRelativeToRoot.Count, lstLeftToBb.Count);
 			for (int i = 0; i < cLevels; i++)
 			{
-				lstLeftToBB[i] = lti.lstPosRightBoundaryRelativeToRoot[i] + pxNewPosFromBB + pxHorizontalBuffer;
+				lstLeftToBb[i] = lti.LstPosRightBoundaryRelativeToRoot[i] + pxNewPosFromBb + pxHorizontalBuffer;
 				lsttnResponsible[i] = itn;
 			}
-			for (int i = lstLeftToBB.Count; i < lti.lstPosRightBoundaryRelativeToRoot.Count; i++)
+			for (int i = lstLeftToBb.Count; i < lti.LstPosRightBoundaryRelativeToRoot.Count; i++)
 			{
-				lstLeftToBB.Add(lti.lstPosRightBoundaryRelativeToRoot[i] + pxNewPosFromBB + pxHorizontalBuffer);
+				lstLeftToBb.Add(lti.LstPosRightBoundaryRelativeToRoot[i] + pxNewPosFromBb + pxHorizontalBuffer);
 				lsttnResponsible.Add(itn);
 			}
 
@@ -382,18 +423,17 @@ namespace GraphLayout
 
 		private double PxCalculateNewPos(
 			LayeredTreeInfo lti,
-			List<double> lstLeftToBB,
+			List<double> lstLeftToBb,
 			List<int> lstitnResponsible,
 			out int itnResponsible,
 			out int iLayerRet)
 		{
-			double pxOffsetToBB = lstLeftToBB[0];
-			int cLayers = System.Math.Min(lti.lstPosLeftBoundaryRelativeToRoot.Count, lstLeftToBB.Count);
+		    int cLayers = System.Math.Min(lti.LstPosLeftBoundaryRelativeToRoot.Count, lstLeftToBb.Count);
 			double pxRootPosRightmost = 0.0;
 			iLayerRet = 0;
 
-			using (IEnumerator<double> enRight = lti.lstPosLeftBoundaryRelativeToRoot.GetEnumerator(),
-				enLeft = lstLeftToBB.GetEnumerator())
+			using (IEnumerator<double> enRight = lti.LstPosLeftBoundaryRelativeToRoot.GetEnumerator(),
+				enLeft = lstLeftToBb.GetEnumerator())
 			using (IEnumerator<int> enResponsible = lstitnResponsible.GetEnumerator())
 			{
 				itnResponsible = -1;
@@ -403,7 +443,7 @@ namespace GraphLayout
 				enResponsible.MoveNext();
 				for (int iLayer = 0; iLayer < cLayers; iLayer++)
 				{
-					double pxLeftBorderFromBB = enLeft.Current;
+					double pxLeftBorderFromBb = enLeft.Current;
 					double pxRightBorderFromRoot = enRight.Current;
 					double pxRightRootBasedOnThisLevel;
 					int itnResponsibleCur = enResponsible.Current;
@@ -412,7 +452,7 @@ namespace GraphLayout
 					enRight.MoveNext();
 					enResponsible.MoveNext();
 
-					pxRightRootBasedOnThisLevel = pxLeftBorderFromBB - pxRightBorderFromRoot;
+					pxRightRootBasedOnThisLevel = pxLeftBorderFromBb - pxRightBorderFromRoot;
 					if (pxRightRootBasedOnThisLevel > pxRootPosRightmost)
 					{
 						iLayerRet = iLayer;
@@ -436,20 +476,20 @@ namespace GraphLayout
 			_lstLayerHeight[iLayer] = System.Math.Max(tnRoot.TreeHeight, _lstLayerHeight[iLayer]);
 		}
 
-		private System.Double CalcJustify(double height, double pxRowHeight)
+		private double CalcJustify(double height, double pxRowHeight)
 		{
 			double dRet = 0.0;
 
 			switch (_vj)
 			{
-				case VerticalJustification.top:
+				case VerticalJustification.Top:
 					break;
 
-				case VerticalJustification.center:
+				case VerticalJustification.Center:
 					dRet = (pxRowHeight - height) / 2;
 					break;
 
-				case VerticalJustification.bottom:
+				case VerticalJustification.Bottom:
 					dRet = pxRowHeight - height;
 					break;
 			}
@@ -463,7 +503,7 @@ namespace GraphLayout
 		{
 			if (tn.Collapsed)
 			{
-				return _tngEmpty;
+				return TngEmpty;
 			}
 			return tn.TreeChildren;
 		}
@@ -477,22 +517,22 @@ namespace GraphLayout
 			double pxBottom;
 			DPoint dptOrigin;
 
-			lti.pxFromTop = pxFromTop + CalcJustify(tn.TreeHeight, pxRowHeight);
-			pxBottom = lti.pxFromTop + tn.TreeHeight;
+			lti.PxFromTop = pxFromTop + CalcJustify(tn.TreeHeight, pxRowHeight);
+			pxBottom = lti.PxFromTop + tn.TreeHeight;
 			if (pxBottom > PxOverallHeight)
 			{
 				PxOverallHeight = pxBottom;
 			}
-			lti.pxFromLeft = lti.pxLeftPosRelativeToParent + pxParentFromLeft;
-			dptOrigin = new DPoint(lti.pxFromLeft + tn.TreeWidth / 2, lti.pxFromTop + tn.TreeHeight);
+			lti.PxFromLeft = lti.PxLeftPosRelativeToParent + pxParentFromLeft;
+			dptOrigin = new DPoint(lti.PxFromLeft + tn.TreeWidth / 2, lti.PxFromTop + tn.TreeHeight);
 			iLayer++;
 			foreach (ITreeNode tnCur in GetChildren(tn))
 			{
 				List<DPoint> lstcpt = new List<DPoint>();
 				LayeredTreeInfo ltiCur = Info(tnCur);
 				lstcpt.Add(dptOrigin);
-				DetermineFinalPositions(tnCur, iLayer, pxFromTop + pxRowHeight + _pxBufferVertical, lti.pxFromLeft);
-				lstcpt.Add(new DPoint(ltiCur.pxFromLeft + tnCur.TreeWidth / 2, ltiCur.pxFromTop));
+				DetermineFinalPositions(tnCur, iLayer, pxFromTop + pxRowHeight + _pxBufferVertical, lti.PxFromLeft);
+				lstcpt.Add(new DPoint(ltiCur.PxFromLeft + tnCur.TreeWidth / 2, ltiCur.PxFromTop));
 				_lsttcn.Add(new TreeConnection(tn, tnCur, lstcpt));
 			}
 		}
@@ -503,25 +543,23 @@ namespace GraphLayout
 		#region Internal classes
 		private class LayeredTreeInfo
 		{
-			public double SubTreeWidth { get; set; }
-			public double pxLeftPosRelativeToParent { get; set; }
-			public double pxLeftPosRelativeToBoundingBox { get; set; }
-			public double pxToLeftSibling { get; set; }
-			public double pxFromTop { get; set; }
-			public double pxFromLeft { get; set; }
-			public ITreeNode ign { get; private set; }
-			public List<double> lstPosLeftBoundaryRelativeToRoot = new List<double>();
-			public List<double> lstPosRightBoundaryRelativeToRoot = new List<double>();
+		    public double SubTreeWidth { get; set; }
+		    public double PxLeftPosRelativeToParent { get; set; }
+			public double PxLeftPosRelativeToBoundingBox { get; set; }
+			public double PxToLeftSibling { get; set; }
+			public double PxFromTop { get; set; }
+			public double PxFromLeft { get; set; }
+		    public readonly List<double> LstPosLeftBoundaryRelativeToRoot = new List<double>();
+			public readonly List<double> LstPosRightBoundaryRelativeToRoot = new List<double>();
 
 			/// <summary>
 			/// Initializes a new instance of the GraphLayoutInfo class.
 			/// </summary>
-			public LayeredTreeInfo(double subTreeWidth, ITreeNode tn)
+			public LayeredTreeInfo(double subTreeWidth)
 			{
-				SubTreeWidth = subTreeWidth;
-				pxLeftPosRelativeToParent = 0;
-				pxFromTop = 0;
-				ign = tn;
+			    SubTreeWidth = subTreeWidth;
+			    PxLeftPosRelativeToParent = 0;
+				PxFromTop = 0;
 			}
 		}
 		#endregion

@@ -1,26 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Documents;
-using GraphLayout;
-using Windows.UI.Xaml.Shapes;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml;
 using Windows.Foundation;
 using Windows.UI;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Shapes;
+using Calculator.Graph;
 
-
-namespace TreeContainer
+namespace Calculator.Tree
 {
+	/// <summary>
+	/// Custom Control of Panel
+	/// </summary>
 	public class TreeContainer : Panel
 	{
 		#region Private fields
 		LayeredTreeDraw _ltd;
-		int _iNextNameSuffix = 0;
+		int _iNextNameSuffix;
 		#endregion
 
 		#region Properties
+		/// <summary>
+		/// List of Connections
+		/// </summary>
 		public List<TreeConnection> Connections
 		{
 			get
@@ -33,11 +36,17 @@ namespace TreeContainer
         #region Dependency Properties
 
         #region Root
+        /// <summary>
+        /// registring dependencyProperty for customcontrol
+        /// </summary>
         public static readonly DependencyProperty RootProperty = DependencyProperty.Register("Root", typeof(string), typeof(TreeContainer), new PropertyMetadata(null));
 			//DependencyProperty.Register("Root",	typeof(String),	typeof(TreeContainer),new FrameworkPropertyMetadata(null,FrameworkPropertyMetadataOptions.AffectsMeasure |FrameworkPropertyMetadataOptions.AffectsArrange |	FrameworkPropertyMetadataOptions.AffectsParentMeasure |	FrameworkPropertyMetadataOptions.AffectsParentArrange |FrameworkPropertyMetadataOptions.AffectsRender |	0,null,	null,true),
 			//	null
 			//);
 
+		/// <summary>
+		/// root of Tree
+		/// </summary>
 		public string Root
 		{
 			get
@@ -52,6 +61,9 @@ namespace TreeContainer
         #endregion
 
         #region VerticalJustification
+        /// <summary>
+        /// registring dependencyProperty for customcontrol
+        /// </summary>
         public static readonly DependencyProperty VerticalJustifcationProperty = DependencyProperty.Register("VerticalJustification", typeof(VerticalJustification), typeof(TreeContainer), new PropertyMetadata(null));
 			//DependencyProperty.Register(
 			//	"VerticalJustification",
@@ -72,6 +84,9 @@ namespace TreeContainer
 			//	null
 			//);
 
+		/// <summary>
+		/// size of Nodes in tree
+		/// </summary>
 		public VerticalJustification VerticalJustification
 		{
 			get
@@ -87,27 +102,33 @@ namespace TreeContainer
         #endregion
 
         #region VerticalBufferProperty
+        /// <summary>
+        /// registring dependencyProperty for customcontrol
+        /// </summary>
         public static readonly DependencyProperty VerticalBufferProperty = DependencyProperty.Register("VerticalBuffer", typeof(double), typeof(TreeContainer), new PropertyMetadata(null));
-			//DependencyProperty.Register(
-			//	"VerticalBuffer",
-			//	typeof(double),
-			//	typeof(TreeContainer),
-			//	new FrameworkPropertyMetadata(
-			//		10.0,
-			//		FrameworkPropertyMetadataOptions.AffectsMeasure |
-			//		FrameworkPropertyMetadataOptions.AffectsArrange |
-			//		FrameworkPropertyMetadataOptions.AffectsParentMeasure |
-			//		FrameworkPropertyMetadataOptions.AffectsParentArrange |
-			//		FrameworkPropertyMetadataOptions.AffectsRender |
-			//		0,
-			//		null,
-			//		null,
-			//		false
-			//	),
-			//	null
-			//);
+        //DependencyProperty.Register(
+        //	"VerticalBuffer",
+        //	typeof(double),
+        //	typeof(TreeContainer),
+        //	new FrameworkPropertyMetadata(
+        //		10.0,
+        //		FrameworkPropertyMetadataOptions.AffectsMeasure |
+        //		FrameworkPropertyMetadataOptions.AffectsArrange |
+        //		FrameworkPropertyMetadataOptions.AffectsParentMeasure |
+        //		FrameworkPropertyMetadataOptions.AffectsParentArrange |
+        //		FrameworkPropertyMetadataOptions.AffectsRender |
+        //		0,
+        //		null,
+        //		null,
+        //		false
+        //	),
+        //	null
+        //);
 
-		public double VerticalBuffer
+        /// <summary>
+        /// registring dependencyProperty for customcontrol
+        /// </summary>
+        public double VerticalBuffer
 		{
 			get { return (double)GetValue(VerticalBufferProperty); }
 			set { SetValue(VerticalBufferProperty, value); }
@@ -116,6 +137,9 @@ namespace TreeContainer
         #endregion
 
         #region HorizontalBufferSubtreeProperty
+        /// <summary>
+        /// set sizeo fo buffer for subTrees
+        /// </summary>
         public readonly static DependencyProperty HorizontalBufferSubtreeProperty = DependencyProperty.Register("HorizontalBufferSubtree", typeof(double), typeof(TreeContainer), new PropertyMetadata(null));
             //DependencyProperty.Register(
             //	"HorizontalBufferSubtree",
@@ -136,6 +160,9 @@ namespace TreeContainer
             //	null
             //);
 
+        /// <summary>
+        /// 
+        /// </summary>
         public double HorizontalBufferSubtree
 		{
 			get { return (double)GetValue(HorizontalBufferSubtreeProperty); }
@@ -144,6 +171,9 @@ namespace TreeContainer
         #endregion
 
         #region HorizontalBufferProperty
+        /// <summary>
+        /// registring dependencyProperty for customcontrol
+        /// </summary>
         public readonly static DependencyProperty HorizontalBufferProperty = DependencyProperty.Register("HorizontalBuffer", typeof(double), typeof(TreeContainer), new PropertyMetadata(null));
 			//DependencyProperty.Register(
 			//	"HorizontalBuffer",
@@ -164,6 +194,9 @@ namespace TreeContainer
 			//	null
 			//);
 
+		/// <summary>
+		/// set spaces between nodes
+		/// </summary>
 		public double HorizontalBuffer
 		{
 			get { return (double)GetValue(HorizontalBufferProperty); }
@@ -173,11 +206,8 @@ namespace TreeContainer
 		#endregion
 
 		#region Constructors
-		public TreeContainer()
-		{
-            
-		}
-        #endregion
+
+	    #endregion
 
         #region Parenting
         private void SetParents(TreeNode tnRoot)
@@ -205,6 +235,9 @@ namespace TreeContainer
         #endregion
 
         #region Public utilities
+        /// <summary>
+        /// clear all child in tree
+        /// </summary>
         public void Clear()
         {
             //foreach (TreeNode tnCur in Children)
@@ -221,6 +254,12 @@ namespace TreeContainer
             //RegisterName(strName, tn);
         }
 
+        /// <summary>
+        /// Adds node to Tree
+        /// </summary>
+        /// <param name="objContent"></param>
+        /// <param name="strName"></param>
+        /// <returns></returns>
         public TreeNode AddRoot(Object objContent, string strName)
 		{
 			TreeNode tnNew = new TreeNode();
@@ -231,11 +270,23 @@ namespace TreeContainer
 			return tnNew;
 		}
 
+		/// <summary>
+		/// Adds new node s to tree
+		/// </summary>
+		/// <param name="objContent"></param>
+		/// <returns></returns>
 		public TreeNode AddRoot(Object objContent)
 		{
 			return AddRoot(objContent, StrNextName());
 		}
         
+		/// <summary>
+		/// adds new nodes to tree
+		/// </summary>
+		/// <param name="objContent"></param>
+		/// <param name="strName"></param>
+		/// <param name="strParent"></param>
+		/// <returns></returns>
 		public TreeNode AddNode(Object objContent, string strName, string strParent)
 		{
 			TreeNode tnNew = new TreeNode();
@@ -252,11 +303,24 @@ namespace TreeContainer
 			return "__TreeNode" + _iNextNameSuffix++;
 		}
 
+		/// <summary>
+		/// Adds new nodes to tree
+		/// </summary>
+		/// <param name="objContent"></param>
+		/// <param name="strName"></param>
+		/// <param name="tnParent"></param>
+		/// <returns></returns>
 		public TreeNode AddNode(Object objContent, string strName, TreeNode tnParent)
 		{
 			return AddNode(objContent, strName, tnParent.Name);
 		}
 
+		/// <summary>
+		/// Adds new nodes to tre
+		/// </summary>
+		/// <param name="objContent"></param>
+		/// <param name="tnParent"></param>
+		/// <returns></returns>
 		public TreeNode AddNode(Object objContent, TreeNode tnParent)
 		{
 			return AddNode(objContent, StrNextName(), tnParent.Name);
@@ -264,6 +328,11 @@ namespace TreeContainer
         #endregion
 
         #region Panel overrides
+        /// <summary>
+        /// ovveride for customcontrol
+        /// </summary>
+        /// <param name="availableSize"></param>
+        /// <returns></returns>
         protected override Size MeasureOverride(Size availableSize)
         {
             if (Children.Count == 0)
@@ -273,7 +342,7 @@ namespace TreeContainer
 
             Size szFinal = new Size(0, 0);
             string strRoot = Root;
-            TreeNode tnRoot = this.FindName(strRoot) as TreeNode;
+            TreeNode tnRoot = FindName(strRoot) as TreeNode;
 
             foreach (UIElement uiel in Children)
             {
@@ -291,7 +360,7 @@ namespace TreeContainer
             if (tnRoot != null)
             {
                 SetParents(tnRoot);
-                _ltd = new LayeredTreeDraw(tnRoot, HorizontalBuffer, HorizontalBufferSubtree, VerticalBuffer, VerticalJustification.top);
+                _ltd = new LayeredTreeDraw(tnRoot, HorizontalBuffer, HorizontalBufferSubtree, VerticalBuffer, VerticalJustification.Top);
                 _ltd.LayoutTree();
                 szFinal = new Size(_ltd.PxOverallWidth, _ltd.PxOverallHeight);
             }
@@ -299,6 +368,11 @@ namespace TreeContainer
             return szFinal;
         }
 
+        /// <summary>
+        /// size of panel
+        /// </summary>
+        /// <param name="finalSize"></param>
+        /// <returns></returns>
         protected override Size ArrangeOverride(Size finalSize)
         {
             foreach (UIElement uiel in Children)
@@ -322,15 +396,9 @@ namespace TreeContainer
 			return new Point(dpt.X, dpt.Y);
 		}
 
-        public event EventHandler SavingStarted;
-        public virtual void OnSavingStarted(EventArgs e)
-        {
-            if (SavingStarted != null)
-            {
-                SavingStarted(this, e);
-            }
-        }
-
+        /// <summary>
+        /// Redraws all connections of tree
+        /// </summary>
         public void ReDraw()
         {
             if (Connections != null)
@@ -339,9 +407,9 @@ namespace TreeContainer
                 brsh.Opacity = 0.5;
 
 
-
-                Point ptLast = new Point(120, 120);
-                bool fHaveLastPoint = false;
+                // ReSharper disable once ObjectCreationAsStatement
+                new Point(120, 120);
+                bool fHaveLastPoint;
 
                 foreach (TreeConnection tcn in Connections)
                 {
@@ -350,7 +418,7 @@ namespace TreeContainer
                     {
                         if (!fHaveLastPoint)
                         {
-                            ptLast = PtFromDPoint(tcn.LstPt[0]);
+                            PtFromDPoint(tcn.LstPt[0]);
                             fHaveLastPoint = true;
                             continue;
                         }
@@ -363,7 +431,7 @@ namespace TreeContainer
                             Y2 = PtFromDPoint(dpt).Y
                         };
                         Children.Add(pen);
-                        ptLast = PtFromDPoint(dpt);
+                        PtFromDPoint(dpt);
                     }
                 }
             }
