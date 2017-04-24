@@ -184,12 +184,12 @@ namespace Math.Nodes
 
             var canBeUnaryNode = (LeftNode == null && RightNode != null) || (LeftNode != null && RightNode == null);
             if (FutureType != null &&
-                (FutureType.NodeType.GetTypeInfo().IsSubclassOf(typeof(IUnaryOperationNode)) && !canBeUnaryNode))
+                (FutureType.NodeType.IsUnary() && !canBeUnaryNode))
                 throw new ArgumentException($"Unary node needs exactly one child node.");
 
             var canBeBinaryNode = LeftNode != null && RightNode != null;
             if (FutureType != null &&
-                (FutureType.NodeType.GetTypeInfo().IsSubclassOf(typeof(IBinaryOperationNode)) && !canBeBinaryNode))
+                (FutureType.NodeType.IsBinary() && !canBeBinaryNode))
                 throw new ArgumentException($"Binary node needs exactly two child nodes.");
         }
     }
