@@ -59,6 +59,7 @@ namespace Math.Tokenizer
             RegisterOperator(new MathOperatorDescription(typeof(CosNode), "cos", OperationPriority.FunctionCalls,OperationCategory.Goniometric));
             RegisterOperator(new MathOperatorDescription(typeof(TanNode), "tan", OperationPriority.FunctionCalls,OperationCategory.Goniometric));
             RegisterOperator(new MathOperatorDescription(typeof(CotgNode), "cotg", OperationPriority.FunctionCalls, OperationCategory.Goniometric));
+            RegisterOperator(new MathOperatorDescription(typeof(RandomNumberNode), "rnd", OperationPriority.FunctionCalls, OperationCategory.Special));
         }
 
 
