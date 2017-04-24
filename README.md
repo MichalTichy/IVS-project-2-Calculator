@@ -7,12 +7,19 @@ which is graphicaly ilustrated.
 
 Calculator can be easily expanded by new features.
 
+## Instalation
+
+You will find instruction in  [manual.pdf](manual.pdf)
+
+
 ## Platforms
 **GUI**
 
 *Windows UWP*
-  * Windows 32bit / 64bit
+  * Windows 32bit / 64bit / ARM
   * Windows Phone
+  * Windows for tablets
+  
   
  **Math library**
 
