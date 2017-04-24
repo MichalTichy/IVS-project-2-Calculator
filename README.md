@@ -24,9 +24,9 @@ Calculator can be easily expanded by new features.
 
 ## Authors
 
-* **xmastn02 - [Gabriel Mastný](https://github.com/GabrielMastny)** - *front-end, UX* - 
-* **xtichy26 - [Michal Tichý](https://github.com/MichalTichy)** - *Architecture, back-end* - 
-* **xmarti78 - [Michal Martinů](https://github.com/Misanovy)** - *Math expertise, back-end* - 
+* **xmastn02 - [Gabriel Mastný](https://github.com/GabrielMastny)** - *front-end, UX*
+* **xtichy26 - [Michal Tichý](https://github.com/MichalTichy)** - *Architecture, back-end*
+* **xmarti78 - [Michal Martinů](https://github.com/Misanovy)** - *Math expertise, back-end*
 
 ## License
 
