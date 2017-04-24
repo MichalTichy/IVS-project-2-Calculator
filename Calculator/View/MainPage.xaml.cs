@@ -9,6 +9,7 @@ using Calculator.Graph;
 using Calculator.ViewModels;
 using Math.Tokenizer;
 using System;
+using Windows.UI.Xaml.Data;
 
 // Dokumentaci k šabloně položky Prázdná stránka najdete na adrese https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x405
 
@@ -41,15 +42,15 @@ namespace Calculator.View
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             _viewModel.LostBySelection = true;
-            _viewModel.SelectedItem = (MathOperatorDescription)LstVw.SelectedItem;
+            _viewModel.SelectedItem = (MathOperatorDescription)(((ListView)sender).SelectedItem);
             TXB_Value.Focus(FocusState.Keyboard);
             TXB_Value.Select(_viewModel.Selection, 0);
-            if (LstVw.SelectedItem != null)
+            if (((ListView)sender).SelectedItem != null)
             {
                 _viewModel.SelectedItem = (MathOperatorDescription)LstVw.SelectedItem;
             }
             
-            //LstVw.DeselectRange(new ItemIndexRange(0, 100));
+            ((ListView)sender).DeselectRange(new ItemIndexRange(0, 100));
         }
 
         static Point PtFromDPoint(DPoint dpt)

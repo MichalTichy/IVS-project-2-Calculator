@@ -11,7 +11,7 @@ using Windows.UI.Xaml.Input;
 using Calculator.Graph;
 using Math.ExpressionTreeBuilder;
 using Math.Tokenizer;
-
+using System.Collections.ObjectModel;
 namespace Calculator.ViewModels
 {
    /// <summary>
@@ -35,13 +35,82 @@ namespace Calculator.ViewModels
             extree = new ExpressionTreeBuilder<Tokenizer>((Tokenizer)_tokenizer);
             Parse(false);
             OutputColor.Color = Colors.Black;
-
+            dt.Interval = new TimeSpan(0, 0, 0, 0, 80);
+            dt.Tick += Dt_Tick;
+            dt.Start();
+            FillFunctionLists();
         }
+
+        private void FillFunctionLists()
+        {
+            IReadOnlyCollection<MathOperatorDescription> tmp = _tokenizer.RegisteredOperators;
+            _bLst = new Collection<MathOperatorDescription>();
+            _gLst = new Collection<MathOperatorDescription>();
+            _sLst = new Collection<MathOperatorDescription>();
+            string lastItem = "";
+            foreach (var ss in tmp)
+            {
+                
+                switch (ss.OperationCategory)
+                {
+                    case OperationCategory.Basic:
+                    {
+                        if (lastItem != ss.TextRepresentation)
+                        {
+                            _bLst.Add(ss);
+                        }
+                    }
+                        break;
+                    case OperationCategory.Goniometric:
+                    {
+                        if (lastItem != ss.TextRepresentation)
+                        {
+                            _gLst.Add(ss);
+                        }
+                        
+                    }
+                        break;
+                    case OperationCategory.Special:
+                    {
+                        if (lastItem != ss.TextRepresentation)
+                        {
+                            _sLst.Add(ss);
+                        }
+                        
+                    }
+                        break;
+                }
+                lastItem = ss.TextRepresentation;
+            }
+            OnPropertyChanged("BasicList");
+            OnPropertyChanged("GoniometricList");
+            OnPropertyChanged("SpecialList");
+        }
+        private void Dt_Tick(object sender, object e)
+        {
+            foreach (var ss in tre.Children)
+            {
+                if (ss is Windows.UI.Xaml.Shapes.Line)
+                {
+                    tre.Children.Remove(ss);
+                }
+            }
+            if (_node != null)
+            {
+                TreeParser(_node);
+            }
+            
+            tre.ReDraw();
+        }
+
         private MathOperatorDescription _selectedItem;
         private readonly ITokenizer _tokenizer;
         private ICollection<string> _collectionWithExpressionPartTypes;
         private IExpressionTreeBuilder extree;
-        private ICollection<MathOperatorDescription> _lst;
+        private ICollection<MathOperatorDescription> _rLst;
+        private ICollection<MathOperatorDescription> _bLst;
+        private ICollection<MathOperatorDescription> _gLst;
+        private ICollection<MathOperatorDescription> _sLst;
         private Math.Nodes.INode _node;
         private string _inputValue = "";
         private string _result = "";
@@ -76,13 +145,43 @@ namespace Calculator.ViewModels
         /// <summary>
         /// Binding for ListView
         /// </summary>
-        public ICollection<MathOperatorDescription> List
+        public ICollection<MathOperatorDescription> RecomendedList
         {
-            get => _lst;
+            get => _rLst;
             set
             {
-                _lst = value;
-                OnPropertyChanged("Lst");
+                _rLst = value;
+                OnPropertyChanged("RecomendedList");
+            }
+        }
+
+        public ICollection<MathOperatorDescription> BasicList
+        {
+            get => _bLst;
+            set
+            {
+                _bLst = value;
+                OnPropertyChanged("BasicList");
+            }
+        }
+
+        public ICollection<MathOperatorDescription> GoniometricList
+        {
+            get => _gLst;
+            set
+            {
+                _gLst = value;
+                OnPropertyChanged("GoniometricList");
+            }
+        }
+
+        public ICollection<MathOperatorDescription> SpecialList
+        {
+            get => _sLst;
+            set
+            {
+                _sLst = value;
+                OnPropertyChanged("SpecialList");
             }
         }
 
@@ -170,7 +269,7 @@ namespace Calculator.ViewModels
             set
             {
                 _treeConnection = value;
-                OnPropertyChanged("Conn");
+                OnPropertyChanged("TreeConnection");
             }
         }
 
@@ -187,7 +286,7 @@ namespace Calculator.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
-
+       
         #region TreeNodeHandling
         Math.Nodes.INode getLeftNode(Math.Nodes.INode n)
         {
@@ -306,11 +405,11 @@ namespace Calculator.ViewModels
                 {
                     if (!IsParsable)
                     {
-                        List = null;
+                        RecomendedList = null;
                     }
                     else
                     {
-                        List = _tokenizer.GetPossibleNextMathOperators(Tokenizer.GetPrecedingExpressionPartType(_tokenCollection.Last()));
+                        RecomendedList = _tokenizer.GetPossibleNextMathOperators(Tokenizer.GetPrecedingExpressionPartType(_tokenCollection.Last()));
                         LostBySelection = false;
 
 
@@ -398,6 +497,9 @@ namespace Calculator.ViewModels
 
             await errDialog.ShowAsync();
         }
+
+        private DispatcherTimer dt = new DispatcherTimer();
+        
 
     }
 
