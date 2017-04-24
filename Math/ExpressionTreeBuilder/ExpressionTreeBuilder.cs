@@ -67,7 +67,7 @@ namespace Math.ExpressionTreeBuilder
                     {
                         currentNode.FutureType = operatorDescription;
                     }
-                    else if (currentNode.FutureType.OperationType >= operatorDescription.OperationType)
+                    else if (currentNode.FutureType.OperationPriority >= operatorDescription.OperationPriority)
                     {
                         currentNode = currentNode.InsertToParent(new TemporaryNode() {FutureType = operatorDescription});
                     }

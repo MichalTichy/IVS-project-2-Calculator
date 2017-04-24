@@ -32,10 +32,8 @@ namespace Calculator.View
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
             _viewModel = new MainPageViewModel(Tree);
             DataContext = _viewModel;
-          
-
-
-
+            TXB_Value.Focus(FocusState.Keyboard);
+            
         }
 
         

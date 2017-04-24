@@ -43,23 +43,23 @@ namespace Math.Tokenizer
         /// </summary>
         protected void RegisterDefaultOperators()
         {
-            RegisterOperator(new MathOperatorDescription(typeof(SumNode), "+", OperationType.LowPriorityOperation));
-            RegisterOperator(new MathOperatorDescription(typeof(SubstractionNode), "-",
-                OperationType.LowPriorityOperation));
-            RegisterOperator(new MathOperatorDescription(typeof(NegationNode), "-", OperationType.FunctionCalls));
-            RegisterOperator(new MathOperatorDescription(typeof(MultiplyNode), "*", OperationType.HighPriorityOperation));
-            RegisterOperator(new MathOperatorDescription(typeof(DivisionNode), "/", OperationType.HighPriorityOperation));
-            RegisterOperator(new MathOperatorDescription(typeof(FactorialNode), "!", OperationType.FunctionCalls));
-            RegisterOperator(new MathOperatorDescription(typeof(PercentageNode), "%", OperationType.FunctionCalls));
-            RegisterOperator(new MathOperatorDescription(typeof(PowNode), "^", OperationType.FunctionCalls));
-            RegisterOperator(new MathOperatorDescription(typeof(RootNode), "sqrt", OperationType.FunctionCalls));
-            RegisterOperator(new MathOperatorDescription(typeof(SqrtNode), "sqrt", OperationType.FunctionCalls));
-            RegisterOperator(new MathOperatorDescription(typeof(LogNode), "log", OperationType.FunctionCalls));
-            RegisterOperator(new MathOperatorDescription(typeof(GammaNode), "Γ", OperationType.FunctionCalls));
-            RegisterOperator(new MathOperatorDescription(typeof(SinNode), "sin", OperationType.FunctionCalls));
-            RegisterOperator(new MathOperatorDescription(typeof(CosNode), "cos", OperationType.FunctionCalls));
-            RegisterOperator(new MathOperatorDescription(typeof(TanNode), "tan", OperationType.FunctionCalls));
-            RegisterOperator(new MathOperatorDescription(typeof(CotgNode), "cotg", OperationType.FunctionCalls));
+            RegisterOperator(new MathOperatorDescription(typeof(SumNode), "+", OperationPriority.LowPriorityOperation,OperationCategory.Basic));
+            RegisterOperator(new MathOperatorDescription(typeof(SubstractionNode), "-",OperationPriority.LowPriorityOperation,OperationCategory.Basic));
+            RegisterOperator(new MathOperatorDescription(typeof(NegationNode), "-", OperationPriority.FunctionCalls,OperationCategory.Special));
+            RegisterOperator(new MathOperatorDescription(typeof(MultiplyNode), "*", OperationPriority.HighPriorityOperation,OperationCategory.Basic));
+            RegisterOperator(new MathOperatorDescription(typeof(DivisionNode), "/", OperationPriority.HighPriorityOperation,OperationCategory.Basic));
+            RegisterOperator(new MathOperatorDescription(typeof(FactorialNode), "!", OperationPriority.FunctionCalls,OperationCategory.Special));
+            RegisterOperator(new MathOperatorDescription(typeof(PercentageNode), "%", OperationPriority.FunctionCalls,OperationCategory.Special));
+            RegisterOperator(new MathOperatorDescription(typeof(PowNode), "^", OperationPriority.FunctionCalls,OperationCategory.Basic));
+            RegisterOperator(new MathOperatorDescription(typeof(RootNode), "sqrt", OperationPriority.FunctionCalls,OperationCategory.Basic));
+            RegisterOperator(new MathOperatorDescription(typeof(SqrtNode), "sqrt", OperationPriority.FunctionCalls,OperationCategory.Basic));
+            RegisterOperator(new MathOperatorDescription(typeof(LogNode), "log", OperationPriority.FunctionCalls,OperationCategory.Special));
+            RegisterOperator(new MathOperatorDescription(typeof(GammaNode), "Γ", OperationPriority.FunctionCalls,OperationCategory.Special));
+            RegisterOperator(new MathOperatorDescription(typeof(SinNode), "sin", OperationPriority.FunctionCalls,OperationCategory.Goniometric));
+            RegisterOperator(new MathOperatorDescription(typeof(CosNode), "cos", OperationPriority.FunctionCalls,OperationCategory.Goniometric));
+            RegisterOperator(new MathOperatorDescription(typeof(TanNode), "tan", OperationPriority.FunctionCalls,OperationCategory.Goniometric));
+            RegisterOperator(new MathOperatorDescription(typeof(CotgNode), "cotg", OperationPriority.FunctionCalls, OperationCategory.Goniometric));
+            RegisterOperator(new MathOperatorDescription(typeof(RandomNumberNode), "rnd", OperationPriority.FunctionCalls, OperationCategory.Special));
         }
 
 

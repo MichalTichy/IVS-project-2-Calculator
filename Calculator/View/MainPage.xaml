@@ -25,7 +25,7 @@
                     <StackPanel  BorderThickness="2" BorderBrush="{x:Bind _viewModel.OutputColor,Mode=OneWay}"  Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <TextBox KeyUp="{x:Bind _viewModel.KeyPressed, Mode=OneWay}"  SelectionChanged="{x:Bind _viewModel.SelectionChanged, Mode=OneWay}" SelectionStart="{Binding Path=Selection, Mode=TwoWay}" x:Name="TXB_Value" BorderThickness="0" Text="{ Binding Path=Values, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Padding="5" Height="53"/>
                        
-                        <TextBlock x:Name="TXBL_Result"  FontSize="20"   Text="{ x:Bind _viewModel.Result, Mode=OneWay}" Padding="5" HorizontalAlignment="Right" VerticalAlignment="Bottom" TextAlignment="Right" Height="39" Width="936"/>
+                        <TextBlock x:Name="TXBL_Result" FontSize="20"   Text="{ x:Bind _viewModel.Result, Mode=OneWay}" Padding="5" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" TextAlignment="Right" Height="39" />
                         
                     </StackPanel>
                     
@@ -96,10 +96,7 @@
 
                 </Grid>
             </PivotItem>
-            <PivotItem Header="Programátorská">
-                <!--Pivot content goes here-->
-                <TextBlock Text="Content of pivot item 3."/>
-            </PivotItem>
+            
 
         </Pivot>
 

@@ -313,11 +313,13 @@ namespace Calculator.ViewModels
                         List = _tokenizer.GetPossibleNextMathOperators(Tokenizer.GetPrecedingExpressionPartType(_tokenCollection.Last()));
                         LostBySelection = false;
 
+
                     }
                     if (!edit)
                     {
                         OutputColor.Color = (!_isParsable) ? Colors.Red : Colors.Black;
                     }
+                   
                 }
 
 
@@ -375,7 +377,7 @@ namespace Calculator.ViewModels
             {
                 try
                 {
-                    Result = _node.Evaluate().ToString(CultureInfo.CurrentCulture);
+                    Result = _node.Evaluate().ToString();
                 }
                 catch (Exception ex)
                 {
