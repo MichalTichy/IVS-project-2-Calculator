@@ -19,27 +19,27 @@ namespace Math
     {
         internal static bool IsUnary(this Type type)
         {
-            return typeof(IUnaryOperationNode).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo());
+            return typeof(IUnaryOperationNode).IsAssignableFrom(type);
         }
 
         internal static bool IsPrecedingUnary(this Type type)
         {
-            return typeof(IPrecedingUnaryOperationNode).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo());
+            return typeof(IPrecedingUnaryOperationNode).IsAssignableFrom(type);
         }
 
         internal static bool IsFollowingUnary(this Type type)
         {
-            return typeof(IFollowingUnaryOperationNode).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo());
+            return typeof(IFollowingUnaryOperationNode).IsAssignableFrom(type);
         }
 
         internal static bool IsBinary(this Type type)
         {
-            return typeof(IBinaryOperationNode).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo());
+            return typeof(IBinaryOperationNode).IsAssignableFrom(type);
         }
 
         internal static bool IsFunctionNode(this Type type)
         {
-            return typeof(IFunctionNode).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo());
+            return typeof(IFunctionNode).IsAssignableFrom(type);
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace Math
         /// <exception cref="NotSupportedException"> Throws when given node cannot be translated to ExpressionPartType </exception>
         public static ExpressionPartTypes ToExpressionPart(this Type type)
         {
-            if (typeof(NumberNode).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo()))
+            if (typeof(NumberNode).IsAssignableFrom(type))
                 return ExpressionPartTypes.Number;
 
             if (type.IsPrecedingUnary())

@@ -1,9 +1,9 @@
 ﻿namespace Math.Nodes.Functions
 {
     /// <summary>
-    /// Operation type degfines order of operations.
+    /// defines order of operations.
     /// </summary>
-    public enum OperationType
+    public enum OperationPriority
     {
         /// <summary>
         /// subtractions, summations, ...
