@@ -1,15 +1,11 @@
 # IVS Project 2 - Calculator
 
-This is a school project created by group K.I.S.S. - *Keep It Simple Stupid (and Shrot)*.
+This is a school project created by group K.I.S.S. - *Keep It Simple Stupid (and Short)*.
 
 It's a calculator, which can be used for calculation mathematical expressions. Mathematical expressions are parsed into binary tree, 
 which is graphicaly ilustrated. 
 
 Calculator can be easily expanded by new features.
-
-## Instalation
-
-You will find instruction in  [manual.pdf](manual.pdf)
 
 
 ## Platforms

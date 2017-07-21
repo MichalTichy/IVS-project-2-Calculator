@@ -1,1 +1,0 @@
-Get-AppxPackage *9c4ddece-1f40-4cce-8688-fb0d113e8a26* | Remove-AppxPackage
