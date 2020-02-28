@@ -7,6 +7,7 @@ which is graphicaly ilustrated.
 
 Calculator can be easily expanded by new features.
 
+![Screenshop](https://raw.githubusercontent.com/MichalTichy/IVS-project-2-Calculator/master/screenshot.png)
 
 ## Platforms
 **GUI**
